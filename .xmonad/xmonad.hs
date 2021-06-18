@@ -128,7 +128,7 @@ spirals  = renamed [Replace "spirals"]
            $ smartBorders
            $ addTabs shrinkText myTabTheme
            $ subLayout [] (smartBorders Simplest)
-           $ mySpacing' 5
+           $ mySpacing 5
            $ spiral (6/7)
 threeCol = renamed [Replace "threeCol"]
            $ smartBorders
@@ -172,13 +172,13 @@ myLayoutHook = avoidStruts $ mouseResize $ windowArrange $ T.toggleLayouts float
                myDefaultLayout =      grid
                                   ||| magnify
                                   ||| noBorders monocle
-                                  ||| floats
+                                  -- ||| floats
                                   ||| noBorders tabs
                                   ||| withBorder myBorderWidth tall
                                   ||| spirals
                                   ||| threeCol
                                   ||| threeRow
-                                  ||| tallAccordion
+                                  -- ||| tallAccordion
                                   ||| wideAccordion
 
 
