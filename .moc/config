@@ -235,7 +235,7 @@ ShowTime = yes
 #
 # Example:    Theme = laras_theme
 #
-Theme = deephouse
+Theme = 30equals
 
 # The theme used when running on an xterm.
 #
@@ -250,7 +250,7 @@ Theme = deephouse
 
 # MOC directory (where pid file, socket and state files are stored).
 # You can use ~ at the beginning.
-#MOCDir = ~/.moc
+MOCDir = ~/.moc
 
 # Use mmap() to read files.  mmap() is much slower on NFS.
 #UseMMap = no
