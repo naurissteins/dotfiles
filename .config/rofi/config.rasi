@@ -1,0 +1,3 @@
+configuration {
+	theme: "/home/arch/.config/rofi/themes/ayu-mirage/rofi.rasi";
+}
