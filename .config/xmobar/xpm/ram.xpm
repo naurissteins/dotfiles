@@ -1,0 +1,22 @@
+/* XPM */
+static char *ram_xpm[] = {
+"24 16 2 1",
+"  c None",
+"w c #b58900",
+"                        ",
+"  wwwwwwwwwwwwwwwwwwww  ",
+" w                    w ",
+" w                    w ",
+" w                   ww ",
+" w  www www www www w   ",
+" w  w w w w w w w w w   ",
+" w  www www www www w   ",
+" w                   ww ",
+" w                    w ",
+" w                    w ",
+" w            ww      w ",
+" w w w w w w w  w w w w ",
+" w w w w w w w  w w w w ",
+" wwwwwwwwwwwww  wwwwwww ",
+"                        ",
+};

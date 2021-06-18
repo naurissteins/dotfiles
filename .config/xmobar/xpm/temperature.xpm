@@ -1,0 +1,22 @@
+/* XPM */
+static char *temperature_xpm[] = {
+"12 16 2 1",
+"  c None",
+"w c #b58900",
+"            ",
+"    wwwww   ",
+" wwww   w   ",
+"    w   w   ",
+" wwww   w   ",
+"    w   w   ",
+" wwww   w   ",
+"    w   w   ",
+"    w   w   ",
+"   ww   ww  ",
+"  ww     ww ",
+"  w       w ",
+"  w       w ",
+"  ww     ww ",
+"   wwwwwww  ",
+"            ",
+};

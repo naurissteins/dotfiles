@@ -1,0 +1,22 @@
+/* XPM */
+static char *bat_2_xpm[] = {
+"24 16 2 1",
+"  c None",
+"w c #b58900",
+"                        ",
+" wwwwwwwwwwwwwwwwwwww   ",
+" w                  w   ",
+" w                  w   ",
+" w                  www ",
+" w    wwwwwwwww       w ",
+" w   wwwwwwwww        w ",
+" w        www         w ",
+" w       www          w ",
+" w      wwwwwwwww     w ",
+" w     wwwwwwwww      w ",
+" w                  www ",
+" w                  w   ",
+" w                  w   ",
+" wwwwwwwwwwwwwwwwwwww   ",
+"                        ",
+};
