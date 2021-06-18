@@ -1,0 +1,64 @@
+{
+  "_from": "https://www.atom.io/api/packages/atom-sublime-monokai-syntax/versions/0.4.4/tarball",
+  "_id": "atom-sublime-monokai-syntax@0.4.4",
+  "_inBundle": false,
+  "_integrity": "sha512-zeAQL16NU/7H8YWv4/zODIiJGAwJqdQt/Nbl/tTAT+n6ZIoYSHnav5EYi7Y87LA2MwVm95IeVAgARUecat/xqg==",
+  "_location": "/atom-sublime-monokai-syntax",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "remote",
+    "raw": "https://www.atom.io/api/packages/atom-sublime-monokai-syntax/versions/0.4.4/tarball",
+    "rawSpec": "https://www.atom.io/api/packages/atom-sublime-monokai-syntax/versions/0.4.4/tarball",
+    "saveSpec": "https://www.atom.io/api/packages/atom-sublime-monokai-syntax/versions/0.4.4/tarball",
+    "fetchSpec": "https://www.atom.io/api/packages/atom-sublime-monokai-syntax/versions/0.4.4/tarball"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://www.atom.io/api/packages/atom-sublime-monokai-syntax/versions/0.4.4/tarball",
+  "_shasum": "2f93dc2a4fc12ec7f60f69e91f5deb9d88857961",
+  "_spec": "https://www.atom.io/api/packages/atom-sublime-monokai-syntax/versions/0.4.4/tarball",
+  "_where": "/tmp/apm-install-dir-2021412-5909-w36mr0.so4r",
+  "author": {
+    "name": "odahcam"
+  },
+  "bugs": {
+    "url": "https://github.com/odahcam/atom-sublime-monokai-syntax/issues"
+  },
+  "bundleDependencies": false,
+  "dependencies": {},
+  "deprecated": false,
+  "description": "A monokai theme, made with ❤ and Vodka (kidding, was ☕ again) for Sublime Text Monokai Syntax and ⚛ lovers. 💚",
+  "devDependencies": {},
+  "engines": {
+    "atom": ">=1.13.0 <2.0.0"
+  },
+  "homepage": "https://github.com/odahcam/atom-sublime-monokai-syntax#readme",
+  "keywords": [
+    "syntax",
+    "theme",
+    "monokai",
+    "sublime",
+    "text",
+    "odahcam"
+  ],
+  "license": "MIT",
+  "name": "atom-sublime-monokai-syntax",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/odahcam/atom-sublime-monokai-syntax.git"
+  },
+  "theme": "syntax",
+  "version": "0.4.4",
+  "_atomModuleCache": {
+    "version": 1,
+    "dependencies": [],
+    "extensions": {
+      ".json": [
+        "package.json"
+      ]
+    },
+    "folders": []
+  }
+}

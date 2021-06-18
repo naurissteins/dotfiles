@@ -1,0 +1,18 @@
+"*":
+  core:
+    autoHideMenuBar: true
+    disabledPackages: [
+      "wrap-guide"
+    ]
+    telemetryConsent: "no"
+    themes: [
+      "one-dark-ui"
+      "ayu-mirage-syntax"
+    ]
+  editor: {}
+  "exception-reporting":
+    userId: "40184d28-63df-4a43-b531-295700896fcd"
+  github: {}
+  minimap: {}
+  welcome:
+    showOnStartup: false

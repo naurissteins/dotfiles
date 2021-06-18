@@ -1,0 +1,145 @@
+* {
+  box-sizing: border-box;
+}
+*:focus:active {
+  outline: none !important;
+}
+
+html,
+body {
+  font-weight: @font-weight;
+}
+
+atom-workspace {
+  background-color: @app-background-color;
+  font-family: inherit;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  line-height: 1;
+  margin-bottom: @scale-a-l * 1rem;
+}
+h1 {
+  font-size: @scale-a-xxl * 1rem;
+}
+h2 {
+  font-size: @scale-a-xl * 1rem;
+}
+h3 {
+  font-size: @scale-a-l * 1rem;
+}
+h4,
+h5,
+h6 {
+  font-size: 1rem;
+}
+
+p {
+  line-height: @scale-b-l * 1rem;
+  margin-bottom: @scale-b-l * 1rem;
+}
+
+label {
+  font-weight: normal;
+}
+
+pre {
+  box-shadow: none;
+  color: @base-fg;
+  background: @level-3-bg;
+  border-radius: @component-border-radius;
+  border: none;
+  margin: 0;
+}
+
+code {
+  color: @fg-highlight;
+  background: @level-2-bg;
+  border-radius: @component-border-radius;
+}
+
+.atom-dock-toggle-button .atom-dock-toggle-button-inner {
+  border-radius: 0;
+}
+
+.inset-panel {
+  border-radius: 0;
+}
+
+.atom-dock-resize-handle {
+  position: relative;
+  background-color: @stroke;
+}
+
+.atom-dock-toggle-button .atom-dock-toggle-button-inner.left .icon-chevron-left {
+  transform: translateX(11px);
+}
+
+.atom-dock-toggle-button .atom-dock-toggle-button-inner.left .icon-chevron-right {
+  transform: translateX(12px);
+}
+
+.atom-dock-toggle-button .atom-dock-toggle-button-inner.right .icon-chevron-left {
+  transform: translateX(-11px);
+}
+
+.atom-dock-toggle-button .atom-dock-toggle-button-inner.right .icon-chevron-right {
+  transform: translateX(-12px);
+}
+
+.atom-dock-toggle-button .atom-dock-toggle-button-inner.top .icon-chevron-up {
+  transform: translateY(10px);
+}
+
+.atom-dock-toggle-button .atom-dock-toggle-button-inner.top .icon-chevron-down {
+  transform: translateY(11px);
+}
+
+.atom-dock-toggle-button .atom-dock-toggle-button-inner.bottom .icon-chevron-up {
+  transform: translateY(-11px);
+}
+
+.atom-dock-toggle-button .atom-dock-toggle-button-inner.bottom .icon-chevron-down {
+  transform: translateY(-10px);
+}
+
+.atom-dock-resize-handle::before {
+  display: block;
+  content: '';
+  position: absolute;
+  z-index: 3;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background-color: transparent;
+}
+
+.atom-dock-resize-handle.left,
+.atom-dock-resize-handle.right {
+  width: 1px;
+
+  &::before {
+    left: -4px;
+    right: -4px;
+  }
+}
+
+.atom-dock-resize-handle.top,
+.atom-dock-resize-handle.bottom {
+  height: 1px;
+
+  &::before {
+    top: -4px;
+    bottom: -4px;
+  }
+}
+
+th {
+  font-weight: normal !important;
+}

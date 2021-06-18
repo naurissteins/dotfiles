@@ -1,0 +1,173 @@
+@import "syntax-variables";
+
+
+//provide defaults, users can set configs that are handled in config.less
+@font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+@font-size: 11px;
+@font-weight: 400;
+
+
+// a modular scale maintains relations across all sizes and spaces
+// hhttp://www.modularscale.com
+// rounding prevents stray pixel rounding error glitches
+@scale-a: 1.15;
+@scale-b: 1.3;
+
+@scale-a-s:    round(pow(@scale-a, -1), 1);
+@scale-a-m:    1;
+@scale-a-l:    round(pow(@scale-a, 1), 1);
+@scale-a-xl:   round(pow(@scale-a, 2), 1);
+@scale-a-xxl:  round(pow(@scale-a, 3), 1);
+@scale-a-xxxl: round(pow(@scale-a, 4), 1);
+
+@scale-b-s:    round(pow(@scale-b, -1), 1);
+@scale-b-m:    1;
+@scale-b-l:    round(pow(@scale-b, 1), 1);
+@scale-b-xl:   round(pow(@scale-b, 2), 1);
+@scale-b-xxl:  round(pow(@scale-b, 3), 1);
+
+@space: round(@scale-b-s, 1) * 1rem;
+
+// leading color
+@ui-theme-color: @syntax-background-color;
+
+// Tend towards blue instead of red when base color is white
+.ui-hue() when (hsvhue(@ui-theme-color) = 0) and (hsvsaturation(@ui-theme-color) = 0%) {
+  @ui-hue: 180;
+}
+.ui-hue() when (hsvhue(@ui-theme-color) > 0), (hsvsaturation(@ui-theme-color) > 0%) {
+  @ui-hue: hsvhue(@ui-theme-color);
+}
+.ui-hue();
+
+.ui-saturation() when (hsvhue(@ui-theme-color) >= 180) {
+  @ui-saturation: min(hsvsaturation(@ui-theme-color), 24%);
+}
+.ui-saturation() when (hsvhue(@ui-theme-color) > 280), (hsvhue(@ui-theme-color) < 180) {
+  @ui-saturation: min(hsvsaturation(@ui-theme-color), 6%);
+}
+.ui-saturation();
+
+.ui-brightness() when (hsvvalue(@ui-theme-color) >= 50%) {
+  @ui-brightness: hsvvalue(@ui-theme-color) - 80%;
+}
+.ui-brightness() when (hsvvalue(@ui-theme-color) < 50%) {
+  @ui-brightness: hsvvalue(@ui-theme-color) + 6%;
+}
+.ui-brightness();
+
+@ui-accent:        spin( hsl( @ui-hue, 60% + @ui-saturation, 60%), 66 );
+
+
+
+// background
+@base-bg: hsv(@ui-hue, @ui-saturation, @ui-brightness);
+
+@level-1-bg: lighten(@base-bg, 6%);
+@level-2-bg:  darken(@base-bg, 0%);
+@level-3-bg:  darken(@base-bg, 6%);
+
+@stroke: darken(@base-bg, 6%);
+@item-views-stroke: darken(@base-bg, 7%);
+
+@bg-info:    hsl(200, 60%, 50%);
+@bg-success: hsl(140, 60%, 50%);
+@bg-warning: hsl(40,  60%, 50%);
+@bg-error:   hsl(350, 60%, 50%);
+
+
+// foreground
+@base-fg: hsl(@ui-hue, @ui-saturation, max(24%, (@ui-brightness) * 2.8) );
+
+@fg-subtle: mix(@base-fg, @base-bg, 76%);
+@fg-faded: mix(@base-fg, @base-bg, 36%);
+@fg-ignored:  mix(@base-fg, @base-bg, 48%);
+@fg-highlight: hsl(@ui-hue, @ui-saturation, 86%);
+@fg-selected: hsl(@ui-hue, @ui-saturation, 98%);
+
+@fg-info:    hsl(200, 60%, 60%);
+@fg-success: hsl(140, 60%, 60%);
+@fg-warning: hsl(40,  60%, 60%);
+@fg-error:   hsl(350, 60%, 60%);
+
+@fg-added:    @fg-success;
+@fg-renamed:  @fg-info;
+@fg-modified: @fg-warning;
+@fg-removed:  @fg-error;
+
+@shadow: 0 0 2rem rgba(0,0,0,.3);
+
+
+// other required vars
+// may or may not be used elsewhere in this package
+// https://atom.io/docs/v0.174.0/theme-variables
+// translate to vars required for other packages
+@text-color: @base-fg;
+@text-color-subtle: @fg-subtle;
+@text-color-highlight: @fg-highlight;
+@text-color-selected: @fg-selected;
+@text-color-info:    @fg-info;
+@text-color-success: @fg-success;
+@text-color-warning: @fg-warning;
+@text-color-error:   @fg-error;
+@text-color-modified: @fg-warning;
+
+@background-color-info: @bg-info;
+@background-color-success: @bg-success;
+@background-color-warning: @bg-warning;
+@background-color-error: @bg-error;
+@background-color-highlight: @ui-theme-color;
+@background-color-selected: @level-2-bg;
+
+@app-background-color:             @level-2-bg;
+@base-background-color:            @app-background-color;
+@base-border-color:                @stroke;
+
+@pane-item-background-color:       @level-3-bg;
+@pane-item-border-color:           @stroke;
+
+@input-background-color:           @level-1-bg;
+@input-border-color:               @stroke;
+
+@tool-panel-background-color:      @level-2-bg;
+@tool-panel-border-color:          @stroke;
+
+@inset-panel-background-color:     @level-3-bg;
+@inset-panel-border-color:         @stroke;
+
+@panel-heading-background-color:   @level-3-bg;
+@panel-heading-border-color:       @stroke;
+
+@overlay-background-color:         @level-2-bg;
+@overlay-border-color:             @stroke;
+
+@button-background-color:          @level-1-bg;
+@button-background-color-hover:    @level-2-bg;
+@button-background-color-selected: @level-1-bg;
+@button-border-color:              @stroke;
+
+@tab-bar-background-color:         @app-background-color;
+@tab-bar-border-color:             @tab-bar-background-color;
+@tab-background-color:             @level-2-bg;
+@tab-background-color-active:      @ui-theme-color;
+@tab-border-color:                 @tab-background-color;
+
+@tree-view-background-color:       @level-3-bg;
+@tree-view-border-color:           @level-3-bg;
+
+@ui-site-color-1: @bg-success;             // green
+@ui-site-color-2: spin(@bg-success, 60);   // blue
+@ui-site-color-3: spin(@bg-success, -120); // orange
+@ui-site-color-4: spin(@bg-success, -210); // pink
+@ui-site-color-5: spin(@bg-success, -100); // yellow
+
+
+@disclosure-arrow-size:    1rem;
+
+@component-padding:        @scale-a-m * 1rem;
+@component-icon-padding:   @space;
+@component-icon-size:      16/12 * 1rem;
+@component-line-height:    round(@scale-b-xxl) * 1rem;
+@component-border-radius:  4px;
+
+@tab-height: @component-line-height + (@scale-b-s * 1rem);

@@ -1,0 +1,57 @@
+.selected {
+  color: @fg-highlight;
+}
+
+.text-smaller {
+  font-size: @scale-a-s * 1rem;
+}
+
+.text-subtle {
+  color: @fg-subtle;
+}
+.text-highlight {
+  color: @fg-highlight;
+}
+
+.text-error {
+  color: @fg-error;
+}
+.text-info {
+  color: @fg-info;
+  &:hover {
+    color: @fg-info;
+  }
+}
+.text-warning {
+  color: @fg-warning;
+  &:hover {
+    color: @fg-warning;
+  }
+}
+.text-success {
+  color: @fg-success;
+  &:hover {
+    color: @fg-success;
+  }
+}
+
+.highlight-mixin {
+  padding: 1px 4px;
+  text-shadow: none;
+  border-radius: @component-border-radius;
+  color: @fg-highlight;
+}
+.highlight {
+  .highlight-mixin();
+  background-color: @level-2-bg;
+}
+.highlight-color-mixin(@name, @color, @base-fg) {
+  .highlight-@{name} {
+    .highlight-mixin();
+    background-color: fadeout(@color, 50%);
+  }
+}
+.highlight-color-mixin(info, @bg-info, @fg-info);
+.highlight-color-mixin(warning, @bg-warning, @fg-warning);
+.highlight-color-mixin(error, @bg-error, @fg-error);
+.highlight-color-mixin(success, @bg-success, @fg-success);

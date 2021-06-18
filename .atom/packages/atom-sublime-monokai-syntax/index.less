@@ -1,0 +1,179 @@
+@import "./styles/base.less";
+
+atom-text-editor {
+    .search-results {
+        .syntax--marker .region {
+            background-color: transparent;
+            border: 1px solid @syntax-result-marker-color;
+        }
+
+        .syntax--marker.current-result .region {
+            border: 1px solid @syntax-result-marker-color-selected;
+        }
+    }
+
+    .syntax--gfm {
+        .syntax--markup {
+            &.syntax--heading {
+                color: @green;
+                font-weight: bold;
+            }
+
+            &.syntax--underline {
+                color: @yellow;
+                text-decoration: underline;
+            }
+        }
+
+        .syntax--bold {
+            font-weight: bold;
+        }
+
+        .syntax--italic {
+            font-style: italic;
+        }
+
+        .syntax--raw {
+            color: @blue;
+        }
+
+        .syntax--variable.syntax--list {
+            color: @pink;
+            font-weight: bold;
+        }
+
+        .syntax--link {
+            color: @light-gray;
+
+            .syntax--entity {
+                color: @purple;
+            }
+        }
+    }
+}
+
+.syntax--entity {
+    &.syntax--name {
+        &.syntax--class {
+            text-decoration: none;
+            color: @green;
+        }
+
+        &.syntax--function {
+            color: @function-declaration-color;
+
+            .syntax--method-call & {
+                // selects the parent which className is method-call
+                color: @function-call-color;
+            }
+        }
+
+        &.syntax--instance {
+            color: @blue;
+        }
+
+        &.syntax--tag {
+            color: @pink;
+        }
+    }
+
+    &.syntax--other {
+        &.syntax--attribute-name {
+            color: @green;
+        }
+
+        &.syntax--inherited-class {
+            font-style: italic;
+            text-decoration: none;
+            color: @green;
+        }
+
+        &.syntax--class.syntax--jade {
+            // Jade syntax
+            color: @purple;
+        }
+    }
+}
+
+.syntax--punctuation {
+    &.syntax--definition.syntax--parameters,
+    &.syntax--section.syntax--embedded,
+    &.syntax--section.syntax--scope,
+    &.syntax--separator,
+    &.syntax--terminator.syntax--expression {
+        color: @syntax-text-color;
+    }
+}
+
+.syntax--invalid {
+    color: @ghost-white;
+    background-color: @pink;
+
+    &.syntax--deprecated {
+        background-color: @purple;
+    }
+
+    &.syntax--illegal {
+        background-color: @red;
+        color: @syntax-background-color;
+    }
+}
+
+.syntax--support {
+    &.syntax--constant,
+    &.syntax--function {
+        color: @function-call-color;
+    }
+
+    &.syntax--class,
+    &.syntax--type {
+        font-style: italic;
+        color: @blue;
+    }
+}
+
+.syntax--variable {
+    color: @syntax-text-color; // white
+    // 'self' Python
+    &.syntax--language.syntax--python,
+    // 'this' Javascript
+    &.syntax--language.syntax--js {
+        color: @pink;
+        font-style: italic;
+    }
+}
+
+.syntax--meta {
+    &.syntax--tag {
+        color: @syntax-text-color;
+    }
+
+    &.syntax--delimiter.syntax--period {
+        color: @pink
+    }
+
+    &.syntax--function-call:not(.syntax--js) {
+        // atom puts the ( and ) punctuations inside the function-call block for JS
+        color: @function-call-color;
+    }
+
+    &.syntax--function .syntax--variable {
+        font-style: italic;
+        color: @orange;
+    }
+}
+// Prevent underlines from making their way into whitespace elements
+
+.leading-whitespace,
+.trailing-whitespace {
+    display: inline-block;
+}
+// specific language highlight
+
+.syntax--php {
+    // PHP syntax highlighting
+    .syntax--punctuation.syntax--section.syntax--embedded {
+        font-weight: bold;
+        font-style: italic;
+    }
+}

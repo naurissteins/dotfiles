@@ -1,0 +1,29 @@
+/*
+ * Copyright (C) 2016-present Arctic Ice Studio <development@arcticicestudio.com>
+ * Copyright (C) 2016-present Sven Greb <development@svengreb.de>
+ *
+ * Support for community package "tool-bar".
+ *
+ * Project:    Nord Atom UI
+ * Repository: https://github.com/arcticicestudio/nord-atom-ui
+ * License:    MIT
+ * References:
+ *   https://atom.io/packages/tool-bar
+ */
+
+.tool-bar {
+  background-color: @base-background-color;
+  border: none;
+
+  button.tool-bar-btn {
+    background-color: @base-background-color;
+    background-image: none;
+    border-color: @base-background-color;
+  }
+
+  hr.tool-bar-spacer {
+    -webkit-mask-image: none !important;
+    border-top: 1px solid @tool-bar-spacer-border-color !important;
+    margin: 2px 5px !important;
+  }
+}

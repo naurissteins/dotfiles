@@ -1,0 +1,93 @@
+/*
+ * Copyright (C) 2016-present Arctic Ice Studio <development@arcticicestudio.com>
+ * Copyright (C) 2016-present Sven Greb <development@svengreb.de>
+ *
+ * Project:    Nord Atom UI
+ * Repository: https://github.com/arcticicestudio/nord-atom-ui
+ * License:    MIT
+ */
+
+.tree-view {
+  font-size: @font-size;
+  background: @tree-view-background-color;
+  padding-top: 0;
+
+  .project-root {
+    padding-bottom: @component-padding / 2;
+
+    &:before {
+      height: @tab-height;
+      background-clip: padding-box;
+    }
+
+    & > .header {
+      & .name {
+        .text(normal);
+        font-weight: 600;
+        color: @text-color-highlight;
+        height: @tab-height + 1px;
+        line-height: @tab-height;
+      }
+
+      &:before {
+        color: @text-color-highlight;
+        transition: all @transition-time ease;
+        opacity: 0;
+      }
+
+      &:hover {
+        &:before {
+          opacity: 1;
+        }
+      }
+    }
+  }
+
+  .project-root.project-root.collapsed {
+    & > .header {
+      &:before {
+        opacity: 0;
+      }
+
+      &:hover {
+        &:before {
+          opacity: 1;
+        }
+      }
+    }
+  }
+}
+
+.list-group .icon,
+.list-tree .icon {
+  display: inline-block;
+  height: inherit;
+  &::before {
+    top: initial;
+    line-height: inherit;
+    height: inherit;
+    vertical-align: top;
+  }
+}
+
+.tree-view-resizer {
+  .tree-view-resize-handle {
+    width: 8px;
+  }
+}
+@media (max-width: 1280px), (max-height: 800px) {
+  .tree-view {
+    .project-root.project-root {
+      &:before {
+        height: @tab-height * 0.8;
+      }
+
+      & > .header {
+        & .name {
+          height: @tab-height * 0.8 + 1px;
+          line-height: @tab-height * 0.8;
+        }
+      }
+    }
+  }
+}

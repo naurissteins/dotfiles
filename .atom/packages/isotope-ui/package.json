@@ -1,0 +1,63 @@
+{
+  "_from": "https://www.atom.io/api/packages/isotope-ui/versions/2.8.5/tarball",
+  "_id": "isotope-ui@2.8.5",
+  "_inBundle": false,
+  "_integrity": "sha512-lQN3kngFaIkk1jc3KAGlRdwXPKOJtBpOaNkt2MnyU66xd2u9+0t3EL6feZY8RCEgnolEK6h2D+9jWlxMZ1spfg==",
+  "_location": "/isotope-ui",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "remote",
+    "raw": "https://www.atom.io/api/packages/isotope-ui/versions/2.8.5/tarball",
+    "rawSpec": "https://www.atom.io/api/packages/isotope-ui/versions/2.8.5/tarball",
+    "saveSpec": "https://www.atom.io/api/packages/isotope-ui/versions/2.8.5/tarball",
+    "fetchSpec": "https://www.atom.io/api/packages/isotope-ui/versions/2.8.5/tarball"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://www.atom.io/api/packages/isotope-ui/versions/2.8.5/tarball",
+  "_shasum": "64580fe9fd25a5305729faf4f3fd298dea647dd8",
+  "_spec": "https://www.atom.io/api/packages/isotope-ui/versions/2.8.5/tarball",
+  "_where": "/tmp/apm-install-dir-2021431-22695-w2hl4w.7fr8",
+  "bugs": {
+    "url": "https://github.com/braver/isotope-ui/issues"
+  },
+  "bundleDependencies": false,
+  "deprecated": false,
+  "description": "A clean and configurable UI theme.",
+  "engines": {
+    "atom": ">=1.1.0 <2.0.0"
+  },
+  "homepage": "https://github.com/braver/isotope-ui#readme",
+  "keywords": [
+    "configurable",
+    "minimal",
+    "clean",
+    "compact",
+    "desaturated"
+  ],
+  "license": "MIT",
+  "main": "lib/isotope-ui",
+  "name": "isotope-ui",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/braver/isotope-ui.git"
+  },
+  "theme": "ui",
+  "version": "2.8.5",
+  "_atomModuleCache": {
+    "version": 1,
+    "dependencies": [],
+    "extensions": {
+      ".coffee": [
+        "lib/config.coffee",
+        "lib/isotope-ui.coffee"
+      ],
+      ".json": [
+        "package.json"
+      ]
+    },
+    "folders": []
+  }
+}

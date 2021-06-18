@@ -1,0 +1,24 @@
+.scrollbars-visible-always {
+  /deep/ ::-webkit-scrollbar {
+    width: @component-padding;
+    height: @component-padding;
+  }
+
+  atom-text-editor {
+    /deep/ ::-webkit-scrollbar-track {
+      background: @ui-theme-color;
+    }
+  }
+
+  /deep/ ::-webkit-scrollbar-track {
+      background: transparent;
+  }
+
+  /deep/ ::-webkit-scrollbar-thumb,
+  /deep/ ::-webkit-scrollbar-corner {
+    border-radius: @component-padding;
+    border: 3px solid transparent;
+    background: @level-1-bg;
+    background-clip: content-box;
+  }
+}

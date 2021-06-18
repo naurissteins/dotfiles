@@ -1,0 +1,19 @@
+.status-bar {
+
+  height: ~"calc("@component-line-height ~"+ 3px)";
+  line-height: ~"calc("@component-line-height ~"+ 2px)";
+  background: @tool-panel-background-color;
+  border: none;
+  font-size: 1rem;
+
+  > * {
+    padding: 0 @space;
+  }
+
+  .status-bar-left > *,
+  .status-bar-left .inline-block,
+  .status-bar-right > *,
+  .status-bar-right .inline-block {
+    vertical-align: top;
+  }
+}

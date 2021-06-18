@@ -1,0 +1,57 @@
+{
+  "_from": "https://www.atom.io/api/packages/ayu-mirage-syntax/versions/0.1.0/tarball",
+  "_id": "ayu-mirage-syntax@0.1.0",
+  "_inBundle": false,
+  "_integrity": "sha512-0ydq4UlHA2x0FJhJYYE+x/rXJXywgykwu0dLIhYvi6QRUJVlXenLbJj3PGXPXpvyo+zkoKG4yKyg5BVoMTMpEQ==",
+  "_location": "/ayu-mirage-syntax",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "remote",
+    "raw": "https://www.atom.io/api/packages/ayu-mirage-syntax/versions/0.1.0/tarball",
+    "rawSpec": "https://www.atom.io/api/packages/ayu-mirage-syntax/versions/0.1.0/tarball",
+    "saveSpec": "https://www.atom.io/api/packages/ayu-mirage-syntax/versions/0.1.0/tarball",
+    "fetchSpec": "https://www.atom.io/api/packages/ayu-mirage-syntax/versions/0.1.0/tarball"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://www.atom.io/api/packages/ayu-mirage-syntax/versions/0.1.0/tarball",
+  "_shasum": "416b6d80e32c2705490034b5f47998214a2fb868",
+  "_spec": "https://www.atom.io/api/packages/ayu-mirage-syntax/versions/0.1.0/tarball",
+  "_where": "/tmp/apm-install-dir-202152-13719-1988rf0.iqig",
+  "bugs": {
+    "url": "https://github.com/appelgriebsch/ayu-mirage-syntax/issues"
+  },
+  "bundleDependencies": false,
+  "deprecated": false,
+  "description": "Imported tmTheme for Ayu-Mirage on Atom",
+  "engines": {
+    "atom": ">=1.0.0 <2.0.0"
+  },
+  "homepage": "https://github.com/appelgriebsch/ayu-mirage-syntax#readme",
+  "keywords": [
+    "syntax",
+    "theme",
+    "ayu",
+    "mirage"
+  ],
+  "license": "MIT",
+  "name": "ayu-mirage-syntax",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/appelgriebsch/ayu-mirage-syntax.git"
+  },
+  "theme": "syntax",
+  "version": "0.1.0",
+  "_atomModuleCache": {
+    "version": 1,
+    "dependencies": [],
+    "extensions": {
+      ".json": [
+        "package.json"
+      ]
+    },
+    "folders": []
+  }
+}

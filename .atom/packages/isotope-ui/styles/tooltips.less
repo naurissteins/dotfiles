@@ -1,0 +1,89 @@
+@tooltip-background-color:         @ui-accent;
+@tooltip-text-color:               contrast(@tooltip-background-color, white, hsl(0,0%,20%), 60 );
+@tooltip-text-key-color:           darken(@tooltip-text-color, 12%);
+
+.tooltip {
+  white-space: nowrap;
+  font-size: @scale-a-m * 1rem;
+  -webkit-filter: drop-shadow(0 0 3px fadeOut(@stroke, 50%));
+
+  .tooltip-inner {
+    line-height: @component-line-height;
+    padding: 0 @space;
+    border-radius: @component-border-radius;
+    background-color: @tooltip-background-color;
+    color: @tooltip-text-color;
+    white-space: nowrap;
+    max-width: none;
+  }
+
+  .keystroke {
+    margin: 0 0 0 1rem;
+    color: @tooltip-text-key-color;
+  }
+
+  &.in {
+    opacity: 1;
+    transition: opacity .1s ease-out;
+  }
+
+  &.top .tooltip-arrow {
+    border-top-color: @tooltip-background-color;
+  }
+  &.top-left .tooltip-arrow {
+    border-top-color: @tooltip-background-color;
+  }
+  &.top-right .tooltip-arrow {
+    border-top-color: @tooltip-background-color;
+  }
+  &.right .tooltip-arrow {
+    border-right-color: @tooltip-background-color;
+  }
+  &.left .tooltip-arrow {
+    border-left-color: @tooltip-background-color;
+  }
+  &.bottom .tooltip-arrow {
+    border-bottom-color: @tooltip-background-color;
+  }
+  &.bottom-left .tooltip-arrow {
+    border-bottom-color: @tooltip-background-color;
+  }
+  &.bottom-right .tooltip-arrow {
+    border-bottom-color: @tooltip-background-color;
+  }
+}
+
+[data-isotope-ui-tooltip-lowcontrast='true'] {
+  .tooltip {
+    .tooltip-inner {
+      background: @level-1-bg;
+    }
+    .keystroke {
+      color: @base-fg;
+    }
+    &.top .tooltip-arrow {
+      border-top-color: @level-1-bg;
+    }
+    &.top-left .tooltip-arrow {
+      border-top-color: @level-1-bg;
+    }
+    &.top-right .tooltip-arrow {
+      border-top-color: @level-1-bg;
+    }
+    &.right .tooltip-arrow {
+      border-right-color: @level-1-bg;
+    }
+    &.left .tooltip-arrow {
+      border-left-color: @level-1-bg;
+    }
+    &.bottom .tooltip-arrow {
+      border-bottom-color: @level-1-bg;
+    }
+    &.bottom-left .tooltip-arrow {
+      border-bottom-color: @level-1-bg;
+    }
+    &.bottom-right .tooltip-arrow {
+      border-bottom-color: @level-1-bg;
+    }
+  }
+}

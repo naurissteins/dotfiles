@@ -1,0 +1,37 @@
+.styleguide section.bordered,
+.styleguide section.collapsed {
+  padding: @component-padding 0; // stops jumping of the title when collapsing
+}
+
+.styleguide atom-panel.modal:after {
+  position: absolute;  // prevent overlay backdrop from leaking outside
+  left: -@component-padding/2;
+  right: -@component-padding/2;
+  bottom: -@component-padding/2;
+}
+.styleguide .atom-panel.modal:after {
+  position: absolute;  // prevent overlay backdrop from leaking outside
+}
+
+.styleguide .select-list atom-text-editor[mini],
+.styleguide .popover-list atom-text-editor[mini] {
+}
+
+.example {
+  border: none;
+
+  .example-rendered {
+    border: 1px solid @stroke;
+    border-right: none;
+    background: @level-2-bg;
+  }
+
+  .example-code {
+    border: 1px solid @stroke;
+    border-radius: 0 @component-border-radius @component-border-radius 0;
+
+    .btn-group .btn.selected {
+      background: @level-3-bg;
+    }
+  }
+}

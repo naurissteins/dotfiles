@@ -1,0 +1,38 @@
+/*
+ * Copyright (C) 2016-present Arctic Ice Studio <development@arcticicestudio.com>
+ * Copyright (C) 2016-present Sven Greb <development@svengreb.de>
+ *
+ * Support for community package "imdone-atom".
+ *
+ * Project:    Nord Atom UI
+ * Repository: https://github.com/arcticicestudio/nord-atom-ui
+ * License:    MIT
+ * References:
+ *   https://atom.io/packages/imdone-atom
+ */
+
+.imdone-atom .imdone-board-wrapper .imdone-board {
+  .list {
+    background: @base-background-color;
+
+    .task {
+      background-color: @imdone-atom-task-background-color;
+      border: 1px solid @base-border-color;
+      transition: background @transition-time ease;
+
+      &.sortable-chosen {
+        background-color: @imdone-atom-task-background-color-draged;
+      }
+    }
+
+    .list-name {
+      .icon-trashcan {
+        transition: color @transition-time ease;
+
+        &:hover {
+          color: @text-color-removed;
+        }
+      }
+    }
+  }
+}

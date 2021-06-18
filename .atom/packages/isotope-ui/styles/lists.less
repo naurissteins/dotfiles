@@ -1,0 +1,186 @@
+@list-item-height: @component-line-height;
+@tree-item-height: @scale-a-xxxl * 1rem;
+
+
+//a mixin for creating a number of color variations
+.li-variation-mixin(@class, @color, @hover) {
+  li {
+    &.@{class},
+    &:not(.list-nested-item).@{class},
+    &.list-nested-item.@{class} > .list-item {
+      color: @color;
+      &:hover {
+        color: @hover;
+      }
+    }
+  }
+}
+
+//the main mixin
+.li-mixin(@color, @height:@list-item-height) {
+  li {
+    padding-left: @space;
+
+    &,
+    &:not(.list-nested-item),
+    &.list-nested-item > .list-item {
+      min-height: @height;
+      line-height: @height;
+      color: @color;
+      &:before {
+        height: @height;
+        line-height: @height;
+      }
+      &:hover {
+        color: lighten(@color, 12%);
+      }
+
+      &.path-details { // search
+        color: @fg-highlight;
+      }
+    }
+    &.selected {
+      color: @fg-selected;
+
+      &:before {
+        line-height: @height;
+        min-height: @height;
+        background-color: @level-2-bg;
+      }
+    }
+  }
+
+  .li-variation-mixin( status-modified, @fg-modified, lighten(@fg-modified, 12%) );
+  .li-variation-mixin( status-added,    @fg-added,    lighten(@fg-added, 12%) );
+  .li-variation-mixin( status-ignored,  @fg-ignored,  lighten(@fg-ignored, 12%) );
+  .li-variation-mixin( text-subtle,     @fg-subtle,   lighten(@fg-subtle, 12%) );
+  .li-variation-mixin( text-info,       @fg-info,     lighten(@fg-info, 12%) );
+  .li-variation-mixin( text-success,    @fg-success,  lighten(@fg-success, 12%) );
+  .li-variation-mixin( text-warning,    @fg-warning,  lighten(@fg-warning, 12%) );
+  .li-variation-mixin( text-error,      @fg-error,    lighten(@fg-error, 12%) );
+}
+
+.command-palette .list-group .character-match {
+  font-weight: inherit;
+}
+
+.list-group {
+  .li-mixin (@base-fg, @list-item-height);
+
+}
+.list-tree {
+  .li-mixin (@base-fg, @tree-item-height);
+}
+
+.list-group,
+.list-tree {
+
+  .icon {
+    line-height: inherit;
+    position: relative;
+    &::before {
+      height: 16px;
+      line-height: 16px;
+    }
+  }
+  button { //e.g. open file list package
+    padding: 0;
+    height: 100%;
+    line-height: 100%;
+    margin-right: @space;
+  }
+  .no-icon {
+    padding-left: @component-icon-size + @component-icon-padding;
+  }
+  .status {
+    float: left;
+  }
+  .two-lines {
+    height: auto;
+  }
+  .primary-line {
+    line-height: @list-item-height;
+  }
+  .secondary-line {
+    line-height: 1;
+    padding-bottom: @space;
+  }
+  .secondary-line,
+  .key-binding {
+    background: transparent;
+    color: @fg-subtle;
+    box-shadow: none;
+  }
+}
+
+.select-list ol.list-group {
+  margin: 0;
+
+  li {
+    &.selected {
+      color: @fg-selected;
+      background-color: @level-3-bg;
+      &:before{
+        display: none;
+      }
+    }
+  }
+
+  &.mark-active {
+    @active-icon-size: 14px;
+
+    // pad in front of the text where the icon would be We'll pad the non-
+    // active items with a 'fake' icon so other classes can pad the item
+    // without worrying about the icon padding.
+    li::before,
+    li.selected:before {
+      content: '';
+      background-color: transparent;
+      position: static;
+      display: inline-block;
+      left: auto;
+      right: auto;
+      width: @active-icon-size;
+      float: left;
+    }
+    > li:not(.active):before {
+      margin-right: @component-icon-padding;
+    }
+    li.active {
+      .octicon(check, @active-icon-size);
+      &::before { //icon
+        margin-right: @component-icon-padding;
+        color: @fg-success;
+        height: @list-item-height;
+        line-height: @list-item-height;
+      }
+    }
+  }
+}
+
+.select-list.popover-list {
+  background-color: @overlay-background-color;
+  box-shadow: @shadow;
+  padding: @space;
+  border-radius: @component-border-radius;
+
+  atom-text-editor.mini {
+    margin-bottom: @space;
+  }
+
+  .list-group li {
+    padding-left: @space;
+  }
+}
+
+li.ui-draggable-dragging,
+li.ui-sortable-helper {
+  height: @list-item-height;
+  line-height: @list-item-height;
+  border: 0;
+  border-radius: 0;
+  list-style: none;
+  padding: 0 @component-padding;
+  background: @level-2-bg;
+  box-shadow: @shadow;
+}

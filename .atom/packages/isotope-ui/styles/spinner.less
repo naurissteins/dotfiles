@@ -1,0 +1,61 @@
+/*
+Thanks to: http://stephanwagner.me/only-css-loading-spinner
+*/
+
+@keyframes spinner {
+  to {transform: rotate(360deg);}
+}
+
+@-webkit-keyframes spinner {
+  to {-webkit-transform: rotate(360deg);}
+}
+
+.loading-spinner(@size) {
+  min-width: @size;
+  min-height: @size;
+  display: block;
+  position: relative;
+
+  &:before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: @size;
+    height: @size;
+    margin-top: @size / -2;
+    margin-left: @size / -2;
+    border-radius: 50%;
+    border: 2px solid @base-fg;
+    border-top-color: @base-bg;
+    animation: spinner .7s cubic-bezier(0.645, 0.045, 0.355, 1) infinite;
+    -webkit-animation: spinner .7s cubic-bezier(0.645, 0.045, 0.355, 1) infinite;
+  }
+
+  &.inline-block {
+    display: inline-block;
+    min-height: 1em; // fixes alignment if spinner larger than text
+  }
+}
+
+
+// rounded values to ensure circles
+.loading-spinner-large {
+  @large: round(@scale-a-xl * 24);
+  .loading-spinner(@large * 1px);
+}
+
+.loading-spinner-medium {
+  @medium: round(@scale-a-l * 24);
+  .loading-spinner(@medium * 1px);
+}
+
+.loading-spinner-small {
+  @small: 24;
+  .loading-spinner(@small * 1px);
+}
+
+.loading-spinner-tiny {
+  @tiny: .8 * 24;
+  .loading-spinner(@tiny * 1px);
+}

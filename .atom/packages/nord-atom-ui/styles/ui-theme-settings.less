@@ -1,0 +1,69 @@
+/*
+ * Copyright (C) 2016-present Arctic Ice Studio <development@arcticicestudio.com>
+ * Copyright (C) 2016-present Sven Greb <development@svengreb.de>
+ *
+ * Project:    Nord Atom UI
+ * Repository: https://github.com/arcticicestudio/nord-atom-ui
+ * License:    MIT
+ */
+
+/*+-----------+
+  + Variables +
+  +-----------+*/
+@theme-setting-formfocuseffect: ~"theme-@{ui-theme-name}-form-focus-effect";
+@theme-setting-tabsizing: ~"theme-@{ui-theme-name}-tabsizing";
+
+@theme-setting-formfocuseffect-background-color: @nord3;
+@theme-setting-formfocuseffect-border-color: @nord3;
+@theme-setting-formfocuseffect-text-selection-color: @nord1;
+
+/*+----------------+
+  + User Interface +
+  +----------------+*/
+/*+--- Darker Form-Focusing Effect ---+*/
+[@{theme-setting-formfocuseffect}="nosnowlight"] {
+  .theme-setting-formfocuseffect-nosnowlight();
+}
+
+.theme-setting-formfocuseffect-nosnowlight() {
+  .find-and-replace,
+  .settings-view {
+    atom-text-editor[mini].is-focused {
+      border: 1px solid @theme-setting-formfocuseffect-border-color;
+      background-color: @theme-setting-formfocuseffect-background-color;
+
+      .syntax--text,
+      .syntax--source {
+        color: @text-color;
+
+        .regexp {
+          color: @text-color;
+        }
+      }
+
+      .highlights .region {
+        background-color: @theme-setting-formfocuseffect-text-selection-color;
+      }
+    }
+  }
+}
+
+/*+--- Full Width Tab Sizing ---+*/
+[@{theme-setting-tabsizing}="nofullwidth"] {
+  .theme-setting-tabsizing-nofullwidth();
+}
+
+.theme-setting-tabsizing-nofullwidth() {
+  .tab-bar {
+    width: auto;
+
+    .tab {
+      width: inherit;
+    }
+
+    .tab.active,
+    .tab:hover.active {
+      width: inherit;
+    }
+  }
+}

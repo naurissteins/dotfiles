@@ -1,0 +1,105 @@
+.project-root(@height) {
+  li.project-root,
+  li.project-root:not(.list-nested-item),
+  li.project-root.list-nested-item > .list-item {
+    //align it with tab titles
+    min-height: @height;
+    line-height: @height;
+  }
+  li.project-root.selected:before,
+  li.project-root:not(.list-nested-item).selected:before,
+  li.project-root.list-nested-item.selected > .list-item:before {
+    height: @height;
+    min-height: @height;
+    line-height: @height;
+  }
+}
+
+.tree-view.list-tree {
+
+  .li-mixin (@fg-subtle, @scale-b-xl * 1rem);
+
+  padding: @space/3 0 0 0;
+
+  li {
+    &.selected,
+    &:not(.list-nested-item).selected,
+    &.list-nested-item.selected > .list-item {
+      color: @base-fg;
+      &:before {
+        box-sizing: content-box;
+        margin-top: -1px;
+        border-top: 1px solid mix(@level-2-bg, @level-3-bg);
+        border-bottom: 1px solid mix(@level-2-bg, @level-3-bg);
+        background-color: mix(@level-2-bg, @level-3-bg);
+      }
+    }
+    .icon {
+      padding-left: 22px;
+      &::before {
+        position: absolute;
+        left: 0;
+        top: 0;
+      }
+      &[data-name=".gitignore"]::before {
+        top: -1px;
+      }
+      &[data-name="Gruntfile.js"]::before {
+        top: -1px;
+      }
+    }
+
+    //add these variations in here as well for specicifty
+    .li-variation-mixin ( status-modified, @fg-modified, lighten(@fg-modified, 12%) );
+    .li-variation-mixin ( status-added,    @fg-added,    lighten(@fg-added, 12%) );
+  }
+
+  .project-root(~"calc("@tab-height ~"- 2px)");
+
+  // hide pointer icons in treeview
+  &.has-collapsable-children {
+    .list-nested-item > .list-item:before {
+      display: none;
+    }
+    .list-nested-item > .list-tree > li,
+    .list-nested-item > .list-group > li {
+      margin-left: 0;
+    }
+  }
+
+  // correct git icon size
+  .icon-file-directory[data-name=".git"] {
+    &:before {
+      top: 2px;
+      font-size: medium;
+    }
+  }
+
+  &:focus {
+    li {
+      &.selected,
+      &:not(.list-nested-item).selected,
+      &.list-nested-item.selected > .list-item {
+        &:before {
+          background-color: @level-3-bg;
+          border-color: @level-3-bg;
+        }
+      }
+    }
+  }
+}
+
+body[data-isotope-ui-minimal='true'] {
+  .tree-view.list-tree {
+    padding-top: 1px;
+    .project-root(~"calc("@tab-height~"- 4px)");
+  }
+}
+
+.tree-view > ol {
+  padding: .5rem 0;
+}
+
+.tree-view span.name {
+  padding-right: .5rem;
+}

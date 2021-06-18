@@ -1,0 +1,57 @@
+ul.background-message {
+    color: @fg-faded;
+    font-size: @scale-b-xxl * 1rem;
+}
+atom-notifications {
+  atom-notification {
+    &:first-child.has-close .message {
+      padding-right: 12rem;
+    }
+    &:only-child.has-close .message,
+    &.has-close .message {
+      padding-right: 4rem;
+    }
+    .message p {
+      line-height: 1rem;
+    }
+    .close {
+      height: 3rem;
+      line-height: 3rem;
+    }
+    &.icon:before {
+      padding-top: ~"calc((3rem - 16px) / 2)";
+    }
+    .close-all.btn {
+      border: none !important;
+      color: inherit;
+      &:hover,
+      &:active {
+        background: transparent !important;
+        box-shadow: none !important;
+      }
+    }
+    .close-all.btn.btn-error,
+    .btn-copy-report {
+      &:hover,
+      &:active {
+        color: darken(@fg-error, 32%);
+      }
+    }
+    .close-all.btn.btn-warning {
+      &:hover,
+      &:active {
+        color: darken(@fg-warning, 32%);
+      }
+    }
+    .close-all.btn.btn-success {
+      &:hover,
+      &:active {
+        color: darken(@fg-success, 32%);
+      }
+    }
+    .btn.btn-error {
+      height: 2rem;
+      line-height: ~"calc(2rem - 2px)";
+    }
+  }
+}

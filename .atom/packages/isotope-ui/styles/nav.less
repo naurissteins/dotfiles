@@ -1,0 +1,26 @@
+//not sure what this is for
+.nav-tabs {
+  border-bottom: 1px solid @stroke;
+  li {
+    a,
+    &.active a {
+      border: none;
+      margin-right: 0px;
+      margin-bottom: 1px;
+    }
+
+    a:hover,
+    &.active a,
+    &.active a:hover {
+      background-color: @level-2-bg;
+      border: none;
+      color: @fg-selected;
+      border-bottom-left-radius: 0px;
+      border-bottom-right-radius: 0px;
+    }
+
+    &.active a {
+      background-color: @level-3-bg;
+    }
+  }
+}

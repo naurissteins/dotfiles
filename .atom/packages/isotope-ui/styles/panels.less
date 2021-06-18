@@ -1,0 +1,38 @@
+atom-panel {
+  &.top,
+  &.right,
+  &.bottom,
+  &.left {
+    background: @level-3-bg;
+  }
+}
+
+.panel {
+  &.bordered {
+    border-radius: @component-border-radius;
+  }
+}
+
+.tool-panel {
+  &.tool-panel {
+    color: @fg-subtle;
+    background-color: @tool-panel-background-color;
+
+    &.panel-bottom {
+      background-color: @level-2-bg;
+    }
+  }
+}
+
+.inset-panel {
+  background-color: @level-1-bg;
+  &.bordered {
+    border-radius: @component-border-radius;
+  }
+}
+
+.panel-heading {
+  color: @base-fg;
+  font-weight: bold;
+  background-color: @panel-heading-background-color;
+}

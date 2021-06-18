@@ -1,0 +1,247 @@
+@modified-icon-width: @component-icon-size / 2;
+@tab-top-padding: @space/3;
+@tab-max-width: none;
+@tab-min-width: 60px;
+
+@tab-text-color: @fg-subtle;
+
+.close-icon-mixin() {
+  margin-top: -9px;
+  margin-right: -6px;
+  top: 50%;
+  right: @scale-a-l * 1rem;
+  width: 12px;
+  height: 12px;
+  border: none !important; //overrule default modified indicator
+  background: transparent;
+  opacity: 0;
+
+  &:before {
+    position: absolute;
+    top: 0;
+    right: 0;
+    text-align: center;
+    line-height: 1;
+    color: inherit;
+  }
+
+  &:hover {
+    color: @ui-accent;
+    opacity: 1;
+  }
+}
+
+.tab-bar {
+  position: relative;
+  overflow-x: auto;
+  overflow-y: hidden;
+  background: @tab-bar-background-color;
+  height: ~"calc("@tab-height~"- 2px)";
+
+  &:before {
+    content: '';
+    position: absolute;
+    top: ~"calc("@tab-height + @tab-top-padding ~"- 2px)";
+    left: 0;
+    width: 100%;
+    height: 1px;
+    margin-top: -1px;
+    border-top: 1px solid @item-views-stroke;
+    z-index: 1;
+  }
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  .tab {
+    max-width: @tab-max-width;
+    height: ~"calc("@tab-height ~"- 2px)";
+    line-height: ~"calc("@tab-height ~"- 4px)";
+    font-size: inherit;
+    padding: 0;
+    margin: 0;
+    color: @tab-text-color;
+    background: transparent;
+    border: 1px solid transparent;
+    border-bottom: none;
+    text-align: center;
+    transition: background .1s;
+
+    &:hover {
+      color: @base-fg;
+      background: fade(@level-3-bg, 30%);
+      .close-icon {
+        opacity: 1;
+        color: @base-fg;
+        transition: opacity .1s;
+      }
+    }
+
+    .title {
+      padding: 0 30px 0 @space;
+    }
+
+    .close-icon {
+      .close-icon-mixin();
+    }
+  }
+
+  .tab.modified {
+    .close-icon:before {
+      content: "\f052";
+    }
+    &:not(:hover) .close-icon {
+      .close-icon-mixin();
+      opacity: 1;
+      transform: scale(1);
+      &:before {
+        display: block; // overrule default style
+      }
+    }
+    &:hover .close-icon {
+      color: @base-fg;
+      transform: scale(1);
+
+      &:hover {
+        color: @ui-accent;
+      }
+    }
+  }
+
+  .tab.is-dragging {
+    .close-icon,
+    &:before {
+      visibility: hidden;
+    }
+    &::after {
+      background: darken(@tab-background-color, 6%);
+      border-color: transparent;
+      opacity: .5;
+    }
+  }
+
+  .placeholder {
+    margin: 0;
+    height: @tab-height + @tab-top-padding;
+    background: @ui-accent;
+    pointer-events: none;
+    &:after {
+      display: none;
+    }
+
+    &:last-child {
+      margin-left: -2px;
+
+      &:after {
+        margin-left: -10px;
+        border-color: transparent @ui-accent transparent transparent;
+      }
+    }
+  }
+}
+
+atom-pane .tab-bar .tab.active {
+  z-index: 1;
+  background: fade(@level-3-bg, 60%);
+  min-width: @tab-min-width;
+  border-color: @item-views-stroke;
+  .title {
+    padding-right: 30px; //overrule default
+  }
+  .close-icon {
+    opacity: 1;
+  }
+}
+
+// active tab in the active pane
+atom-pane.active .tab-bar .tab.active {
+  &:not([data-type="TextEditor"]) {
+    background-color: @level-3-bg;
+    color: contrast(@level-3-bg, @base-fg, @level-1-bg);
+    & .close-icon {
+      color:contrast(@level-3-bg, @base-fg, @level-1-bg);
+    }
+    &:hover .close-icon {
+      color: contrast(@level-3-bg, @base-fg, @level-1-bg);
+
+      &:hover {
+        color: @ui-accent;
+      }
+    }
+    &[data-type="GitControlView"] {
+      background-color: @level-2-bg;
+      color: contrast(@level-2-bg, @base-fg, @level-1-bg);
+      & .close-icon {
+        color:contrast(@level-2-bg, @base-fg, @level-1-bg);
+      }
+      &:hover .close-icon {
+        color: contrast(@level-2-bg, @base-fg, @level-1-bg);
+
+        &:hover {
+          color: @ui-accent;
+        }
+      }
+    }
+  }
+  &,
+  &[data-type="MarkdownPreviewView"] {
+    background-color: @tab-background-color-active;
+    color: contrast(@ui-theme-color, @base-fg, @level-1-bg);
+
+    .close-icon {
+      color: contrast(@ui-theme-color, @base-fg, @level-1-bg);
+    }
+
+    &:hover .close-icon {
+      color: contrast(@ui-theme-color, @base-fg, @level-1-bg);
+    }
+    &:hover .close-icon:hover {
+      color: @ui-accent;
+    }
+  }
+}
+
+body:not([data-isotope-ui-minimal='true']) {
+  .tab-bar {
+      height: ~"calc("@tab-height + @tab-top-padding ~"- 2px)";
+
+      .tab {
+        top: @tab-top-padding;
+        border-top-left-radius: @component-border-radius;
+        border-top-right-radius: @component-border-radius;
+        height: ~"calc("@tab-height + @tab-top-padding ~"- 1px)";
+        border-bottom: none;
+      }
+    }
+  atom-pane.active .tab-bar .tab.active {
+      box-shadow: inset .5*@tab-height @tab-height @tab-height -1*@tab-height rgba(255,255,255,.05);
+  }
+}
+
+body[data-isotope-ui-minimal='true'] {
+  .tab-bar::before {
+    top: ~"calc("@tab-height ~"- 2px)";
+  }
+  .tab-bar .tab .close-icon {
+    margin-top: -7px !important;
+  }
+}
+
+.tab-bar {
+  .tab,
+  .tab.active {
+    flex: 1 1 0;
+    min-width: 7em;
+    max-width: none;
+  }
+}
+
+body[data-isotope-ui-tabsizing="minimum"] .tab-bar {
+  .tab,
+  .tab.active {
+    flex: 0 0 auto;
+    min-width: 2.75em;
+    max-width: 7em * 3.3;
+  }
+}

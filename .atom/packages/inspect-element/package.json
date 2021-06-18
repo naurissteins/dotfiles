@@ -1,0 +1,65 @@
+{
+  "_from": "https://www.atom.io/api/packages/inspect-element/versions/1.2.0/tarball",
+  "_id": "inspect-element@1.2.0",
+  "_inBundle": false,
+  "_integrity": "sha512-DqZbivScFVouJzJ6TkG9o0Dn3F0WL8bxrIh6yIxhkjtL84qjPL8b4RqPZCEkJPcBedK7snh03PAPdtEhmhop9g==",
+  "_location": "/inspect-element",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "remote",
+    "raw": "https://www.atom.io/api/packages/inspect-element/versions/1.2.0/tarball",
+    "rawSpec": "https://www.atom.io/api/packages/inspect-element/versions/1.2.0/tarball",
+    "saveSpec": "https://www.atom.io/api/packages/inspect-element/versions/1.2.0/tarball",
+    "fetchSpec": "https://www.atom.io/api/packages/inspect-element/versions/1.2.0/tarball"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://www.atom.io/api/packages/inspect-element/versions/1.2.0/tarball",
+  "_shasum": "e2fe5e62c3a2b2e7cba9f552e96737f3a229ae3c",
+  "_spec": "https://www.atom.io/api/packages/inspect-element/versions/1.2.0/tarball",
+  "_where": "/tmp/apm-install-dir-2021215-9479-1yhl3ax.wjlw",
+  "bugs": {
+    "url": "https://github.com/danefitzmaurice/inspect-element/issues"
+  },
+  "bundleDependencies": false,
+  "consumedServices": {
+    "status-bar": {
+      "versions": {
+        "^1.0.0": "consumeStatusBar"
+      }
+    }
+  },
+  "dependencies": {
+    "lodash": "^4.17.19"
+  },
+  "deprecated": false,
+  "description": "Inspect HTML elements within atom outside of Dev Mode.",
+  "devDependencies": {
+    "prettier-stylelint": "^0.4.2",
+    "stylelint": "^13.3.2",
+    "stylelint-config-prettier": "^8.0.1",
+    "stylelint-config-recommended": "^3.0.0",
+    "stylelint-config-standard": "^20.0.0",
+    "stylelint-order": "^4.0.0",
+    "stylelint-prettier": "^1.1.2",
+    "stylelint-scss": "^3.16.1"
+  },
+  "engines": {
+    "atom": ">=1.0.0 <2.0.0"
+  },
+  "homepage": "https://github.com/danefitzmaurice/inspect-element#readme",
+  "keywords": [
+    "atom",
+    "inspect-element"
+  ],
+  "license": "MIT",
+  "main": "./lib/inspect-element",
+  "name": "inspect-element",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/danefitzmaurice/inspect-element.git"
+  },
+  "version": "1.2.0"
+}

@@ -1,0 +1,24 @@
+/*
+ * Copyright (C) 2016-present Arctic Ice Studio <development@arcticicestudio.com>
+ * Copyright (C) 2016-present Sven Greb <development@svengreb.de>
+ *
+ * Project:    Nord Atom UI
+ * Repository: https://github.com/arcticicestudio/nord-atom-ui
+ * License:    MIT
+ */
+
+status-bar {
+  .text(subtle);
+  background: @base-border-color;
+  height: @input-height;
+  line-height: @component-line-height;
+  font-size: 11px;
+
+  & > .flexbox-repaint-hack {
+    padding-top: 3px;
+  }
+
+  span {
+    font-size: 11px;
+  }
+}
