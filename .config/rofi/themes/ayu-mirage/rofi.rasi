@@ -8,7 +8,7 @@
    red:              #ff6666;
 
    dark1:            #212733;
-   dark2:            #292b30;
+   dark2:            #191e2a;
    dark3:            #bfbab0;
    dark4:            #bfbab0;
 
@@ -21,7 +21,7 @@
    main-color:       @blue;
    highlight:        @light1;
    urgent-color:     @red;
-   selected-color:   @lightcyan;
+   selected-color:   #77a8d9;
 }
 
 window {
@@ -29,7 +29,7 @@ window {
    width: 33%;
    padding: 10px;
    fullscreen: false;
-   border:  5px;
+   border:  0;
    border-radius: 0px;
    border-color: @border-color;
 }

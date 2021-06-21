@@ -1,0 +1,30 @@
+[global_config]
+  dbus = False
+  extra_styling = False
+  tab_position = Hidden
+  hide_tabbar = True
+  scroll_tabbar = True
+  homogeneous_tabbar = False
+  title_transmit_bg_color = "#000000"
+  title_receive_bg_color = "#000000"
+  title_inactive_bg_color = "#000000"
+  inactive_color_offset = 1.0
+[keybindings]
+[profiles]
+  [[default]]
+    icon_bell = False
+    cursor_color = "#aaaaaa"
+    show_titlebar = False
+    scrollbar_position = hidden
+    use_custom_command = True
+    custom_command = unimatrix -n -s 96 -l o
+[layouts]
+  [[default]]
+    [[[window0]]]
+      type = Window
+      parent = ""
+    [[[child1]]]
+      type = Terminal
+      parent = window0
+      profile = default
+[plugins]
