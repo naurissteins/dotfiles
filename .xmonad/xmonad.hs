@@ -71,7 +71,7 @@ myBrowser :: String
 myBrowser = "firefox"           -- Sets qutebrowser as browser
 
 myBorderWidth :: Dimension
-myBorderWidth   = 5            -- Sets border width for windows
+myBorderWidth   = 0            -- Sets border width for windows
 
 myNormColor :: String
 myNormColor   = "#282c34"       -- Border color of normal windows
@@ -82,7 +82,7 @@ myFocusColor  = "#46d9ff"       -- Border color of focused windows
 
 --Makes setting the spacingRaw simpler to write. The spacingRaw module adds a configurable amount of space around windows.
 mySpacing :: Integer -> l a -> XMonad.Layout.LayoutModifier.ModifiedLayout Spacing l a
-mySpacing i = spacingRaw False (Border 40 10 10 10) True (Border i i i i) True
+mySpacing i = spacingRaw False (Border 40 10 10 10) True (Border 10 10 10 10) True
 
 -- Below is a variation of the above except no borders are applied
 -- if fewer than two windows. So a single window has no gaps.
@@ -93,6 +93,12 @@ mySpacing' i = spacingRaw True (Border i i i i) True (Border i i i i) True
 -- Defining a bunch of layouts, many that I don't use.
 -- limitWindows n sets maximum number of windows displayed for layout.
 -- mySpacing n sets the gap size around the windows.
+spirals  = renamed [Replace "spirals"]
+           $ smartBorders
+           $ addTabs shrinkText myTabTheme
+           $ subLayout [] (smartBorders Simplest)
+           $ mySpacing 5
+           $ spiral (6/7)
 grid     = renamed [Replace "grid"]
            $ smartBorders
            $ addTabs shrinkText myTabTheme
@@ -124,12 +130,6 @@ monocle  = renamed [Replace "monocle"]
 floats   = renamed [Replace "floats"]
            $ smartBorders
            $ limitWindows 20 simplestFloat
-spirals  = renamed [Replace "spirals"]
-           $ smartBorders
-           $ addTabs shrinkText myTabTheme
-           $ subLayout [] (smartBorders Simplest)
-           $ mySpacing 5
-           $ spiral (6/7)
 threeCol = renamed [Replace "threeCol"]
            $ smartBorders
            $ addTabs shrinkText myTabTheme
@@ -169,13 +169,13 @@ myTabTheme = def { fontName            = myFont
 myLayoutHook = avoidStruts $ mouseResize $ windowArrange $ T.toggleLayouts floats
                $ mkToggle (NBFULL ?? NOBORDERS ?? EOT) myDefaultLayout
              where
-               myDefaultLayout =      grid
+               myDefaultLayout =      spirals
                                   ||| magnify
                                   ||| noBorders monocle
                                   -- ||| floats
                                   ||| noBorders tabs
                                   ||| withBorder myBorderWidth tall
-                                  ||| spirals
+                                  ||| grid
                                   ||| threeCol
                                   ||| threeRow
                                   -- ||| tallAccordion
@@ -196,13 +196,14 @@ myScratchPads =
   [
       NS "discord"             "discord"              (appName =? "discord")                   (customFloating $ W.RationalRect 0.15 0.15 0.7 0.7)
     , NS "nautilus"            "nautilus"             (className =? "Org.gnome.Nautilus")      (customFloating $ W.RationalRect 0.15 0.15 0.7 0.7)
-    , NS "mocp"                launchMocp             (title =? "mocp")                        (customFloating $ W.RationalRect 0.15 0.15 0.7 0.7)
+    -- , NS "mocp"                launchMocp             (title =? "mocp")                        (customFloating $ W.RationalRect 0.15 0.15 0.7 0.7)
+    , NS "ncmpcpp"                launchMocp             (title =? "ncmpcpp")                        (customFloating $ W.RationalRect 0.15 0.15 0.7 0.7)
     , NS "whatsapp-for-linux"  "whatsapp-for-linux"   (appName =? "whatsapp-for-linux")        (customFloating $ W.RationalRect 0.15 0.15 0.7 0.7)
     , NS "signal"              "signal"               (appName =? "signal")                    (customFloating $ W.RationalRect 0.15 0.15 0.7 0.7)
     , NS "terminal"            launchTerminal         (title =? "scratchpad")                  (customFloating $ W.RationalRect 0.15 0.15 0.7 0.7)
   ]
   where
-    launchMocp     = myTerminal ++ " -t mocp -e mocp"
+    launchMocp     = myTerminal ++ " -t ncmpcpp -e ncmpcpp"
     launchTerminal = myTerminal ++ " -t scratchpad"
 
 ------------------------------------------------------------------------
@@ -269,14 +270,14 @@ myCustomKeys =
 
 
     -- Controls for mocp music player (SUPER-u followed by a key)
-      , ("M-<Insert>", spawn "mocp --server; mocp --play")
-      , ("M-S-<Insert>", spawn "mocp --exit")
-      , ("M-<Home>", spawn "mocp --next")
-      , ("M-<End>", spawn "mocp --previous")
-      , ("M-<Delete>", spawn "mocp --toggle-pause")
+      , ("M-<Insert>", spawn "mpc play")
+      , ("M-S-<Insert>", spawn "mpc stop")
+      , ("M-<Home>", spawn "mpc next")
+      , ("M-<End>", spawn "mpc prev")
+      , ("M-<Delete>", spawn "mpc toggle")
 
       -- Quick view
-      , ("M-m", namedScratchpadAction myScratchPads "mocp")     -- Mocp Player
+      , ("M-m", namedScratchpadAction myScratchPads "ncmpcpp")     -- Mocp Player
       , ("M-a", namedScratchpadAction myScratchPads "nautilus") -- Nautilus file manager
       , ("M-d", namedScratchpadAction myScratchPads "discord") -- Nautilus file manager
       , ("M-w", namedScratchpadAction myScratchPads "whatsapp-for-linux") -- Nautilus file manager
@@ -413,13 +414,13 @@ myManageHook = composeAll
      , className =? "pinentry-gtk-2"  --> doFloat
      , className =? "splash"          --> doFloat
      , className =? "toolbar"         --> doFloat
-     , title =? "Oracle VM VirtualBox Manager"  --> doFloat
+     --, title =? "Oracle VM VirtualBox Manager"  --> doFloat
      -- , title =? "Mozilla Firefox"     --> doShift ( myWorkspaces !! 1 )
      , className =? "brave-browser"   --> doShift ( myWorkspaces !! 1 )
      , className =? "qutebrowser"     --> doShift ( myWorkspaces !! 1 )
      , className =? "mpv"             --> doShift ( myWorkspaces !! 7 )
      , className =? "Gimp"            --> doShift ( myWorkspaces !! 8 )
-     , className =? "VirtualBox Manager" --> doShift  ( myWorkspaces !! 4 )
+     --, className =? "VirtualBox Manager" --> doShift  ( myWorkspaces !! 4 )
      --, (className =? "firefox" <&&> resource =? "Dialog") --> doFloat  -- Float Firefox Dialog
      --, (className =? "Chromium" <&&> resource =? "Dialog") --> doCenterFloat  -- Float Firefox Dialog
      , isFullscreen -->  doFullFloat
@@ -435,6 +436,7 @@ windowCount = gets $ Just . show . length . W.integrate' . W.stack . W.workspace
 myStartupHook = do
     spawnOnce "nitrogen --restore &"
     spawnOnce "picom --experimental-backend &"
+    spawnOnce "moc_notify &"
     spawnOnce "xrandr --output DisplayPort-0 --primary --mode 2560x1440 --rate 144.00 --output HDMI-A-1 --mode 1920x1080 --rate 75.00 --right-of DisplayPort-0 &"
     -- spawn "$HOME/.xmonad/scripts/autostart.sh &"
     setWMName "LG3D"

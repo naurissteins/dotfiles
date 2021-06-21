@@ -683,6 +683,7 @@ PlaylistFullPaths = no
 # Example:    OnSongChange = "/home/jack/.moc/myscript %a %r"
 #
 #OnSongChange =
+OnSongChange="/home/arch/.moc/onsongchange.sh %a %t %r %f"
 
 # If RepeatSongChange is 'yes' then MOC will execute the command every time
 # a song starts playing regardless of whether or not it is just repeating.
