@@ -1,0 +1,1 @@
+{"source":".gutter {\n  background-color: transparent !important;\n}\n.gutter .line-number.cursor-line {\n  background-color: #353845 !important;\n  color: #F8F8F2;\n}\n"}
