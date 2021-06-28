@@ -234,6 +234,7 @@ myKeys =
     -- Apps
       , ("M-o", spawn "atom")                                 -- Atom Editor
       , ("M-f", spawn "firefox")                              -- Firefox
+      , ("M-S-f", spawn "firefox -private-window")            -- Firefox Private mode
       , ("M-<Print>", spawn "flameshot gui")                  -- Flameshot (screenshot)
       , ("M-<Return>", spawn (myTerminal))                    -- Terminal
 
