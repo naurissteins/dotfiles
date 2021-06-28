@@ -1,11 +1,22 @@
--- http://projects.haskell.org/xmobar/
--- I use Font Awesome 5 fonts in this config for unicode "icons".  On Arch Linux,
--- install this package from the AUR to get these fonts: otf-font-awesome and ttf-font-awesome
+-- Inspired by "Distro Tube" and "unixporn" community
+-- XMobar http://projects.haskell.org/xmobar/
+-- Font Awesome 5 otf https://archlinux.org/packages/community/any/otf-font-awesome/
+-- Font Awesome 5 ttf https://archlinux.org/packages/community/any/ttf-font-awesome/
+-- Font Awesome 4 otf https://aur.archlinux.org/packages/otf-font-awesome-4/
+-- Font Awesome 4 ttf https://aur.archlinux.org/packages/otf-font-awesome-4/
+-- MPD music server https://archlinux.org/packages/extra/x86_64/mpd/
+-- MPC Command line for MPD https://archlinux.org/packages/extra/x86_64/mpd/
+-- ncmpcpp music player https://archlinux.org/packages/community/x86_64/ncmpcpp/
+-- nordvpn https://aur.archlinux.org/packages/nordvpn-bin/
 
-Config { font    = "xft:Ubuntu:weight=bold:pixelsize=13:antialias=true:hinting=true"
+
+Config { font    = "xft:Ubuntu:weight=bold:pixelsize=13:antialias=true:hinting=true,Font Awesome 5 Free Regular:pixelsize=14"
        , additionalFonts = [ "xft:Mononoki Nerd Font:pixelsize=13:antialias=true:hinting=true"
-                           , "xft:Font Awesome 5 Free Solid:pixelsize=14"
-                           , "xft:Font Awesome 5 Brands:pixelsize=14"
+                           , "xft:Font Awesome 5 Free Solid:pixelsize=13"
+                           , "xft:FontAwesome:pixelsize=13"                         -- Weather
+                           , "xft:Font Awesome 5 Free Solid:pixelsize=10"           -- MPD music player
+                           , "xft:Font Awesome 5 Free Regular:pixelsize=13"         -- tiling
+                           , "xft:Ubuntu:pixelsize=13:antialias=true:hinting=true"  -- Networks
                            ]
        , bgColor = "#212733"
        , fgColor = "#ff6c6b"
@@ -14,29 +25,84 @@ Config { font    = "xft:Ubuntu:weight=bold:pixelsize=13:antialias=true:hinting=t
        , hideOnStart = False
        , allDesktops = True
        , persistent = True
-       , iconRoot = "/home/arch/.config/xmobar/xpm/"  -- default: "."
+       , iconRoot = "/home/arch/.config/xmobar/xpm/"
        , commands = [
                     -- Time and date
-                      Run Date "<fn=2>\xf017</fn>  %b %d %Y - (%H:%M) " "date" 50
-                      -- Network up and down
-                    , Run Network "enp4s0" ["-t", "<fn=2>\xf0ab</fn>  <rx>kb  <fn=2>\xf0aa</fn>  <tx>kb"] 20
+                      Run Date "<fc=#bae67e><fn=5> </fn> %b %d %Y</fc> <fc=#212733> | |</fc> <fc=#f27983><fn=5></fn> %H:%M </fc>" "date" 50
+
+                      -- Network
+                    , Run Network "enp4s0" ["-t", "<rx>kb / <tx>kb"] 20
+
                       -- Cpu usage in percent
-                    , Run Cpu ["-t", "<fn=2>\xf108</fn>  cpu: (<total>%)","-H","50","--high","red"] 20
-                      -- Ram used number and percent
-                    , Run Memory ["-t", "<fn=2>\xf233</fn>  mem: <used>M (<usedratio>%)"] 20
-                      -- Disk space free
-                    , Run DiskU [("/", "<fn=2>\xf0c7</fn>  S: <free>")
-                               , ("/mnt/4TBZ", "Z: <free>")
-                               , ("/mnt/4TBX", "X: <free> free")] [] 60
-                      -- Runs custom script to check for pacman updates.
-                      -- This script is in my dotfiles repo in .local/bin.
-                    , Run Com "/home/arch/.local/bin/pacupdate" [] "pacupdate" 36000
-                      -- Runs a standard shell command 'uname -r' to get kernel version
-                    , Run Com "uname" ["-r"] "" 3600
+                    , Run Cpu ["-t", "<total>%","-H","50","--high","red"] 20
+
+                    -- Cpu core temperature monitor
+                    , Run MultiCoreTemp
+                      ["-t", "<fn=2></fn> <avg> °C",
+                        "-L", "20", "-H", "80"
+                      ] 20
+
+                      -- Ram used in percent
+                    , Run Memory ["-t", "<fn=2></fn>  <used> / <usedratio>%"] 20
+
+                      -- Disk space free | System and external HDD's
+                    , Run DiskU [("/", "<fn=2></fn>  SSD: <free>")] [] 60
+                               --, ("/mnt/4TBZ", "Z: <free>")
+                               --, ("/mnt/4TBX", "X: <free> free")] [] 60
+
+                    -- System update (with yay)
+                    , Run Com "/home/arch/.config/xmobar/scripts/sysupdate" [] "sysupdate" 36000
+
+                    --, UnsafeStdinReader
                     , Run UnsafeStdinReader
-                    , Run MPD ["-t","<fc=#73d0ff><fn=2>\xf048</fn></fc> <fc=#bae67e><fn=2>\xf144</fn></fc> <fc=#73d0ff><fn=2>\xf051</fn></fc> <artist> - <title>","-h","127.0.0.1","-p","6601"] 10
+
+                    -- Weather https://skyvector.com/airport/EVRA/Riga-Airport
+                    , Run WeatherX "EVRA"
+                             [ ("clear", "")
+                             , ("sunny", "")
+                             , ("mostly clear", "")
+                             , ("mostly sunny", "")
+                             , ("partly sunny", "")
+                             , ("fair", "")
+                             , ("cloudy","")
+                             , ("overcast","")
+                             , ("partly cloudy", "")
+                             , ("mostly cloudy", "")
+                             , ("considerable cloudiness", "")]
+                             ["-t", "<fn=2><skyConditionS> </fn> <tempC> °C" --  <rh>%  <windKmh> (<hour>)
+                             -- , "-L","10", "-H", "25", "--normal", "black"
+                             --, "--high", "lightgoldenrod4", "--low", "darkseagreen4"
+                             ] 18000
+
+                    -- Nordvpn status
+                    , Run Com "/home/arch/.config/xmobar/scripts/nordvpn" [] "nordvpn" 10
+
+                    -- BTC status
+                    , Run Com "/home/arch/.config/xmobar/scripts/btc" [] "btc" 10
+
+                    -- BTC status
+                    , Run Volume "default" "Master"
+                      ["-t","<status> <volume>%"
+                      , "--"
+                      , "-O", ""
+                      , "-o",""
+                      ] 10
+
+                      -- MPD Music server
+                    , Run MPD ["-t","<action=`mpc prev`><fc=#73d0ff><fn=4>\xf048</fn></fc></action> <action=`mpc play`><fc=#bae67e><fn=2>\xf144</fn></fc></action> <action=`mpc next`><fc=#73d0ff><fn=4>\xf051</fn></fc></action> <fc=#212733>a</fc> <artist> - <title>","-h","127.0.0.1","-p","6601"] 10
                     ]
        , sepChar = "%"
        , alignSep = "}{"
-       , template = " <icon=haskell_20.xpm/>   <fc=#666666>|</fc> %UnsafeStdinReader% } <fc=#ff79c6>%mpd%</fc> { <fc=#666666>|</fc>  <fc=#b3afc2><fn=3></fn>  <action=`alacritty -e htop`>%uname%</action> </fc>  <fc=#666666>|</fc>  <fc=#ecbe7b> <action=`alacritty -e htop`>%cpu%</action> </fc> <fc=#666666>|</fc>  <fc=#ff6c6b> <action=`alacritty -e htop`>%memory%</action> </fc> <fc=#666666>|</fc>  <fc=#51afef> <action=`alacritty -e htop`>%disku%</action> </fc> <fc=#666666>|</fc>  <fc=#98be65> <action=`alacritty -e sudo iftop`>%enp4s0%</action> </fc> <fc=#666666>|</fc>   <fc=#c678dd><fn=2></fn>  <action=`alacritty -e yay -Syu`>%pacupdate%</action> </fc> <fc=#666666>|</fc>  <fc=#46d9ff> <action=`emacsclient -c -a 'emacs' --eval '(doom/window-maximize-buffer(dt/year-calendar))'`>%date%</action>  </fc>"
+       , template = "<fc=#212733> | | </fc> <fc=#73d0ff><fn=2></fn></fc> \
+       \<fc=#212733> | </fc> %UnsafeStdinReader% \
+       \<fc=#212733> | </fc>  <fc=#73d0ff> <action=`alacritty -e htop`>%multicoretemp% / %cpu%</action> </fc> \
+       \<fc=#212733> | </fc>  <fc=#ff79c6> <action=`alacritty -e htop`>%memory%</action> </fc> \
+       \<fc=#212733> | </fc>  <action=`alacritty -e watch nordvpn status`><fc=#ffd580> <fn=2></fn> %nordvpn% </fc> <fc=#bae67e><fn=6>(%enp4s0%)</fn></fc></action>} \
+       \<fc=#c7c7c7>%mpd%</fc> \
+       \{<fc=#212733> | </fc>  <fc=#73d0ff> %EVRA% </fc> \
+       \<fc=#212733> | </fc>  <fc=#ffd580><fn=3></fn> %btc% </fc> \
+       \<fc=#212733> | </fc>  <fc=#ff79c6> <action=`alacritty -e watch df -h`>%disku%</action> </fc> \
+       \<fc=#212733> | </fc>   <fc=#d4bfff><fn=2></fn>  <action=`alacritty -e yay -Syyu`>%sysupdate%</action> </fc> \
+       \<fc=#212733> | </fc>  <fc=#95e6cb> <fn=2></fn> %default:Master% </fc> \
+       \<fc=#212733> | </fc>  %date% <fc=#212733> | | </fc>"
        }
