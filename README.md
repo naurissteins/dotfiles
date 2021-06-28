@@ -1,1 +1,1 @@
-![My ArchLinux Desktop](https://i.imgur.com/3qFuz2n.png)
+![My ArchLinux Desktop](https://i.imgur.com/lEmi6f1.png)
