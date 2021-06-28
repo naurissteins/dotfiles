@@ -363,5 +363,4 @@ main = do
 
 -- Find app class name
 -- xprop | grep WM_CLASS
--- https://github.com/antoniosarosi/dotfiles/blob/master/.config/xmonad/xmonad.hs
 -- https://xmobar.org/#diskio-disks-args-refreshrate
