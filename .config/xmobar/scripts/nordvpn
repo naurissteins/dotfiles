@@ -1,0 +1,20 @@
+#!/bin/bash
+
+RESPONSE=$(wget -q -O - https://freegeoip.live/csv/)
+IP_ADDRESS=$(echo $RESPONSE | cut -d',' -f1)
+IP_CITY=$(echo $RESPONSE | cut -d',' -f3)
+IP_STATE=$(echo $RESPONSE | cut -d',' -f2)
+UPTIME=$(echo )
+
+STATUS=$(nordvpn status | head -n 1 | cut -d' ' -f6)
+
+if [ $STATUS == "Connected" ]
+then
+    echo ${IP_CITY}
+elif [ $STATUS == "Disconnected" ]
+then 
+    echo "Disconnected" 
+else
+		echo "Connecting..."
+fi
+

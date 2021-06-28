@@ -1,0 +1,2 @@
+#!/bin/bash
+curl -s http://api.coindesk.com/v2/bpi/currentprice.json  | jq '.bpi.EUR.rate' | curl -s http://api.coindesk.com/v2/bpi/currentprice.json  | jq '.bpi.EUR.rate' | sed 's/^.//' | sed 's/......$//'
