@@ -245,8 +245,8 @@ myKeys =
       , ("M-S-r>", refresh)                                   -- Resize viewed windows to the correct size
       , ("M-S-p>", withFocused $ windows . W.sink)            -- Push window back into tiling (for some reason not working)
       , ("M-S-t", sinkAll)                                    -- Push all windows back into tiling
-      , ("M-S-<Up>", windows W.swapUp)                        -- Swap the focused window with the previous window
-      , ("M-S-<Down>", windows W.swapDown)                    -- Swap the focused window with the next window
+      , ("M-<Up>", windows W.swapUp)                          -- Swap the focused window with the previous window
+      , ("M-<Down>", windows W.swapDown)                      -- Swap the focused window with the next window
 
     -- Workspaces
       , ("M-.", nextScreen)                                   -- Switch focus to next monitor
@@ -309,6 +309,7 @@ myManageHook = composeAll
      , className =? "dialog"          --> doFloat
      , className =? "download"        --> doFloat
      , className =? "Electron9"       --> doRectFloat (W.RationalRect 0.35 0.35 0.3 0.3)
+     , className =? "Org.gnome.NautilusPreviewer"       --> (customFloating $ W.RationalRect 0.15 0.15 0.7 0.7)
      , className =? "error"           --> doFloat
      , className =? "Gimp"            --> doFloat
      , className =? "notification"    --> doFloat
@@ -327,6 +328,7 @@ myStartupHook = do
     spawnOnce "nitrogen --restore &"
     spawnOnce "picom --experimental-backend &"
     spawnOnce "mpd &"
+    spawnOnce "sleep 20 && conky -c $HOME/.config/conky/conky.conkyrc &"
     spawnOnce "xrandr --output DisplayPort-0 --primary --mode 2560x1440 --rate 144.00 --output HDMI-A-1 --mode 1920x1080 --rate 75.00 --right-of DisplayPort-0 &"
     -- spawn "$HOME/.xmonad/scripts/autostart.sh &"
     setWMName "LG3D"
