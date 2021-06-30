@@ -14,10 +14,10 @@ env:
   LANG: "en_US.UTF-8"
   LC_CTYPE: en_US.UTF-8
 
-# Save to clipboard  
+# Save to clipboard
 selection:
-  save_to_clipboard: true 
-#Window 
+  save_to_clipboard: true
+#Window
 window:
   # Window dimensions (changes require restart)
   #
