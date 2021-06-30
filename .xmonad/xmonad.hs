@@ -45,6 +45,7 @@ import XMonad.Layout.Renamed
 import XMonad.Layout.Simplest
 import XMonad.Layout.Spacing
 import XMonad.Layout.SubLayouts
+import XMonad.Layout.WindowNavigation
 import XMonad.Layout.WindowArranger (windowArrange, WindowArrangerMsg(..))
 import qualified XMonad.Layout.ToggleLayouts as T (toggleLayouts, ToggleLayout(Toggle))
 import qualified XMonad.Layout.MultiToggle as MT (Toggle(..))
@@ -94,12 +95,14 @@ mySpacing i = spacingRaw False (Border 40 10 10 10) True (Border 10 10 10 10) Tr
 ------------------------------------------------------------------------
 spirals  = renamed [Replace " <fc=#95e6cb><fn=2> \61449 </fn>Spirals</fc>"]
            $ smartBorders
+           $ windowNavigation
            $ addTabs shrinkText myTabTheme
            $ subLayout [] (smartBorders Simplest)
            $ mySpacing 5
            $ spiral (6/7)
 grid     = renamed [Replace " <fc=#95e6cb><fn=2> \61449 </fn>Grid</fc>"]
            $ smartBorders
+           $ windowNavigation
            $ addTabs shrinkText myTabTheme
            $ subLayout [] (smartBorders Simplest)
            $ limitWindows 12
@@ -108,6 +111,7 @@ grid     = renamed [Replace " <fc=#95e6cb><fn=2> \61449 </fn>Grid</fc>"]
            $ Grid (16/10)
 tall     = renamed [Replace " <fc=#95e6cb><fn=2> \61449 </fn>Tall</fc>"]
            $ smartBorders
+           $ windowNavigation
            $ addTabs shrinkText myTabTheme
            $ subLayout [] (smartBorders Simplest)
            $ limitWindows 8
@@ -115,6 +119,7 @@ tall     = renamed [Replace " <fc=#95e6cb><fn=2> \61449 </fn>Tall</fc>"]
            $ ResizableTall 1 (3/100) (1/2) []
 magnify  = renamed [Replace " <fc=#95e6cb><fn=2> \61449 </fn>Magnify</fc>"]
            $ smartBorders
+           $ windowNavigation
            $ addTabs shrinkText myTabTheme
            $ subLayout [] (smartBorders Simplest)
            $ magnifier
@@ -123,17 +128,20 @@ magnify  = renamed [Replace " <fc=#95e6cb><fn=2> \61449 </fn>Magnify</fc>"]
            $ ResizableTall 1 (3/100) (1/2) []
 monocle  = renamed [Replace " <fc=#95e6cb><fn=2> \61449 </fn>Monocle</fc>"]
            $ smartBorders
+           $ windowNavigation
            $ addTabs shrinkText myTabTheme
            $ subLayout [] (smartBorders Simplest)
            $ limitWindows 20 Full
 threeCol = renamed [Replace " <fc=#95e6cb><fn=2> \61449 </fn>Three Col</fc>"]
            $ smartBorders
+           $ windowNavigation
            $ addTabs shrinkText myTabTheme
            $ subLayout [] (smartBorders Simplest)
            $ limitWindows 7
            $ ThreeCol 1 (3/100) (1/2)
 threeRow = renamed [Replace " <fc=#95e6cb><fn=2> \61449 </fn>Three Row</fc>"]
            $ smartBorders
+           $ windowNavigation
            $ addTabs shrinkText myTabTheme
            $ subLayout [] (smartBorders Simplest)
            $ limitWindows 7
@@ -218,9 +226,9 @@ myKeys =
 
     [
     -- Xmonad
-        ("M-<KP_Subtract>", spawn "xmonad --recompile")  -- Recompiles xmonad
-      , ("M-<KP_Multiply>", spawn "xmonad --restart")    -- Restarts xmonad
-      , ("M-S-<KP_Divide>", io exitSuccess)              -- Quits xmonad
+        ("M-<KP_Subtract>", spawn "xmonad --recompile")       -- Recompiles xmonad
+      , ("M-<KP_Multiply>", spawn "xmonad --restart")         -- Restarts xmonad
+      , ("M-S-<KP_Divide>", io exitSuccess)                   -- Quits xmonad
 
     -- System Volume (PulseAudio)
       , ("M-<Page_Up>", spawn "pactl set-sink-volume @DEFAULT_SINK@ +10%")    -- Volume Up
@@ -240,7 +248,7 @@ myKeys =
 
 
     -- Windows navigation
-      , ("M-S-m", windows W.swapMaster)                       -- Swap the focused window and the master window
+      , ("M-<Left>", windows W.swapMaster)                    -- Swap the focused window and the master window
       , ("M-<Space>", sendMessage NextLayout)                 -- Rotate through the available layout algorithms
       , ("M-S-r>", refresh)                                   -- Resize viewed windows to the correct size
       , ("M-S-p>", withFocused $ windows . W.sink)            -- Push window back into tiling (for some reason not working)
@@ -304,18 +312,18 @@ myKeys =
 ------------------------------------------------------------------------
 myManageHook :: XMonad.Query (Data.Monoid.Endo WindowSet)
 myManageHook = composeAll
-     [ className =? "confirm"         --> doFloat
-     , className =? "file_progress"   --> doFloat
-     , className =? "dialog"          --> doFloat
-     , className =? "download"        --> doFloat
-     , className =? "Electron9"       --> doRectFloat (W.RationalRect 0.35 0.35 0.3 0.3)
+     [ className =? "confirm"                           --> doFloat
+     , className =? "file_progress"                     --> doFloat
+     , className =? "dialog"                            --> doFloat
+     , className =? "download"                          --> doFloat
+     , className =? "Electron9"                         --> doRectFloat (W.RationalRect 0.35 0.35 0.3 0.3)
      , className =? "Org.gnome.NautilusPreviewer"       --> (customFloating $ W.RationalRect 0.15 0.15 0.7 0.7)
-     , className =? "error"           --> doFloat
-     , className =? "Gimp"            --> doFloat
-     , className =? "notification"    --> doFloat
-     , className =? "pinentry-gtk-2"  --> doFloat
-     , className =? "splash"          --> doFloat
-     , className =? "toolbar"         --> doFloat
+     , className =? "error"                             --> doFloat
+     , className =? "Gimp"                              --> doFloat
+     , className =? "notification"                      --> doFloat
+     , className =? "pinentry-gtk-2"                    --> doFloat
+     , className =? "splash"                            --> doFloat
+     , className =? "toolbar"                           --> doFloat
      --, (className =? "Chromium" <&&> resource =? "Dialog") --> doCenterFloat  -- Float Firefox Dialog
      , isFullscreen -->  doFullFloat
      ] <+> namedScratchpadManageHook myScratchPads
@@ -328,6 +336,7 @@ myStartupHook = do
     spawnOnce "nitrogen --restore &"
     spawnOnce "picom --experimental-backend &"
     spawnOnce "mpd &"
+    spawnOnce "nordvpn c &"
     spawnOnce "sleep 20 && conky -c $HOME/.config/conky/conky.conkyrc &"
     spawnOnce "xrandr --output DisplayPort-0 --primary --mode 2560x1440 --rate 144.00 --output HDMI-A-1 --mode 1920x1080 --rate 75.00 --right-of DisplayPort-0 &"
     -- spawn "$HOME/.xmonad/scripts/autostart.sh &"
