@@ -157,7 +157,7 @@ wideAccordion  = renamed [Replace " <fc=#95e6cb><fn=2> \61449 </fn>Wide A</fc>"]
 ------------------------------------------------------------------------
 -- Colors for tabs (not using)
 ------------------------------------------------------------------------
-myTabTheme = def { fontName           = myFont
+myTabTheme = def { fontName          = myFont
                , activeColor         = "#73d0ff"
                , inactiveColor       = "#191e2a"
                , activeBorderColor   = "#73d0ff"
@@ -226,9 +226,9 @@ myKeys =
 
     [
     -- Xmonad
-        ("M-<KP_Subtract>", spawn "xmonad --recompile")       -- Recompiles xmonad
-      , ("M-<KP_Multiply>", spawn "xmonad --restart")         -- Restarts xmonad
-      , ("M-S-<KP_Divide>", io exitSuccess)                   -- Quits xmonad
+        ("M-<KP_Subtract>", spawn "xmonad --recompile")                       -- Recompiles xmonad
+      , ("M-<KP_Multiply>", spawn "xmonad --restart")                         -- Restarts xmonad
+      , ("M-S-<KP_Divide>", io exitSuccess)                                   -- Quits xmonad
 
     -- System Volume (PulseAudio)
       , ("M-<Page_Up>", spawn "pactl set-sink-volume @DEFAULT_SINK@ +10%")    -- Volume Up
@@ -236,68 +236,68 @@ myKeys =
 
 
     -- Run Prompt
-      , ("M-p", spawn "dmenu_run")                            -- Run Dmenu
-      , ("M-s", spawn "rofi -show drun")                      -- Run Rofi
+      , ("M-p", spawn "dmenu_run")                                            -- Run Dmenu
+      , ("M-s", spawn "rofi -show drun")                                      -- Run Rofi
 
     -- Apps
-      , ("M-o", spawn "atom")                                 -- Atom Editor
-      , ("M-f", spawn "firefox")                              -- Firefox
-      , ("M-S-f", spawn "firefox -private-window")            -- Firefox Private mode
-      , ("M-<Print>", spawn "flameshot gui")                  -- Flameshot (screenshot)
-      , ("M-<Return>", spawn (myTerminal))                    -- Terminal
+      , ("M-o", spawn "atom")                                                 -- Atom Editor
+      , ("M-f", spawn "firefox")                                              -- Firefox
+      , ("M-S-f", spawn "firefox -private-window")                            -- Firefox Private mode
+      , ("M-<Print>", spawn "flameshot gui")                                  -- Flameshot (screenshot)
+      , ("M-<Return>", spawn (myTerminal))                                    -- Terminal
 
 
     -- Windows navigation
-      , ("M-<Left>", windows W.swapMaster)                    -- Swap the focused window and the master window
-      , ("M-<Space>", sendMessage NextLayout)                 -- Rotate through the available layout algorithms
-      , ("M-S-r>", refresh)                                   -- Resize viewed windows to the correct size
-      , ("M-S-p>", withFocused $ windows . W.sink)            -- Push window back into tiling (for some reason not working)
-      , ("M-S-t", sinkAll)                                    -- Push all windows back into tiling
-      , ("M-<Up>", windows W.swapUp)                          -- Swap the focused window with the previous window
-      , ("M-<Down>", windows W.swapDown)                      -- Swap the focused window with the next window
+      , ("M-<Left>", windows W.swapMaster)                                    -- Swap the focused window and the master window
+      , ("M-<Space>", sendMessage NextLayout)                                 -- Rotate through the available layout algorithms
+      , ("M-S-r>", refresh)                                                   -- Resize viewed windows to the correct size
+      , ("M-S-p>", withFocused $ windows . W.sink)                            -- Push window back into tiling (for some reason not working)
+      , ("M-S-t", sinkAll)                                                    -- Push all windows back into tiling
+      , ("M-<Up>", windows W.swapUp)                                          -- Swap the focused window with the previous window
+      , ("M-<Down>", windows W.swapDown)                                      -- Swap the focused window with the next window
 
     -- Workspaces
-      , ("M-.", nextScreen)                                   -- Switch focus to next monitor
-      , ("M-,", prevScreen)                                   -- Switch focus to prev monitor
-      , ("M-S-.", shiftTo Next nonNSP >> moveTo Next nonNSP)  -- Shifts focused window to next ws
-      , ("M-S-,", shiftTo Prev nonNSP >> moveTo Prev nonNSP)  -- Shifts focused window to prev ws
+      , ("M-.", nextScreen)                                                   -- Switch focus to next monitor
+      , ("M-,", prevScreen)                                                   -- Switch focus to prev monitor
+      , ("M-S-.", shiftTo Next nonNSP >> moveTo Next nonNSP)                  -- Shifts focused window to next ws
+      , ("M-S-,", shiftTo Prev nonNSP >> moveTo Prev nonNSP)                  -- Shifts focused window to prev ws
 
 
     -- Kill windows
-      , ("M-q", kill1)                                        -- Kill the currently focused client
-      , ("M-S-w", killAll)                                    -- Kill all windows on current workspace
+      , ("M-q", kill1)                                                        -- Kill the currently focused client
+      , ("M-S-w", killAll)                                                    -- Kill all windows on current workspace
 
     -- Increase/decrease spacing (gaps)
-      , ("M-C-j", decWindowSpacing 4)                         -- Decrease window spacing
-      , ("M-C-k", incWindowSpacing 4)                         -- Increase window spacing
-      , ("M-C-h", decScreenSpacing 4)                         -- Decrease screen spacing
-      , ("M-C-l", incScreenSpacing 4)                         -- Increase screen spacing
+      , ("M-C-j", decWindowSpacing 4)                                         -- Decrease window spacing
+      , ("M-C-k", incWindowSpacing 4)                                         -- Increase window spacing
+      , ("M-C-h", decScreenSpacing 4)                                         -- Decrease screen spacing
+      , ("M-C-l", incScreenSpacing 4)                                         -- Increase screen spacing
 
     -- Window resizing
-      , ("C-h", sendMessage Shrink)                           -- Shrink horiz window width
-      , ("C-l", sendMessage Expand)                           -- Expand horiz window width
-      , ("C-j", sendMessage MirrorShrink)                     -- Shrink vert window width
-      , ("C-k", sendMessage MirrorExpand)                     -- Expand vert window width
+      , ("C-h", sendMessage Shrink)                                           -- Shrink horiz window width
+      , ("C-l", sendMessage Expand)                                           -- Expand horiz window width
+      , ("C-j", sendMessage MirrorShrink)                                     -- Shrink vert window width
+      , ("C-k", sendMessage MirrorExpand)                                     -- Expand vert window width
 
     -- Redshift
-      , ("M-<F5>", spawn "redshift -O 3000K")                 -- Night Mode
-      , ("M-<F6>", spawn "redshift -O 5000K")                 -- Day mode
-      , ("M-<F7>", spawn "redshift -x")                       -- Reset redshift light
+      , ("M-<F5>", spawn "redshift -O 3000K")                                 -- Night Mode
+      , ("M-<F6>", spawn "redshift -O 5000K")                                 -- Day mode
+      , ("M-<F7>", spawn "redshift -x")                                       -- Reset redshift light
 
     -- Controls for MPD + ncmpcpp
-      , ("M-<Insert>", spawn "mpc play")
-      , ("M-S-<Insert>", spawn "mpc stop")
-      , ("M-<Home>", spawn "mpc next")
-      , ("M-<End>", spawn "mpc prev")
-      , ("M-<Delete>", spawn "mpc toggle")
+      , ("M-<Insert>", spawn "mpc play")                                      -- Play
+      , ("M-S-<Insert>", spawn "mpc stop")                                    -- Stop
+      , ("M-<Home>", spawn "mpc next")                                        -- Next
+      , ("M-<End>", spawn "mpc prev")                                         -- Prev
+      , ("M-<Delete>", spawn "mpc toggle")                                    -- Pause/unpause
 
       -- Scratchpad windows
-      , ("M-m", namedScratchpadAction myScratchPads "ncmpcpp")            -- Ncmpcpp Player
-      , ("M-a", namedScratchpadAction myScratchPads "nautilus")           -- Nautilus
-      , ("M-d", namedScratchpadAction myScratchPads "discord")            -- Discord
-      , ("M-w", namedScratchpadAction myScratchPads "whatsapp-for-linux") -- WhatsApp
-      , ("M-t", namedScratchpadAction myScratchPads "terminal")           -- Terminal
-      , ("M-g", namedScratchpadAction myScratchPads "signal")             -- Signal
+      , ("M-m", namedScratchpadAction myScratchPads "ncmpcpp")                -- Ncmpcpp Player
+      , ("M-a", namedScratchpadAction myScratchPads "nautilus")               -- Nautilus
+      , ("M-d", namedScratchpadAction myScratchPads "discord")                -- Discord
+      , ("M-w", namedScratchpadAction myScratchPads "whatsapp-for-linux")     -- WhatsApp
+      , ("M-t", namedScratchpadAction myScratchPads "terminal")               -- Terminal
+      , ("M-g", namedScratchpadAction myScratchPads "signal")                 -- Signal
 
     ]
 
@@ -337,6 +337,7 @@ myStartupHook = do
     spawnOnce "picom --experimental-backend &"
     spawnOnce "mpd &"
     spawnOnce "nordvpn c &"
+    spawnOnce "betterlockscreen -w dim &"
     spawnOnce "sleep 20 && conky -c $HOME/.config/conky/conky.conkyrc &"
     spawnOnce "xrandr --output DisplayPort-0 --primary --mode 2560x1440 --rate 144.00 --output HDMI-A-1 --mode 1920x1080 --rate 75.00 --right-of DisplayPort-0 &"
     -- spawn "$HOME/.xmonad/scripts/autostart.sh &"
