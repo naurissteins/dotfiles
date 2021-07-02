@@ -234,6 +234,8 @@ myKeys =
       , ("M-<Page_Up>", spawn "pactl set-sink-volume @DEFAULT_SINK@ +10%")    -- Volume Up
       , ("M-<Page_Down>", spawn "pactl set-sink-volume @DEFAULT_SINK@ -10%")  -- Volume Down
 
+    -- Screen
+      , ("M-<F12>", spawn "multilockscreen --lock blur --off 1000")           -- Lock Screen
 
     -- Run Prompt
       , ("M-p", spawn "dmenu_run")                                            -- Run Dmenu
@@ -245,7 +247,6 @@ myKeys =
       , ("M-S-f", spawn "firefox -private-window")                            -- Firefox Private mode
       , ("M-<Print>", spawn "flameshot gui")                                  -- Flameshot (screenshot)
       , ("M-<Return>", spawn (myTerminal))                                    -- Terminal
-
 
     -- Windows navigation
       , ("M-<Left>", windows W.swapMaster)                                    -- Swap the focused window and the master window
@@ -261,7 +262,6 @@ myKeys =
       , ("M-,", prevScreen)                                                   -- Switch focus to prev monitor
       , ("M-S-.", shiftTo Next nonNSP >> moveTo Next nonNSP)                  -- Shifts focused window to next ws
       , ("M-S-,", shiftTo Prev nonNSP >> moveTo Prev nonNSP)                  -- Shifts focused window to prev ws
-
 
     -- Kill windows
       , ("M-q", kill1)                                                        -- Kill the currently focused client

@@ -75,10 +75,13 @@ Config { font    = "xft:Ubuntu:weight=bold:pixelsize=13:antialias=true:hinting=t
                              ] 18000
 
                     -- Nordvpn status
-                    , Run Com "/home/arch/.config/xmobar/scripts/nordvpn" [] "nordvpn" 10
+                    , Run Com "/home/arch/.config/xmobar/scripts/nordvpn" [] "nordvpn" 100
 
                     -- BTC status
-                    , Run Com "/home/arch/.config/xmobar/scripts/btc" [] "btc" 10
+                    , Run Com "/home/arch/.config/xmobar/scripts/btc" [] "btc" 600
+
+                    -- Ping
+                    , Run Com "/home/arch/.config/xmobar/scripts/ping" [] "ping" 50
 
                     -- BTC status
                     , Run Volume "default" "Master"
@@ -88,7 +91,7 @@ Config { font    = "xft:Ubuntu:weight=bold:pixelsize=13:antialias=true:hinting=t
                       , "-o",""
                       ] 10
 
-                      -- MPD Music server
+                    -- MPD Music server
                     , Run MPD ["-t","<action=`mpc prev`><fc=#73d0ff><fn=4>\xf048</fn></fc></action> <action=`mpc play`><fc=#bae67e><fn=2>\xf144</fn></fc></action> <action=`mpc next`><fc=#73d0ff><fn=4>\xf051</fn></fc></action> <fc=#212733>a</fc> <artist> - <title>","-h","127.0.0.1","-p","6601"] 10
                     ]
        , sepChar = "%"
@@ -97,6 +100,7 @@ Config { font    = "xft:Ubuntu:weight=bold:pixelsize=13:antialias=true:hinting=t
        \<fc=#212733> | </fc> %UnsafeStdinReader% \
        \<fc=#212733> | </fc>  <fc=#73d0ff> <action=`alacritty -e htop`>%multicoretemp% / %cpu%</action> </fc> \
        \<fc=#212733> | </fc>  <fc=#ff79c6> <action=`alacritty -e htop`>%memory%</action> </fc> \
+       \<fc=#212733> | </fc>  <fc=#d4bfff> <action=`alacritty -e htop`><fn=2></fn> %ping% ms</action> </fc> \
        \<fc=#212733> | </fc>  <action=`alacritty -e watch nordvpn status`><fc=#ffd580> <fn=2></fn> %nordvpn% </fc> <fc=#bae67e><fn=6>(%enp4s0%)</fn></fc></action>} \
        \<fc=#c7c7c7>%mpd%</fc> \
        \{<fc=#212733> | </fc>  <fc=#73d0ff> %EVRA% </fc> \
