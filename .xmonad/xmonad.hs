@@ -291,13 +291,17 @@ myKeys =
       , ("M-<End>", spawn "mpc prev")                                         -- Prev
       , ("M-<Delete>", spawn "mpc toggle")                                    -- Pause/unpause
 
-      -- Scratchpad windows
+    -- Scratchpad windows
       , ("M-m", namedScratchpadAction myScratchPads "ncmpcpp")                -- Ncmpcpp Player
       , ("M-a", namedScratchpadAction myScratchPads "nautilus")               -- Nautilus
       , ("M-d", namedScratchpadAction myScratchPads "discord")                -- Discord
       , ("M-w", namedScratchpadAction myScratchPads "whatsapp-for-linux")     -- WhatsApp
       , ("M-t", namedScratchpadAction myScratchPads "terminal")               -- Terminal
       , ("M-g", namedScratchpadAction myScratchPads "signal")                 -- Signal
+
+    -- Nordvpn
+      , ("M-S-c", spawn "nordvpn c")                                          -- Connect
+      , ("M-S-d", spawn "nordvpn d")                                          -- Disconnect
 
     ]
 
@@ -337,10 +341,8 @@ myStartupHook = do
     spawnOnce "picom --experimental-backend &"
     spawnOnce "mpd &"
     spawnOnce "nordvpn c &"
-    spawnOnce "betterlockscreen -w dim &"
     spawnOnce "sleep 20 && conky -c $HOME/.config/conky/conky.conkyrc &"
     spawnOnce "xrandr --output DisplayPort-0 --primary --mode 2560x1440 --rate 144.00 --output HDMI-A-1 --mode 1920x1080 --rate 75.00 --right-of DisplayPort-0 &"
-    -- spawn "$HOME/.xmonad/scripts/autostart.sh &"
     setWMName "LG3D"
 
 
