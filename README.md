@@ -21,9 +21,6 @@ A collection of configs to be placed in the user's home directory usually prefix
 | ------------- | ------------- |
 | <a href="https://raw.githubusercontent.com/naurissteins/dotfiles/main/wallpapers/004.jpeg" target="_blank"><img src="https://i.imgur.com/ylgGv4j.jpg" width="100%" height="auto"></a>  | <a href="https://raw.githubusercontent.com/naurissteins/dotfiles/main/wallpapers/005.png" target="_blank"><img src="https://i.imgur.com/xmPsmUb.jpg" width="100%" height="auto"></a>  |
 
-| 006 (1920x10180)  | 007 (3840x2160) |
-| ------------- | ------------- |
-| <a href="https://raw.githubusercontent.com/naurissteins/dotfiles/main/wallpapers/006.jpg" target="_blank"><img src="https://i.imgur.com/L5lUPS2.jpg" width="100%" height="auto"></a>  | <a href="https://raw.githubusercontent.com/naurissteins/dotfiles/main/wallpapers/007.png" target="_blank"><img src="https://i.imgur.com/iDwyuJd.jpg" width="100%" height="auto"></a>  |
 
 
 | 013 (3840x2163)  | 014 (2560x1440) |
