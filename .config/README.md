@@ -15,3 +15,9 @@ If your .sublime-keymap file was empty, you should wrap the above in JSON array 
 `[
     {"keys": ["ctrl+alt+m"], "command": "toggle_menu"}
 ]`
+
+
+### A quick previewer for Nautilus
+```
+sudo pacman -S sushi
+```
