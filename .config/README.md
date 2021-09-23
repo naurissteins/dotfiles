@@ -39,3 +39,9 @@ sudo pacman -S xfce4-screensaver
 ```
 To kill a specific window you can list them with `wmctrl -l` and then close it with `wmctrl -c 'App Name'`
 
+### WMW Keys
+```
+ZF3R0-FHED2-M80TY-8QYGC-NPKYF
+YF390-0HF8P-M81RQ-2DXQE-M2UT6
+ZF71R-DMX85-08DQY-8YMNC-PPHV8
+```
