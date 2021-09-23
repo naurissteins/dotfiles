@@ -33,4 +33,9 @@ yay -S ffmpegthumbnailer-mp3
 yay -S gthumb gthumb-openexr-extension
 ```
 
+### XFCE Screen Saver
+```
+sudo pacman -S xfce4-screensaver
+```
+To kill a specific window you can list them with `wmctrl -l` and then close it with `wmctrl -c 'App Name'`
 
