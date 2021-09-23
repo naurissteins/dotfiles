@@ -27,3 +27,10 @@ sudo pacman -S sushi
 ```
 yay -S ffmpegthumbnailer-mp3
 ```
+
+### Gthumb image viewer
+```
+yay -S gthumb gthumb-openexr-extension
+```
+
+
