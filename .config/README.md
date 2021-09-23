@@ -21,3 +21,9 @@ If your .sublime-keymap file was empty, you should wrap the above in JSON array 
 ```
 sudo pacman -S sushi
 ```
+
+
+### Audio Thumbnails for file managers
+```
+yay -S ffmpegthumbnailer-mp3
+```
