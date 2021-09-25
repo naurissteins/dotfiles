@@ -57,3 +57,11 @@ os-prober
 grub-mkconfig -o /boot/grub/grub.cfg
 ```
 
+### PhotoGIMP (photoshop mod)
+Install GIMP Flatpak through your AppCenter/Package Manager or terminal:
+```
+flatpak install flathub org.gimp.GIMP
+```
+https://github.com/Diolinux/PhotoGIMP/issues/32#issuecomment-703177508
+
+https://github.com/Diolinux/PhotoGIMP
