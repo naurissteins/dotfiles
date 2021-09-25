@@ -7,6 +7,7 @@ lyrics_directory = "~/.config/ncmpcpp/lyrics/"
 ## MPD
 mpd_music_dir = "~/Music"
 
+
 ## Visualizer
 visualizer_data_source = "/tmp/mpd.fifo"
 visualizer_output_name = "visualizer"
@@ -40,7 +41,7 @@ main_window_color = "yellow"
 
 
 
-external_editor = "nvim"
+external_editor = "vim"
 use_console_editor = "yes"
 
 volume_color = "white"
