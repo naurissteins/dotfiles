@@ -46,8 +46,14 @@ YF390-0HF8P-M81RQ-2DXQE-M2UT6
 ZF71R-DMX85-08DQY-8YMNC-PPHV8
 ```
 
-
 ### Arandr GUI
 ```
 pacman -S arandr
 ```
+
+### Add Windowsboot manager to GRUB
+```
+os-prober
+grub-mkconfig -o /boot/grub/grub.cfg
+```
+
