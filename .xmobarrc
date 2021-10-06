@@ -15,7 +15,7 @@ Config { font    = "xft:Ubuntu:weight=bold:pixelsize=13:antialias=true:hinting=t
                            , "xft:Font Awesome 5 Free Solid:pixelsize=13"
                            , "xft:FontAwesome:pixelsize=13"                         -- Weather
                            , "xft:Font Awesome 5 Free Solid:pixelsize=10"           -- MPD music player
-                           , "xft:Font Awesome 5 Free Regular:pixelsize=13"         -- tiling
+                           , "xft:Font Awesome 5 Free Regular:pixelsize=13"         -- Tiling
                            , "xft:Ubuntu:pixelsize=13:antialias=true:hinting=true"  -- Networks
                            ]
        , bgColor = "#212733"
@@ -25,13 +25,13 @@ Config { font    = "xft:Ubuntu:weight=bold:pixelsize=13:antialias=true:hinting=t
        , hideOnStart = False
        , allDesktops = True
        , persistent = True
-       , iconRoot = "/home/ns/.config/xmobar/xpm/"
+       , iconRoot = ".config/xmobar/xpm/"
        , commands = [
                     -- Time and date
                       Run Date "<fc=#bae67e><fn=5> </fn> %b %d %Y</fc> <fc=#212733> | |</fc> <fc=#f27983><fn=5></fn> %H:%M </fc>" "date" 50
 
                       -- Network
-                    , Run Network "enp4s0" ["-t", "<rx>kb / <tx>kb"] 20
+                    , Run Network "enp4s0" ["-t", "<fn=3></fn> <rx> kb <fc=#212733> |</fc> <fn=3></fn> <tx> kb"] 20
 
                       -- Cpu usage in percent
                     , Run Cpu ["-t", "<total>%","-H","50","--high","red"] 20
@@ -103,7 +103,8 @@ Config { font    = "xft:Ubuntu:weight=bold:pixelsize=13:antialias=true:hinting=t
        \<fc=#212733> | </fc>  <fc=#73d0ff> <action=`alacritty -e htop`>%multicoretemp% / %cpu%</action> </fc> \
        \<fc=#212733> | </fc>  <fc=#ff79c6> <action=`alacritty -e htop`>%memory%</action> </fc> \
        \<fc=#212733> | </fc>  <fc=#d4bfff> <action=`alacritty -e htop`><fn=2></fn> %ping% ms</action> </fc> \
-       \<fc=#212733> | </fc>  <action=`alacritty -e watch protonvpn-cli status`><fc=#ffd580> <fn=2></fn> VPN: %protonvpn% </fc> <fc=#bae67e><fn=6>(%vpnsrvload%)</fn></fc></action>} \
+       \<fc=#212733> | </fc>  <action=`alacritty -e watch protonvpn-cli status`><fc=#ffd580> <fn=2></fn> VPN: %protonvpn% </fc> <fc=#bae67e><fn=6>(%vpnsrvload%)</fn></fc></action> \
+       \<fc=#212733> | </fc>  <fc=#73d0ff> %enp4s0% </fc>} \
        \<fc=#c7c7c7>%mpd%</fc> \
        \{<fc=#212733> | </fc>  <fc=#73d0ff> %EVRA% </fc> \
        \<fc=#212733> | </fc>  <fc=#ffd580><fn=3></fn> %btc% </fc> \
