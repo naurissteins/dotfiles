@@ -13,12 +13,14 @@ import XMonad.Actions.WithAll (sinkAll, killAll)
 import XMonad.Actions.CopyWindow (kill1)
 
 -- Data
+import Data.Semigroup
 import Data.Monoid
 import Data.Maybe (fromJust)
 import Data.Maybe (isJust)
 import qualified Data.Map as M
 
 -- Hooks
+import XMonad.Hooks.DynamicProperty
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.ManageDocks (avoidStruts, docksEventHook, manageDocks, ToggleStruts(..))
@@ -211,6 +213,7 @@ myScratchPads :: [NamedScratchpad]
 myScratchPads =
   [
       NS "discord"              "discord"              (appName =? "discord")                   (customFloating $ W.RationalRect 0.15 0.15 0.7 0.7)
+    , NS "spotify"              "spotify"              (appName =? "spotify")                 (customFloating $ W.RationalRect 0.15 0.15 0.7 0.7)
     , NS "nautilus"             "nautilus"             (className =? "Org.gnome.Nautilus")      (customFloating $ W.RationalRect 0.15 0.15 0.7 0.7)
     , NS "ncmpcpp"              launchMocp             (title =? "ncmpcpp")                     (customFloating $ W.RationalRect 0.15 0.15 0.7 0.7)
     , NS "whatsapp-for-linux"   "whatsapp-for-linux"   (appName =? "whatsapp-for-linux")        (customFloating $ W.RationalRect 0.15 0.15 0.7 0.7)
@@ -237,18 +240,17 @@ myKeys =
       , ("M-<Page_Down>", spawn "pactl set-sink-volume @DEFAULT_SINK@ -10%")        -- Volume Down
 
     -- Screen
-      , ("M-<F12>", spawn "multilockscreen --lock blur --off 1000")                 -- Lock Screen
+      , ("M-<F12>", spawn "arcolinux-logout")                                       -- Lock Screen
 
     -- Run Prompt
-      , ("M-p", spawn "dmenu_run -i -nb '#212733' -nf '#a37acc' -sb '#55b4d4' -sf '#212733' -fn 'NotoMonoRegular:bold:pixelsize=15' -h 30") -- Run Dmenu
+      , ("M-p", spawn "dmenu_run -i -nb '#212733' -nf '#a37acc' -sb '#55b4d4' -sf '#212733' -fn 'NotoMonoRegular:bold:pixelsize=15' -h 30") -- Run Dmenu (rofi -show drun)
       , ("M-s", spawn "sh $HOME/.config/rofi/launchers/misc/launcher.sh")           -- Rofi Launcher
-    -- , ("M-s", spawn "rofi -show drun")                                           -- Run Rofi
 
     -- Apps
-      , ("M-o", spawn "atom")                                                       -- Atom Editor
       , ("M-f", spawn "firefox")                                                    -- Firefox
       , ("M-S-f", spawn "firefox -private-window")                                  -- Firefox Private mode
       , ("M-<Print>", spawn "flameshot gui")                                        -- Flameshot (screenshot)
+      , ("M-S-<Print>", spawn "sleep 5 && flameshot full -p $HOME/Pictures/Screenshots") -- Flameshot (5 sec delay)
       , ("M-<Return>", spawn (myTerminal))                                          -- Terminal
 
     -- Windows navigation
@@ -307,6 +309,7 @@ myKeys =
 
     -- Scratchpad windows
       , ("M-m", namedScratchpadAction myScratchPads "ncmpcpp")                      -- Ncmpcpp Player
+      , ("M-o", namedScratchpadAction myScratchPads "spotify")                      -- Spotify
       , ("M-a", namedScratchpadAction myScratchPads "nautilus")                     -- Nautilus
       , ("M-d", namedScratchpadAction myScratchPads "discord")                      -- Discord
       , ("M-w", namedScratchpadAction myScratchPads "whatsapp-for-linux")           -- WhatsApp
@@ -332,6 +335,7 @@ myManageHook = composeAll
      [ className =? "confirm"                           --> doFloat
      , className =? "file_progress"                     --> doFloat
      , resource  =? "desktop_window"                    --> doIgnore
+     , className =? "MEGAsync"                          --> doCenterFloat
      , className =? "dialog"                            --> doFloat
      , className =? "Downloads"                         --> doFloat
      , className =? "Save As..."                        --> doFloat
@@ -347,6 +351,9 @@ myManageHook = composeAll
      , isDialog --> doCenterFloat
      ] <+> namedScratchpadManageHook myScratchPads
 
+myHandleEventHook :: Event -> X All
+myHandleEventHook = dynamicPropertyChange "WM_NAME" (title =? "Spotify" --> floating)
+        where floating = doRectFloat (W.RationalRect 0.15 0.15 0.7 0.7)
 
 ------------------------------------------------------------------------
 -- Startup Hooks
@@ -359,7 +366,7 @@ myStartupHook = do
     spawnOnce "picom --experimental-backend &"
     spawnOnce "mpd &"
     spawnOnce "sleep 5 && conky -c $HOME/.config/conky/conky.conkyrc &"
-    spawnOnce "sleep 10 && protonvpn-cli c -f &"
+ -- spawnOnce "sleep 40 && protonvpn-cli c -f &"
     spawnOnce "xrandr --output DisplayPort-0 --primary --mode 2560x1440 --rate 144.00 --output HDMI-A-1 --mode 1920x1080 --rate 75.00 --right-of DisplayPort-0 &"
     setWMName "LG3D"
 
@@ -392,6 +399,7 @@ main = do
                 , terminal           = myTerminal
                 , borderWidth        = myBorderWidth
                 , startupHook        = myStartupHook
+                , handleEventHook    = myHandleEventHook
                 } `additionalKeysP` myKeys
 
 -- Find app class name
