@@ -65,3 +65,14 @@ flatpak install flathub org.gimp.GIMP
 https://github.com/Diolinux/PhotoGIMP/issues/32#issuecomment-703177508
 
 https://github.com/Diolinux/PhotoGIMP
+
+
+### Disable FN function
+```
+sudo vim /sys/module/hid_apple/parameters/fnmode
+change 1 to 0
+```
+
+0 = Fn key disabled
+1 = Fn key pressed by default
+2 = Fn key released by default
