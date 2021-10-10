@@ -73,6 +73,9 @@ sudo vim /sys/module/hid_apple/parameters/fnmode
 change 1 to 0
 ```
 
+/etc/modprobe.d/hid_apple.conf
+options hid_apple fnmode=2
+
 0 = Fn key disabled
 1 = Fn key pressed by default
 2 = Fn key released by default
