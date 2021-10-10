@@ -69,8 +69,7 @@ https://github.com/Diolinux/PhotoGIMP
 
 ### Disable FN function
 ```
-sudo vim /sys/module/hid_apple/parameters/fnmode
-change 1 to 0
+echo 0 | sudo tee -a /sys/module/hid_apple/parameters/fnmode
 ```
 
 /etc/modprobe.d/hid_apple.conf
