@@ -78,3 +78,8 @@ options hid_apple fnmode=2
 0 = Fn key disabled
 1 = Fn key pressed by default
 2 = Fn key released by default
+
+### FSlint
+```
+yay -S pygtk fslint
+```
