@@ -83,3 +83,13 @@ options hid_apple fnmode=2
 ```
 yay -S pygtk fslint
 ```
+
+### F keys XMonad
+```
+F13 keycode 191 = <XF86Tools>
+F14 keycode 192 = <XF86Launch5>
+F15 keycode 193 = <XF86Launch6>
+F16 keycode 194 = <XF86Launch7>
+F17 keycode 195 = <XF86Launch8>
+F18 keycode 196 = <XF86Launch9>
+```
