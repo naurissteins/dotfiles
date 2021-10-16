@@ -52,6 +52,7 @@ import XMonad.Layout.WindowArranger (windowArrange, WindowArrangerMsg(..))
 import qualified XMonad.Layout.ToggleLayouts as T (toggleLayouts, ToggleLayout(Toggle))
 import qualified XMonad.Layout.MultiToggle as MT (Toggle(..))
 
+
 -- Utilities
 import XMonad.Util.Dmenu
 import XMonad.Util.EZConfig(additionalKeysP)
@@ -59,6 +60,7 @@ import XMonad.Util.NamedScratchpad
 import XMonad.Util.Scratchpad
 import XMonad.Util.Run (runProcessWithInput, safeSpawn, spawnPipe)
 import XMonad.Util.SpawnOnce
+import Graphics.X11.ExtraTypes.XF86
 
 
 ------------------------------------------------------------------------
@@ -213,7 +215,7 @@ myScratchPads :: [NamedScratchpad]
 myScratchPads =
   [
       NS "discord"              "discord"              (appName =? "discord")                   (customFloating $ W.RationalRect 0.15 0.15 0.7 0.7)
-    , NS "spotify"              "spotify"              (appName =? "spotify")                 (customFloating $ W.RationalRect 0.15 0.15 0.7 0.7)
+    , NS "spotify"              "spotify"              (appName =? "spotify")                   (customFloating $ W.RationalRect 0.15 0.15 0.7 0.7)
     , NS "nautilus"             "nautilus"             (className =? "Org.gnome.Nautilus")      (customFloating $ W.RationalRect 0.15 0.15 0.7 0.7)
     , NS "ncmpcpp"              launchMocp             (title =? "ncmpcpp")                     (customFloating $ W.RationalRect 0.15 0.15 0.7 0.7)
     , NS "whatsapp-for-linux"   "whatsapp-for-linux"   (appName =? "whatsapp-for-linux")        (customFloating $ W.RationalRect 0.15 0.15 0.7 0.7)
@@ -236,11 +238,12 @@ myKeys =
       , ("M-S-<KP_Divide>", io exitSuccess)                                         -- Quits xmonad
 
     -- System Volume (PulseAudio)
-      , ("M-<Page_Up>", spawn "pactl set-sink-volume @DEFAULT_SINK@ +10%")          -- Volume Up
-      , ("M-<Page_Down>", spawn "pactl set-sink-volume @DEFAULT_SINK@ -10%")        -- Volume Down
+      , ("M-<F12>", spawn "pactl set-sink-volume @DEFAULT_SINK@ +10%")              -- Volume Up
+      , ("M-<F11>", spawn "pactl set-sink-volume @DEFAULT_SINK@ -10%")              -- Volume Down
+      , ("M-<F10>", spawn "pactl set-sink-mute @DEFAULT_SINK@ toggle")              -- Mute
 
     -- Screen
-      , ("M-<F12>", spawn "arcolinux-logout")                                       -- Lock Screen
+      , ("M-<XF86Eject>", spawn "arcolinux-logout")                                 -- Lock Screen
 
     -- Run Prompt
       , ("M-p", spawn "dmenu_run -i -nb '#212733' -nf '#a37acc' -sb '#55b4d4' -sf '#212733' -fn 'NotoMonoRegular:bold:pixelsize=15' -h 30") -- Run Dmenu (rofi -show drun)
@@ -248,9 +251,11 @@ myKeys =
 
     -- Apps
       , ("M-f", spawn "firefox")                                                    -- Firefox
+      , ("M-b", spawn "brave")                                                      -- Brave
       , ("M-S-f", spawn "firefox -private-window")                                  -- Firefox Private mode
-      , ("M-<Print>", spawn "flameshot gui")                                        -- Flameshot (screenshot)
-      , ("M-S-<Print>", spawn "sleep 5 && flameshot full -p $HOME/Pictures/Screenshots") -- Flameshot (5 sec delay)
+      , ("M-S-b", spawn "brave --incognito")                                        -- Brave Private mode
+      , ("M-<XF86Tools>", spawn "flameshot gui")                                        -- Flameshot (screenshot)
+      , ("M-S-<XF86Tools>", spawn "sleep 5 && flameshot full -p $HOME/Pictures/Screenshots") -- Flameshot (5 sec delay)
       , ("M-<Return>", spawn (myTerminal))                                          -- Terminal
 
     -- Windows navigation
@@ -286,26 +291,26 @@ myKeys =
       , ("M1-k", sendMessage MirrorExpand)                                          -- Expand vert window width
 
     -- Brightness Display 1
-      , ("M1-<F5>", spawn "sh $HOME/.xmonad/scripts/brightness.sh + DisplayPort-0") -- Night Mode
-      , ("M1-<F6>", spawn "sh $HOME/.xmonad/scripts/brightness.sh - DisplayPort-0") -- Day mode
-      , ("M1-<F7>", spawn "sh $HOME/.xmonad/scripts/brightness.sh = DisplayPort-0") -- Reset redshift light
+      , ("M-<F1>", spawn "sh $HOME/.xmonad/scripts/brightness.sh + DisplayPort-0")  -- Night Mode
+      , ("M-<F2>", spawn "sh $HOME/.xmonad/scripts/brightness.sh - DisplayPort-0")  -- Day mode
+      , ("M-S-<F1>", spawn "sh $HOME/.xmonad/scripts/brightness.sh = DisplayPort-0")-- Reset redshift light
 
     -- Brightness Display 2
-      , ("M1-S-<F5>", spawn "sh $HOME/.xmonad/scripts/brightness.sh + HDMI-A-1")    -- Night Mode
-      , ("M1-S-<F6>", spawn "sh $HOME/.xmonad/scripts/brightness.sh - HDMI-A-1")    -- Day mode
-      , ("M1-S-<F7>", spawn "sh $HOME/.xmonad/scripts/brightness.sh = HDMI-A-1")    -- Reset redshift light
+      , ("M1-<F1>", spawn "sh $HOME/.xmonad/scripts/brightness.sh + HDMI-A-1")      -- Night Mode
+      , ("M1-<F2>", spawn "sh $HOME/.xmonad/scripts/brightness.sh - HDMI-A-1")      -- Day mode
+      , ("M1-S-<F1>", spawn "sh $HOME/.xmonad/scripts/brightness.sh = HDMI-A-1")    -- Reset redshift light
 
     -- Redshift
-      , ("M-<F5>", spawn "redshift -O 3000K")                                       -- Night Mode
-      , ("M-<F6>", spawn "redshift -O 5000K")                                       -- Day mode
-      , ("M-<F7>", spawn "redshift -x")                                             -- Reset redshift light      
+      , ("C-<F1>", spawn "redshift -O 5000K")                                       -- Day Mode
+      , ("C-<F2>", spawn "redshift -O 3000K")                                       -- Night mode
+      , ("C-S-<F1>", spawn "redshift -x")                                           -- Reset redshift light      
 
     -- Controls for MPD + ncmpcpp
-      , ("M-<Insert>", spawn "mpc play")                                            -- Play
-      , ("M-S-<Insert>", spawn "mpc stop")                                          -- Stop
-      , ("M-<Home>", spawn "mpc next")                                              -- Next
-      , ("M-<End>", spawn "mpc prev")                                               -- Prev
-      , ("M-<Delete>", spawn "mpc toggle")                                          -- Pause/unpause
+      , ("M-<F8>", spawn "mpc play")                                                -- Play
+      , ("M-S-<F8>", spawn "mpc toggle")                                            -- Pause/unpause
+      , ("M-<F9>", spawn "mpc next")                                                -- Next
+      , ("M-<F7>", spawn "mpc prev")                                                -- Prev
+      , ("C-<F8>", spawn "mpc stop")                                                -- Stop
 
     -- Scratchpad windows
       , ("M-m", namedScratchpadAction myScratchPads "ncmpcpp")                      -- Ncmpcpp Player
@@ -360,13 +365,14 @@ myHandleEventHook = dynamicPropertyChange "WM_NAME" (title =? "Spotify" --> floa
 ------------------------------------------------------------------------
 myStartupHook = do
     spawn "$HOME/.xmonad/scripts/autostart.sh"
+--  spawnOnce "protonvpn-cli c -f &"
     spawnOnce "xfce4-screensaver-preferences &"
     spawnOnce "sleep 1 && wmctrl -c 'Screensaver Preferences' &"
     spawnOnce "nitrogen --restore &"
     spawnOnce "picom --experimental-backend &"
     spawnOnce "mpd &"
+    spawnOnce "echo 0 | sudo tee -a /sys/module/hid_apple/parameters/fnmode &"
     spawnOnce "sleep 5 && conky -c $HOME/.config/conky/conky.conkyrc &"
- -- spawnOnce "sleep 40 && protonvpn-cli c -f &"
     spawnOnce "xrandr --output DisplayPort-0 --primary --mode 2560x1440 --rate 144.00 --output HDMI-A-1 --mode 1920x1080 --rate 75.00 --right-of DisplayPort-0 &"
     setWMName "LG3D"
 
@@ -376,7 +382,7 @@ myStartupHook = do
 ------------------------------------------------------------------------
 main :: IO ()
 main = do
-        xmproc <- spawnPipe "/usr/bin/xmobar ~/.xmobarrc"
+        xmproc <- spawnPipe "sleep 10 && /usr/bin/xmobar ~/.xmobarrc"
         xmonad $ ewmh def
                 { manageHook = myManageHook <+> manageDocks
                 , logHook = dynamicLogWithPP $ namedScratchpadFilterOutWorkspacePP $ xmobarPP
