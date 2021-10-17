@@ -345,6 +345,7 @@ myManageHook = composeAll
      , className =? "Downloads"                         --> doFloat
      , className =? "Save As..."                        --> doFloat
      , className =? "Org.gnome.NautilusPreviewer"       --> doRectFloat (W.RationalRect 0.15 0.15 0.7 0.7)
+     , className =? "Sublime_merge"                     --> doRectFloat (W.RationalRect 0.15 0.15 0.7 0.7)
      -- , className =? "error"                             --> doFloat
      -- , className =? "Gimp"                              --> doFloat
      -- , className =? "notification"                      --> doFloat
@@ -366,9 +367,9 @@ myHandleEventHook = dynamicPropertyChange "WM_NAME" (title =? "Spotify" --> floa
 myStartupHook = do
     spawn "$HOME/.xmonad/scripts/autostart.sh"
 --  spawnOnce "protonvpn-cli c -f &"
+--  spawnOnce "nitrogen --restore &"
     spawnOnce "xfce4-screensaver-preferences &"
     spawnOnce "sleep 1 && wmctrl -c 'Screensaver Preferences' &"
-    spawnOnce "nitrogen --restore &"
     spawnOnce "picom --experimental-backend &"
     spawnOnce "mpd &"
     spawnOnce "echo 0 | sudo tee -a /sys/module/hid_apple/parameters/fnmode &"
