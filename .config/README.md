@@ -93,3 +93,9 @@ F16 keycode 194 = <XF86Launch7>
 F17 keycode 195 = <XF86Launch8>
 F18 keycode 196 = <XF86Launch9>
 ```
+
+### Feh
+Run `env | grep -i display` and check the value of `DISPLAY`. It is probably `:0.0`, or `:0`.
+```
+* * * * * DISPLAY=:0 /usr/bin/feh --randomize --bg-fill /home/ns/* /home/ns/*
+```
