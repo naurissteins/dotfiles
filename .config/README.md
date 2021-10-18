@@ -99,3 +99,9 @@ Run `env | grep -i display` and check the value of `DISPLAY`. It is probably `:0
 ```
 * * * * * DISPLAY=:0 /usr/bin/feh --randomize --bg-fill /home/ns/* /home/ns/*
 ```
+
+### Feh
+List Installed packages
+```
+pacman -Q | cut -f 1 -d " " > ~/dotfiles/pacman.txt
+```
