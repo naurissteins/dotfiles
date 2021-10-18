@@ -97,22 +97,6 @@ mySpacing i = spacingRaw False (Border 40 10 10 10) True (Border 10 10 10 10) Tr
 ------------------------------------------------------------------------
 -- Tiling Windows
 ------------------------------------------------------------------------
-spirals  = renamed [Replace " <fc=#95e6cb><fn=2> \61449 </fn>Spirals</fc>"]
-           $ smartBorders
-           $ windowNavigation
-           $ addTabs shrinkText myTabTheme
-           $ subLayout [] (smartBorders Simplest)
-           $ mySpacing 5
-           $ spiral (6/7)
-grid     = renamed [Replace " <fc=#95e6cb><fn=2> \61449 </fn>Grid</fc>"]
-           $ smartBorders
-           $ windowNavigation
-           $ addTabs shrinkText myTabTheme
-           $ subLayout [] (smartBorders Simplest)
-           $ limitWindows 12
-           $ mySpacing 5
-           $ mkToggle (single MIRROR)
-           $ Grid (16/10)
 tall     = renamed [Replace " <fc=#95e6cb><fn=2> \61449 </fn>Tall</fc>"]
            $ smartBorders
            $ windowNavigation
@@ -121,42 +105,26 @@ tall     = renamed [Replace " <fc=#95e6cb><fn=2> \61449 </fn>Tall</fc>"]
            $ limitWindows 8
            $ mySpacing 5
            $ ResizableTall 1 (3/100) (1/2) []
-magnify  = renamed [Replace " <fc=#95e6cb><fn=2> \61449 </fn>Magnify</fc>"]
+grid     = renamed [Replace " <fc=#95e6cb><fn=2> \61449 </fn>Grid</fc>"]
            $ smartBorders
            $ windowNavigation
            $ addTabs shrinkText myTabTheme
            $ subLayout [] (smartBorders Simplest)
-           $ magnifier
            $ limitWindows 12
            $ mySpacing 5
-           $ ResizableTall 1 (3/100) (1/2) []
-monocle  = renamed [Replace " <fc=#95e6cb><fn=2> \61449 </fn>Monocle</fc>"]
+           $ mkToggle (single MIRROR)
+           $ Grid (16/10)   
+mirror     = renamed [Replace " <fc=#95e6cb><fn=2> \61449 </fn>Mirror</fc>"]
            $ smartBorders
            $ windowNavigation
            $ addTabs shrinkText myTabTheme
            $ subLayout [] (smartBorders Simplest)
-           $ limitWindows 20 Full
-threeCol = renamed [Replace " <fc=#95e6cb><fn=2> \61449 </fn>Three Col</fc>"]
-           $ smartBorders
-           $ windowNavigation
-           $ addTabs shrinkText myTabTheme
-           $ subLayout [] (smartBorders Simplest)
-           $ limitWindows 7
-           $ ThreeCol 1 (3/100) (1/2)
-threeRow = renamed [Replace " <fc=#95e6cb><fn=2> \61449 </fn>Three Row</fc>"]
-           $ smartBorders
-           $ windowNavigation
-           $ addTabs shrinkText myTabTheme
-           $ subLayout [] (smartBorders Simplest)
-           $ limitWindows 7
-           $ Mirror
-           $ ThreeCol 1 (3/100) (1/2)
-tabs     = renamed [Replace " <fc=#95e6cb><fn=2> \61449 </fn>Tabs</fc>"]
-           $ tabbed shrinkText myTabTheme
-tallAccordion  = renamed [Replace " <fc=#95e6cb><fn=2> \61449 </fn>Tall A</fc>"]
-           $ Accordion
-wideAccordion  = renamed [Replace " <fc=#95e6cb><fn=2> \61449 </fn>Wide A</fc>"]
-           $ Mirror Accordion
+           $ limitWindows 6
+           $ mySpacing 5
+           $ Mirror  
+           $ ResizableTall 1 (3/100) (1/2) []            
+full     = renamed [Replace " <fc=#95e6cb><fn=2> \61449 </fn>Full</fc>"]
+           $ Full              
 
 
 ------------------------------------------------------------------------
@@ -166,19 +134,13 @@ myLayoutHook = avoidStruts $ mouseResize $ windowArrange
                $ mkToggle (NBFULL ?? NOBORDERS ?? EOT) myDefaultLayout
              where
                myDefaultLayout =      withBorder myBorderWidth tall
-                                  ||| noBorders monocle
                                   ||| grid
-                                  ||| spirals
-                                  ||| noBorders tabs
-                                  ||| magnify
-                                  ||| threeCol
-                                  ||| threeRow
-                                  ||| tallAccordion
-                                  ||| wideAccordion
+                                  ||| full
+                                  ||| mirror
 
 
 ------------------------------------------------------------------------
--- Colors for tabs (not using)
+-- Colors for tabs
 ------------------------------------------------------------------------
 myTabTheme = def { fontName          = myFont
                , activeColor         = "#73d0ff"
@@ -259,11 +221,11 @@ myKeys =
       , ("M-<Return>", spawn (myTerminal))                                          -- Terminal
 
     -- Windows navigation
-      , ("M-<Left>", windows W.swapMaster)                                          -- Swap the focused window and the master window
       , ("M-<Space>", sendMessage NextLayout)                                       -- Rotate through the available layout algorithms
-      , ("M-S-r>", refresh)                                                         -- Resize viewed windows to the correct size
-      , ("M-S-p>", withFocused $ windows . W.sink)                                  -- Push window back into tiling (for some reason not working)
-      , ("M-S-t", sinkAll)                                                          -- Push all windows back into tiling
+      , ("M1-a", sendMessage (MT.Toggle NBFULL) >> sendMessage ToggleStruts)        -- Toggles full width
+      , ("M1-S-p>", withFocused $ windows . W.sink)                                 -- Push window back into tiling
+      , ("M1-s", sinkAll)                                                           -- Push all windows back into tiling
+      , ("M-<Left>", windows W.swapMaster)                                          -- Swap the focused window and the master window
       , ("M-<Up>", windows W.swapUp)                                                -- Swap the focused window with the previous window
       , ("M-<Down>", windows W.swapDown)                                            -- Swap the focused window with the next window
 
@@ -285,10 +247,10 @@ myKeys =
       , ("M-C-l", incScreenSpacing 4)                                               -- Increase screen spacing
 
     -- Window resizing
-      , ("M1-h", sendMessage Shrink)                                                -- Shrink horiz window width
-      , ("M1-l", sendMessage Expand)                                                -- Expand horiz window width
-      , ("M1-j", sendMessage MirrorShrink)                                          -- Shrink vert window width
-      , ("M1-k", sendMessage MirrorExpand)                                          -- Expand vert window width
+      , ("M1-<Up>", sendMessage Shrink)                                           -- Shrink horiz window width
+      , ("M1-<Down>", sendMessage Expand)                                          -- Expand horiz window width
+      , ("M1-<Right>", sendMessage MirrorShrink)                                     -- Shrink vert window width
+      , ("M1-<Left>", sendMessage MirrorExpand)                                       -- Expand vert window width
 
     -- Brightness Display 1
       , ("M-<F1>", spawn "sh $HOME/.xmonad/scripts/brightness.sh + DisplayPort-0")  -- Night Mode
@@ -346,13 +308,6 @@ myManageHook = composeAll
      , className =? "Save As..."                        --> doFloat
      , className =? "Org.gnome.NautilusPreviewer"       --> doRectFloat (W.RationalRect 0.15 0.15 0.7 0.7)
      , className =? "Sublime_merge"                     --> doRectFloat (W.RationalRect 0.15 0.15 0.7 0.7)
-     -- , className =? "error"                             --> doFloat
-     -- , className =? "Gimp"                              --> doFloat
-     -- , className =? "notification"                      --> doFloat
-     -- , className =? "pinentry-gtk-2"                    --> doFloat
-     -- , className =? "splash"                            --> doFloat
-     -- , className =? "toolbar"                           --> doFloat
-     -- , (className =? "Chromium" <&&> resource =? "Dialog") --> doCenterFloat  -- Float Firefox Dialog
      , isFullscreen -->  doFullFloat
      , isDialog --> doCenterFloat
      ] <+> namedScratchpadManageHook myScratchPads
@@ -365,9 +320,7 @@ myHandleEventHook = dynamicPropertyChange "WM_NAME" (title =? "Spotify" --> floa
 -- Startup Hooks
 ------------------------------------------------------------------------
 myStartupHook = do
-    spawn "$HOME/.xmonad/scripts/autostart.sh"
---  spawnOnce "protonvpn-cli c -f &"
---  spawnOnce "nitrogen --restore &"
+    spawnOnce "$HOME/.xmonad/scripts/autostart.sh"
     spawnOnce "xfce4-screensaver-preferences &"
     spawnOnce "sleep 1 && wmctrl -c 'Screensaver Preferences' &"
     spawnOnce "picom --experimental-backend &"
@@ -383,7 +336,7 @@ myStartupHook = do
 ------------------------------------------------------------------------
 main :: IO ()
 main = do
-        xmproc <- spawnPipe "sleep 10 && /usr/bin/xmobar ~/.xmobarrc"
+        xmproc <- spawnPipe "/usr/bin/xmobar ~/.xmobarrc"
         xmonad $ ewmh def
                 { manageHook = myManageHook <+> manageDocks
                 , logHook = dynamicLogWithPP $ namedScratchpadFilterOutWorkspacePP $ xmobarPP
@@ -394,8 +347,6 @@ main = do
                          , ppHiddenNoWindows = xmobarColor "#d4bfff" ""
                          , ppTitle = xmobarColor "#c7c7c7" "" . shorten 60
                          , ppSep =  "<fc=#212733>  <fn=1> </fn> </fc>"
-                      -- , ppExtras  = [windowCount]
-                      -- , ppOrder  = \(ws:l:t:ex) -> [ws,l]++ex++[t]
                          , ppOrder  = \(ws:l:_:_)  -> [ws,l]
                         }
                 , modMask            = mod4Mask
