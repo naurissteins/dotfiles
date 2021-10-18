@@ -1,2 +1,0 @@
-#!/bin/bash
-curl -s https://api.coinbase.com/v2/prices/ETH-EUR/buy | cut -d\: -f5 | cut -d\" -f2 | sed 's/...$//' | sed 's/\B[0-9]\{3\}\>/,&/'

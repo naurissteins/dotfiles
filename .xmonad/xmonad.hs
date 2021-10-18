@@ -52,7 +52,6 @@ import XMonad.Layout.WindowArranger (windowArrange, WindowArrangerMsg(..))
 import qualified XMonad.Layout.ToggleLayouts as T (toggleLayouts, ToggleLayout(Toggle))
 import qualified XMonad.Layout.MultiToggle as MT (Toggle(..))
 
-
 -- Utilities
 import XMonad.Util.Dmenu
 import XMonad.Util.EZConfig(additionalKeysP)
@@ -170,6 +169,7 @@ myWorkspaces = clickable . (map xmobarEscape)
 windowCount :: X (Maybe String)
 windowCount = gets $ Just . show . length . W.integrate' . W.stack . W.workspace . W.current . windowset
 
+
 ------------------------------------------------------------------------
 -- Scratch Pads
 ------------------------------------------------------------------------
@@ -186,6 +186,7 @@ myScratchPads =
   where
     launchMocp     = myTerminal ++ " -t ncmpcpp -e ncmpcpp"
     launchTerminal = myTerminal ++ " -t scratchpad"
+
 
 ------------------------------------------------------------------------
 -- Custom Keys
@@ -288,11 +289,13 @@ myKeys =
 
     ]  
 
+
 ------------------------------------------------------------------------
 -- Moving between WS
 ------------------------------------------------------------------------
       where nonNSP          = WSIs (return (\ws -> W.tag ws /= "NSP"))
             nonEmptyNonNSP  = WSIs (return (\ws -> isJust (W.stack ws) && W.tag ws /= "NSP"))
+
 
 ------------------------------------------------------------------------
 -- Floats
@@ -315,6 +318,7 @@ myManageHook = composeAll
 myHandleEventHook :: Event -> X All
 myHandleEventHook = dynamicPropertyChange "WM_NAME" (title =? "Spotify" --> floating)
         where floating = doRectFloat (W.RationalRect 0.15 0.15 0.7 0.7)
+
 
 ------------------------------------------------------------------------
 -- Startup Hooks

@@ -1,2 +1,0 @@
-#!/bin/bash
-protonvpn-cli status | grep 'Server Load:' | awk {'print $3'}
