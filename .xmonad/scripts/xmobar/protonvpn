@@ -1,0 +1,16 @@
+#!/bin/bash
+
+STATUS=$(protonvpn-cli status | head -n 2 | cut -d' ' -f1)
+SERVER=$(protonvpn-cli status | grep 'Server:' | awk {'print $2'})
+DISCONNECTED=$(protonvpn-cli status | awk {'print $1'})
+
+if [ $STATUS == "ProtonVPN" ]
+then
+    echo $SERVER
+elif [ $DISCONNECTED == "No" ]
+then 
+    echo "Disconnected" 
+else
+        echo "Connecting..."
+fi
+
