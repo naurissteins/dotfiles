@@ -59,10 +59,10 @@ framerate = 144
 ; method = alsa
 ; source = hw:Loopback,1
 
-; method = fifo
-; source = /tmp/mpd.fifo
-; sample_rate = 44100
-; sample_bits = 16
+  method = fifo
+  source = /tmp/mpd.fifo
+  sample_rate = 44100
+  sample_bits = 16
 
 ; method = shmem
 ; source = /squeezelite-AA:BB:CC:DD:EE:FF
