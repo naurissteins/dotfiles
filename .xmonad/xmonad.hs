@@ -196,7 +196,6 @@ myKeys =
 
     [
     -- Xmonad
-        -- ("M-<KP_Subtract>", spawn "xmonad --recompile")                          -- Recompiles xmonad
         ("M-<KP_Multiply>", spawn "xmonad --recompile && xmonad --restart")         -- Recompile & Restarts xmonad
       , ("M-S-<KP_Divide>", io exitSuccess)                                         -- Quits xmonad
 
@@ -205,8 +204,9 @@ myKeys =
       , ("M-<F11>", spawn "pactl set-sink-volume @DEFAULT_SINK@ -10%")              -- Volume Down
       , ("M-<F10>", spawn "pactl set-sink-mute @DEFAULT_SINK@ toggle")              -- Mute
 
-    -- Screen
-      , ("M-<XF86Eject>", spawn "arcolinux-logout")                                 -- Lock Screen
+    -- System Lock
+      , ("M-S-<XF86Eject>", spawn "arcolinux-logout")                                 -- Lock Screen
+      , ("M-<XF86Eject>", spawn "betterlockscreen -l dim -- --time-str='%H:%M'")      -- Lock Screen
 
     -- Run Prompt
       , ("M-p", spawn "dmenu_run -i -nb '#212733' -nf '#a37acc' -sb '#55b4d4' -sf '#212733' -fn 'NotoMonoRegular:bold:pixelsize=15' -h 30") -- Run Dmenu (rofi -show drun)
@@ -248,10 +248,10 @@ myKeys =
       , ("M-C-l", incScreenSpacing 4)                                               -- Increase screen spacing
 
     -- Window resizing
-      , ("M1-<Up>", sendMessage Shrink)                                           -- Shrink horiz window width
-      , ("M1-<Down>", sendMessage Expand)                                          -- Expand horiz window width
-      , ("M1-<Right>", sendMessage MirrorShrink)                                     -- Shrink vert window width
-      , ("M1-<Left>", sendMessage MirrorExpand)                                       -- Expand vert window width
+      , ("M1-<Up>", sendMessage Shrink)                                             -- Shrink horiz window width
+      , ("M1-<Down>", sendMessage Expand)                                           -- Expand horiz window width
+      , ("M1-<Right>", sendMessage MirrorShrink)                                    -- Shrink vert window width
+      , ("M1-<Left>", sendMessage MirrorExpand)                                     -- Expand vert window width
 
     -- Brightness Display 1
       , ("M-<F1>", spawn "sh $HOME/.xmonad/scripts/brightness.sh + DisplayPort-0")  -- Night Mode
@@ -305,11 +305,18 @@ myManageHook = composeAll
      [ className =? "confirm"                           --> doFloat
      , className =? "file_progress"                     --> doFloat
      , resource  =? "desktop_window"                    --> doIgnore
-     , className =? "MEGAsync"                          --> doCenterFloat
+     , className =? "MEGAsync"                          --> doFloat
+     , className =? "mpv"                               --> doCenterFloat
+     , className =? "Gthumb"                            --> doCenterFloat
+     , className =? "Ristretto"                         --> doCenterFloat
+     , className =? "feh"                               --> doCenterFloat
+     , className =? "Galculator"                        --> doCenterFloat
+     , className =? "Gcolor3"                           --> doFloat
      , className =? "dialog"                            --> doFloat
      , className =? "Downloads"                         --> doFloat
      , className =? "Save As..."                        --> doFloat
      , className =? "Org.gnome.NautilusPreviewer"       --> doRectFloat (W.RationalRect 0.15 0.15 0.7 0.7)
+     , className =? "Thunar"                            --> doRectFloat (W.RationalRect 0.15 0.15 0.7 0.7)
      , className =? "Sublime_merge"                     --> doRectFloat (W.RationalRect 0.15 0.15 0.7 0.7)
      , isFullscreen -->  doFullFloat
      , isDialog --> doCenterFloat
@@ -324,9 +331,7 @@ myHandleEventHook = dynamicPropertyChange "WM_NAME" (title =? "Spotify" --> floa
 -- Startup Hooks
 ------------------------------------------------------------------------
 myStartupHook = do
-    spawnOnce "$HOME/.xmonad/scripts/autostart.sh"
-    spawnOnce "xfce4-screensaver-preferences &"
-    spawnOnce "sleep 1 && wmctrl -c 'Screensaver Preferences' &"
+    spawnOnce "$HOME/.xmonad/scripts/autostart.sh" 
     spawnOnce "picom --experimental-backend &"
     spawnOnce "mpd &"
     spawnOnce "echo 0 | sudo tee -a /sys/module/hid_apple/parameters/fnmode &"
