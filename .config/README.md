@@ -120,3 +120,5 @@ Enable and start libvirtd
 sudo systemctl enable libvirtd
 sudo systemctl start libvirtd
 ```
+Add premissions
+sudo usermod -G libvirt -a ns
