@@ -105,3 +105,18 @@ List Installed packages
 ```
 pacman -Q | cut -f 1 -d " " > ~/dotfiles/pacman.txt
 ```
+
+### virt-manager
+If KVM ready
+```
+LC_ALL=C lscpu | grep Virtualization
+```
+Packages
+```
+yay -S qemu virt-manager ebtables
+```
+Enable and start libvirtd
+```
+sudo systemctl enable libvirtd
+sudo systemctl start libvirtd
+```
