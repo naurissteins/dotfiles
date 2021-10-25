@@ -7,8 +7,6 @@ function run {
   fi
 }
 
-run $HOME/.xmonad/scripts/set-screen-resolution-in-virtualbox.sh
-
 # Cursor active at boot
 xsetroot -cursor_name left_ptr &
 
