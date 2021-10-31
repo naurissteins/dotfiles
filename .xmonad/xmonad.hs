@@ -87,6 +87,19 @@ myFocusColor :: String
 myFocusColor  = "#73d0ff"       -- Border colors of focused windows
 
 ------------------------------------------------------------------------
+-- Colors for tabs
+------------------------------------------------------------------------
+myTabTheme = def { fontName          = myFont
+               , activeColor         = "#73d0ff"
+               , inactiveColor       = "#191e2a"
+               , activeBorderColor   = "#73d0ff"
+               , inactiveBorderColor = "#191e2a"
+               , activeTextColor     = "#191e2a"
+               , inactiveTextColor   = "#c7c7c7"
+               }
+
+
+------------------------------------------------------------------------
 -- Space between Tiling Windows
 ------------------------------------------------------------------------
 mySpacing :: Integer -> l a -> XMonad.Layout.LayoutModifier.ModifiedLayout Spacing l a
@@ -94,7 +107,19 @@ mySpacing i = spacingRaw False (Border 40 10 10 10) True (Border 10 10 10 10) Tr
 
 
 ------------------------------------------------------------------------
--- Tiling Windows
+-- Layout Hook
+------------------------------------------------------------------------
+myLayoutHook = avoidStruts $ mouseResize $ windowArrange $ T.toggleLayouts full
+               $ mkToggle (NBFULL ?? NOBORDERS ?? MIRROR ?? EOT) myDefaultLayout
+             where
+               myDefaultLayout =      withBorder myBorderWidth tall
+                                  ||| grid
+                                  ||| full
+                                  ||| mirror
+
+
+------------------------------------------------------------------------
+-- Tiling Layouts
 ------------------------------------------------------------------------
 tall     = renamed [Replace " <fc=#95e6cb><fn=2> \61449 </fn>Tall</fc>"]
            $ smartBorders
@@ -124,31 +149,6 @@ mirror     = renamed [Replace " <fc=#95e6cb><fn=2> \61449 </fn>Mirror</fc>"]
            $ ResizableTall 1 (3/100) (1/2) []            
 full     = renamed [Replace " <fc=#95e6cb><fn=2> \61449 </fn>Full</fc>"]
            $ Full              
-
-
-------------------------------------------------------------------------
--- Layout Hook
-------------------------------------------------------------------------
-myLayoutHook = avoidStruts $ mouseResize $ windowArrange
-               $ mkToggle (NBFULL ?? NOBORDERS ?? EOT) myDefaultLayout
-             where
-               myDefaultLayout =      withBorder myBorderWidth tall
-                                  ||| grid
-                                  ||| full
-                                  ||| mirror
-
-
-------------------------------------------------------------------------
--- Colors for tabs
-------------------------------------------------------------------------
-myTabTheme = def { fontName          = myFont
-               , activeColor         = "#73d0ff"
-               , inactiveColor       = "#191e2a"
-               , activeBorderColor   = "#73d0ff"
-               , inactiveBorderColor = "#191e2a"
-               , activeTextColor     = "#191e2a"
-               , inactiveTextColor   = "#c7c7c7"
-               }
 
 
 ------------------------------------------------------------------------
@@ -205,12 +205,13 @@ myKeys =
       , ("M-<F10>", spawn "pactl set-sink-mute @DEFAULT_SINK@ toggle")              -- Mute
 
     -- System Lock
-      , ("M-S-<XF86Eject>", spawn "arcolinux-logout")                                 -- Lock Screen
-      , ("M-<XF86Eject>", spawn "betterlockscreen -l dim -- --time-str='%H:%M'")      -- Lock Screen
+      , ("M-S-<XF86Eject>", spawn "arcolinux-logout")                               -- Lock Screen
+      , ("M-<XF86Eject>", spawn "betterlockscreen -l dim -- --time-str='%H:%M'")    -- Lock Screen
 
     -- Run Prompt
       , ("M-p", spawn "dmenu_run -i -nb '#212733' -nf '#a37acc' -sb '#55b4d4' -sf '#212733' -fn 'NotoMonoRegular:bold:pixelsize=15' -h 30") -- Run Dmenu (rofi -show drun)
       , ("M-s", spawn "sh $HOME/.config/rofi/launchers/misc/launcher.sh")           -- Rofi Launcher
+      , ("M-S-s", spawn "xfce4-appfinder")                                          -- XFCE App FInder
 
     -- Apps
       , ("M-f", spawn "firefox")                                                    -- Firefox
@@ -230,6 +231,9 @@ myKeys =
       , ("M-<Up>", windows W.swapUp)                                                -- Swap the focused window with the previous window
       , ("M-<Down>", windows W.swapDown)                                            -- Swap the focused window with the next window
 
+      , ("M-S-w", sendMessage (T.Toggle "full"))                                    -- Toggles my 'mirror' layout
+
+
     -- Workspaces
       , ("M-.", nextScreen)                                                         -- Switch focus to next monitor
       , ("M-,", prevScreen)                                                         -- Switch focus to prev monitor
@@ -248,10 +252,10 @@ myKeys =
       , ("M-C-l", incScreenSpacing 4)                                               -- Increase screen spacing
 
     -- Window resizing
-      , ("M1-<Up>", sendMessage Shrink)                                             -- Shrink horiz window width
-      , ("M1-<Down>", sendMessage Expand)                                           -- Expand horiz window width
-      , ("M1-<Right>", sendMessage MirrorShrink)                                    -- Shrink vert window width
-      , ("M1-<Left>", sendMessage MirrorExpand)                                     -- Expand vert window width
+      , ("M1-<Left>", sendMessage Shrink)                                           -- Shrink horiz window width
+      , ("M1-<Right>", sendMessage Expand)                                          -- Expand horiz window width
+      , ("M1-<Down>", sendMessage MirrorShrink)                                     -- Shrink vert window width
+      , ("M1-<Up>", sendMessage MirrorExpand)                                       -- Expand vert window width
 
     -- Brightness Display 1
       , ("M-<F1>", spawn "sh $HOME/.xmonad/scripts/brightness.sh + DisplayPort-0")  -- Night Mode
@@ -270,10 +274,10 @@ myKeys =
 
     -- Controls for MPD + ncmpcpp
       , ("M-<F8>", spawn "mpc play")                                                -- Play
-      , ("M-S-<F8>", spawn "mpc toggle")                                            -- Pause/unpause
       , ("M-<F9>", spawn "mpc next")                                                -- Next
       , ("M-<F7>", spawn "mpc prev")                                                -- Prev
-      , ("C-<F8>", spawn "mpc stop")                                                -- Stop
+      , ("M-S-<F8>", spawn "mpc toggle")                                            -- Pause/unpause
+      , ("M-C-<F8>", spawn "mpc stop")                                              -- Stop
 
     -- Scratchpad windows
       , ("M-m", namedScratchpadAction myScratchPads "ncmpcpp")                      -- Ncmpcpp Player
@@ -315,6 +319,7 @@ myManageHook = composeAll
      , className =? "dialog"                            --> doFloat
      , className =? "Downloads"                         --> doFloat
      , className =? "Save As..."                        --> doFloat
+     , className =? "Xfce4-appfinder"                   --> doFloat
      , className =? "Org.gnome.NautilusPreviewer"       --> doRectFloat (W.RationalRect 0.15 0.15 0.7 0.7)
      , className =? "Thunar"                            --> doRectFloat (W.RationalRect 0.15 0.15 0.7 0.7)
      , className =? "Sublime_merge"                     --> doRectFloat (W.RationalRect 0.15 0.15 0.7 0.7)
@@ -336,7 +341,7 @@ myStartupHook = do
     spawnOnce "mpd &"
     spawnOnce "echo 0 | sudo tee -a /sys/module/hid_apple/parameters/fnmode &"
     spawnOnce "sleep 5 && conky -c $HOME/.config/conky/conky.conkyrc &"
-    spawnOnce "xrandr --output DisplayPort-0 --primary --mode 2560x1440 --rate 144.00 --output HDMI-A-1 --mode 1920x1080 --rate 75.00 --right-of DisplayPort-0 &"
+    spawnOnce "xrandr --output DisplayPort-0 --primary --mode 2560x1440 --rate 144.00 --output HDMI-A-1 --mode 1920x1080 --rate 75.00 --right-of DisplayPort-0 --output HDMI-A-0 --mode 1920x1080 --rate 75.00 --above DisplayPort-0 &"
     setWMName "LG3D"
 
 

@@ -24,7 +24,7 @@ blueberry-tray &
 /usr/lib/xfce4/notifyd/xfce4-notifyd &
 
 # Some ways to set your wallpaper besides variety or nitrogen
-feh --randomize --bg-fill /home/ns/Pictures/Wallpapers/Girls/Asian/* /home/ns/Pictures/Wallpapers/Girls/Asian/*
+feh --randomize --bg-fill /home/ns/Pictures/Wallpapers/Girls/Asian/* /home/ns/Pictures/Wallpapers/Girls/Asian/* /home/ns/Pictures/Wallpapers/Girls/Asian/*
 
 # Polybar
 #(sleep 2; run $HOME/.config/polybar/launch.sh) &
