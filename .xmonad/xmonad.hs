@@ -113,8 +113,8 @@ myLayoutHook = avoidStruts $ mouseResize $ windowArrange $ T.toggleLayouts full
                $ mkToggle (NBFULL ?? NOBORDERS ?? MIRROR ?? EOT) myDefaultLayout
              where
                myDefaultLayout =      withBorder myBorderWidth tall
-                                  ||| grid
                                   ||| full
+                                  ||| grid
                                   ||| mirror
 
 
@@ -128,7 +128,7 @@ tall     = renamed [Replace " <fc=#95e6cb><fn=2> \61449 </fn>Tall</fc>"]
            $ subLayout [] (smartBorders Simplest)
            $ limitWindows 8
            $ mySpacing 5
-           $ ResizableTall 1 (3/100) (1/2) []
+           $ ResizableTall 1 (3/100) (1/2) []               
 grid     = renamed [Replace " <fc=#95e6cb><fn=2> \61449 </fn>Grid</fc>"]
            $ smartBorders
            $ windowNavigation
@@ -148,7 +148,7 @@ mirror     = renamed [Replace " <fc=#95e6cb><fn=2> \61449 </fn>Mirror</fc>"]
            $ Mirror  
            $ ResizableTall 1 (3/100) (1/2) []            
 full     = renamed [Replace " <fc=#95e6cb><fn=2> \61449 </fn>Full</fc>"]
-           $ Full              
+           $ Full                     
 
 
 ------------------------------------------------------------------------
@@ -216,15 +216,17 @@ myKeys =
     -- Apps
       , ("M-f", spawn "firefox")                                                    -- Firefox
       , ("M-b", spawn "brave")                                                      -- Brave
+      , ("M-c", spawn "chromium")                                                   -- Chromium
       , ("M-S-f", spawn "firefox -private-window")                                  -- Firefox Private mode
       , ("M-S-b", spawn "brave --incognito")                                        -- Brave Private mode
-      , ("M-<XF86Tools>", spawn "flameshot gui")                                        -- Flameshot (screenshot)
+      , ("M-S-c", spawn "chromium --incognito")                                     -- Chromium Private mode
+      , ("M-<XF86Tools>", spawn "flameshot gui")                                    -- Flameshot (screenshot)
       , ("M-S-<XF86Tools>", spawn "sleep 5 && flameshot full -p $HOME/Pictures/Screenshots") -- Flameshot (5 sec delay)
       , ("M-<Return>", spawn (myTerminal))                                          -- Terminal
 
     -- Windows navigation
       , ("M-<Space>", sendMessage NextLayout)                                       -- Rotate through the available layout algorithms
-      , ("M1-a", sendMessage (MT.Toggle NBFULL) >> sendMessage ToggleStruts)        -- Toggles full width
+      , ("M1-f", sendMessage (MT.Toggle NBFULL) >> sendMessage ToggleStruts)        -- Toggles full width
       , ("M1-S-p>", withFocused $ windows . W.sink)                                 -- Push window back into tiling
       , ("M1-s", sinkAll)                                                           -- Push all windows back into tiling
       , ("M-<Left>", windows W.swapMaster)                                          -- Swap the focused window and the master window
@@ -288,8 +290,8 @@ myKeys =
       , ("M-t", namedScratchpadAction myScratchPads "terminal")                     -- Terminal
 
     -- ProtonVPN
-      , ("M-S-c", spawn "protonvpn-cli c -f")                                       -- Connect
-      , ("M-S-d", spawn "protonvpn-cli d")                                          -- Disconnect
+      -- , ("M-S-c", spawn "protonvpn-cli c -f")                                       -- Connect
+      -- , ("M-S-d", spawn "protonvpn-cli d")                                          -- Disconnect
 
     ]  
 
