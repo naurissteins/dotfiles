@@ -1,6 +1,6 @@
 -- Main
 import XMonad
-import System.IO
+import System.IO (hPutStrLn)
 import System.Exit
 import qualified XMonad.StackSet as W
 
@@ -232,9 +232,7 @@ myKeys =
       , ("M-<Left>", windows W.swapMaster)                                          -- Swap the focused window and the master window
       , ("M-<Up>", windows W.swapUp)                                                -- Swap the focused window with the previous window
       , ("M-<Down>", windows W.swapDown)                                            -- Swap the focused window with the next window
-
       , ("M-S-w", sendMessage (T.Toggle "full"))                                    -- Toggles my 'mirror' layout
-
 
     -- Workspaces
       , ("M-.", nextScreen)                                                         -- Switch focus to next monitor
@@ -290,8 +288,8 @@ myKeys =
       , ("M-t", namedScratchpadAction myScratchPads "terminal")                     -- Terminal
 
     -- ProtonVPN
-      -- , ("M-S-c", spawn "protonvpn-cli c -f")                                       -- Connect
-      -- , ("M-S-d", spawn "protonvpn-cli d")                                          -- Disconnect
+      -- , ("M-S-c", spawn "protonvpn-cli c -f")                                    -- Connect
+      -- , ("M-S-d", spawn "protonvpn-cli d")                                       -- Disconnect
 
     ]  
 
@@ -352,11 +350,14 @@ myStartupHook = do
 ------------------------------------------------------------------------
 main :: IO ()
 main = do
-        xmproc <- spawnPipe "/usr/bin/xmobar ~/.xmobarrc"
+        xmproc0 <- spawnPipe "/usr/bin/xmobar -x 0 ~/.xmobarrc0"
+        xmproc1 <- spawnPipe "/usr/bin/xmobar -x 1 ~/.xmobarrc1"
         xmonad $ ewmh def
                 { manageHook = myManageHook <+> manageDocks
                 , logHook = dynamicLogWithPP $ namedScratchpadFilterOutWorkspacePP $ xmobarPP
-                        { ppOutput = hPutStrLn xmproc
+                        { ppOutput = \x -> hPutStrLn xmproc0 x -- xmobar on monitor 1
+                                        >> hPutStrLn xmproc1 x -- xmobar on monitor 2
+
                         , ppCurrent = xmobarColor "#ff79c6" "" . \s -> " <fn=2>\61713</fn>"
                          , ppVisible = xmobarColor "#d4bfff" ""
                          , ppHidden = xmobarColor "#d4bfff" ""
