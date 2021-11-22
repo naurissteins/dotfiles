@@ -15,8 +15,7 @@ import XMonad.Actions.CopyWindow (kill1)
 -- Data
 import Data.Semigroup
 import Data.Monoid
-import Data.Maybe (fromJust)
-import Data.Maybe (isJust)
+import Data.Maybe (fromJust, isJust)
 import qualified Data.Map as M
 
 -- Hooks
@@ -61,7 +60,6 @@ import XMonad.Util.Run (runProcessWithInput, safeSpawn, spawnPipe)
 import XMonad.Util.SpawnOnce
 import Graphics.X11.ExtraTypes.XF86
 
-
 ------------------------------------------------------------------------
 -- Main strings
 ------------------------------------------------------------------------
@@ -105,7 +103,6 @@ myTabTheme = def { fontName          = myFont
 mySpacing :: Integer -> l a -> XMonad.Layout.LayoutModifier.ModifiedLayout Spacing l a
 mySpacing i = spacingRaw False (Border 40 10 10 10) True (Border 10 10 10 10) True
 
-
 ------------------------------------------------------------------------
 -- Layout Hook
 ------------------------------------------------------------------------
@@ -116,7 +113,6 @@ myLayoutHook = avoidStruts $ mouseResize $ windowArrange $ T.toggleLayouts full
                                   ||| full
                                   ||| grid
                                   ||| mirror
-
 
 ------------------------------------------------------------------------
 -- Tiling Layouts
@@ -150,14 +146,13 @@ mirror     = renamed [Replace " <fc=#95e6cb><fn=2> \61449 </fn>Mirror</fc>"]
 full     = renamed [Replace " <fc=#95e6cb><fn=2> \61449 </fn>Full</fc>"]
            $ Full                     
 
-
 ------------------------------------------------------------------------
 -- Workspaces
 ------------------------------------------------------------------------
 xmobarEscape :: String -> String
 xmobarEscape = concatMap doubleLts
   where
-    doubleLts 'a' = "<<"
+
     doubleLts x = [x]
 
 myWorkspaces :: [String]
@@ -168,7 +163,6 @@ myWorkspaces = clickable . (map xmobarEscape)
 
 windowCount :: X (Maybe String)
 windowCount = gets $ Just . show . length . W.integrate' . W.stack . W.workspace . W.current . windowset
-
 
 ------------------------------------------------------------------------
 -- Scratch Pads
@@ -186,7 +180,6 @@ myScratchPads =
   where
     launchMocp     = myTerminal ++ " -t ncmpcpp -e ncmpcpp"
     launchTerminal = myTerminal ++ " -t scratchpad"
-
 
 ------------------------------------------------------------------------
 -- Custom Keys
@@ -287,19 +280,13 @@ myKeys =
       , ("M-w", namedScratchpadAction myScratchPads "whatsapp-for-linux")           -- WhatsApp
       , ("M-t", namedScratchpadAction myScratchPads "terminal")                     -- Terminal
 
-    -- ProtonVPN
-      -- , ("M-S-c", spawn "protonvpn-cli c -f")                                    -- Connect
-      -- , ("M-S-d", spawn "protonvpn-cli d")                                       -- Disconnect
-
     ]  
-
 
 ------------------------------------------------------------------------
 -- Moving between WS
 ------------------------------------------------------------------------
       where nonNSP          = WSIs (return (\ws -> W.tag ws /= "NSP"))
             nonEmptyNonNSP  = WSIs (return (\ws -> isJust (W.stack ws) && W.tag ws /= "NSP"))
-
 
 ------------------------------------------------------------------------
 -- Floats
@@ -331,19 +318,12 @@ myHandleEventHook :: Event -> X All
 myHandleEventHook = dynamicPropertyChange "WM_NAME" (title =? "Spotify" --> floating)
         where floating = doRectFloat (W.RationalRect 0.15 0.15 0.7 0.7)
 
-
 ------------------------------------------------------------------------
 -- Startup Hooks
 ------------------------------------------------------------------------
 myStartupHook = do
-    spawnOnce "$HOME/.xmonad/scripts/autostart.sh" 
-    spawnOnce "picom --experimental-backend &"
-    spawnOnce "mpd &"
-    spawnOnce "echo 0 | sudo tee -a /sys/module/hid_apple/parameters/fnmode &"
-    spawnOnce "sleep 5 && conky -c $HOME/.config/conky/conky.conkyrc &"
-    spawnOnce "xrandr --output DisplayPort-0 --primary --mode 2560x1440 --rate 144.00 --output HDMI-A-1 --mode 1920x1080 --rate 75.00 --right-of DisplayPort-0 --output HDMI-A-0 --mode 1920x1080 --rate 75.00 --above DisplayPort-0 &"
+    spawnOnce "$HOME/.xmonad/scripts/autostart.sh"
     setWMName "LG3D"
-
 
 ------------------------------------------------------------------------
 -- Main Do
@@ -357,7 +337,6 @@ main = do
                 , logHook = dynamicLogWithPP $ namedScratchpadFilterOutWorkspacePP $ xmobarPP
                         { ppOutput = \x -> hPutStrLn xmproc0 x -- xmobar on monitor 1
                                         >> hPutStrLn xmproc1 x -- xmobar on monitor 2
-
                         , ppCurrent = xmobarColor "#ff79c6" "" . \s -> " <fn=2>\61713</fn>"
                          , ppVisible = xmobarColor "#d4bfff" ""
                          , ppHidden = xmobarColor "#d4bfff" ""
