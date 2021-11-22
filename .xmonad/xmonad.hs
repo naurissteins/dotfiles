@@ -7,7 +7,6 @@ import qualified XMonad.StackSet as W
 -- Actions
 import XMonad.Actions.GridSelect
 import XMonad.Actions.CycleWS (Direction1D(..), moveTo, shiftTo, WSType(..), nextScreen, prevScreen)
-import XMonad.Actions.SpawnOn
 import XMonad.Actions.MouseResize
 import XMonad.Actions.WithAll (sinkAll, killAll)
 import XMonad.Actions.CopyWindow (kill1)
@@ -27,18 +26,12 @@ import XMonad.Hooks.SetWMName
 import XMonad.Hooks.ManageHelpers (isFullscreen, doFullFloat, isDialog, doCenterFloat, doRectFloat)
 
 -- Layouts
-import XMonad.Layout.Accordion
 import XMonad.Layout.GridVariants (Grid(Grid))
-import XMonad.Layout.SimplestFloat
-import XMonad.Layout.Spiral
 import XMonad.Layout.ResizableTile
-import XMonad.Layout.Tabbed
-import XMonad.Layout.ThreeColumns
 
 --Layouts modifers
 import XMonad.Layout.LayoutModifier
 import XMonad.Layout.LimitWindows (limitWindows, increaseLimit, decreaseLimit)
-import XMonad.Layout.Magnifier
 import XMonad.Layout.MultiToggle (mkToggle, single, EOT(EOT), (??))
 import XMonad.Layout.MultiToggle.Instances (StdTransformers(NBFULL, MIRROR, NOBORDERS))
 import XMonad.Layout.NoBorders
@@ -69,33 +62,14 @@ myFont = "xft:SauceCodePro Nerd Font Mono:regular:size=9:antialias=true:hinting=
 myTerminal :: String
 myTerminal = "alacritty"        -- Default terminal
 
+myDmenu :: String
+myDmenu = "dmenu_run -i -nb '#2e3440' -nf '#a37acc' -sb '#55b4d4' -sf '#212733' -fn 'NotoMonoRegular:bold:pixelsize=15' -h 30" -- Dmenu
+
 myModMask :: KeyMask
 myModMask = mod4Mask            -- Super Key (--mod4Mask= super key --mod1Mask= alt key --controlMask= ctrl key --shiftMask= shift key)
 
-myBrowser :: String
-myBrowser = "firefox"           -- Default browser
-
 myBorderWidth :: Dimension
 myBorderWidth   = 0             -- Window border
-
-myNormColor :: String
-myNormColor   = "#282c34"       -- Border colors for windows
-
-myFocusColor :: String
-myFocusColor  = "#73d0ff"       -- Border colors of focused windows
-
-------------------------------------------------------------------------
--- Colors for tabs
-------------------------------------------------------------------------
-myTabTheme = def { fontName          = myFont
-               , activeColor         = "#73d0ff"
-               , inactiveColor       = "#191e2a"
-               , activeBorderColor   = "#73d0ff"
-               , inactiveBorderColor = "#191e2a"
-               , activeTextColor     = "#191e2a"
-               , inactiveTextColor   = "#c7c7c7"
-               }
-
 
 ------------------------------------------------------------------------
 -- Space between Tiling Windows
@@ -120,7 +94,6 @@ myLayoutHook = avoidStruts $ mouseResize $ windowArrange $ T.toggleLayouts full
 tall     = renamed [Replace " <fc=#95e6cb><fn=2> \61449 </fn>Tall</fc>"]
            $ smartBorders
            $ windowNavigation
-           $ addTabs shrinkText myTabTheme
            $ subLayout [] (smartBorders Simplest)
            $ limitWindows 8
            $ mySpacing 5
@@ -128,7 +101,6 @@ tall     = renamed [Replace " <fc=#95e6cb><fn=2> \61449 </fn>Tall</fc>"]
 grid     = renamed [Replace " <fc=#95e6cb><fn=2> \61449 </fn>Grid</fc>"]
            $ smartBorders
            $ windowNavigation
-           $ addTabs shrinkText myTabTheme
            $ subLayout [] (smartBorders Simplest)
            $ limitWindows 12
            $ mySpacing 5
@@ -137,7 +109,6 @@ grid     = renamed [Replace " <fc=#95e6cb><fn=2> \61449 </fn>Grid</fc>"]
 mirror     = renamed [Replace " <fc=#95e6cb><fn=2> \61449 </fn>Mirror</fc>"]
            $ smartBorders
            $ windowNavigation
-           $ addTabs shrinkText myTabTheme
            $ subLayout [] (smartBorders Simplest)
            $ limitWindows 6
            $ mySpacing 5
@@ -152,15 +123,12 @@ full     = renamed [Replace " <fc=#95e6cb><fn=2> \61449 </fn>Full</fc>"]
 xmobarEscape :: String -> String
 xmobarEscape = concatMap doubleLts
   where
-
     doubleLts x = [x]
-
 myWorkspaces :: [String]
 myWorkspaces = clickable . (map xmobarEscape)
     $ [" <fn=5>\61713</fn> ", " <fn=5>\61713</fn> ", " <fn=5>\61713</fn> ", " <fn=5>\61713</fn> ", " <fn=5>\61713</fn> "]
   where
     clickable l = ["<action=xdotool key super+" ++ show (i) ++ "> " ++ ws ++ "</action>" | (i, ws) <- zip [1 .. 5] l]
-
 windowCount :: X (Maybe String)
 windowCount = gets $ Just . show . length . W.integrate' . W.stack . W.workspace . W.current . windowset
 
@@ -202,7 +170,7 @@ myKeys =
       , ("M-<XF86Eject>", spawn "betterlockscreen -l dim -- --time-str='%H:%M'")    -- Lock Screen
 
     -- Run Prompt
-      , ("M-p", spawn "dmenu_run -i -nb '#212733' -nf '#a37acc' -sb '#55b4d4' -sf '#212733' -fn 'NotoMonoRegular:bold:pixelsize=15' -h 30") -- Run Dmenu (rofi -show drun)
+      , ("M-p", spawn (myDmenu))                                                    -- Run Dmenu (rofi -show drun)
       , ("M-s", spawn "sh $HOME/.config/rofi/launchers/misc/launcher.sh")           -- Rofi Launcher
       , ("M-S-s", spawn "xfce4-appfinder")                                          -- XFCE App FInder
 
@@ -220,8 +188,8 @@ myKeys =
     -- Windows navigation
       , ("M-<Space>", sendMessage NextLayout)                                       -- Rotate through the available layout algorithms
       , ("M1-f", sendMessage (MT.Toggle NBFULL) >> sendMessage ToggleStruts)        -- Toggles full width
+      , ("M1-s", sinkAll)                                                           -- Push all windows back into tiling      
       , ("M1-S-p>", withFocused $ windows . W.sink)                                 -- Push window back into tiling
-      , ("M1-s", sinkAll)                                                           -- Push all windows back into tiling
       , ("M-<Left>", windows W.swapMaster)                                          -- Swap the focused window and the master window
       , ("M-<Up>", windows W.swapUp)                                                -- Swap the focused window with the previous window
       , ("M-<Down>", windows W.swapDown)                                            -- Swap the focused window with the next window
@@ -348,8 +316,6 @@ main = do
                 , modMask            = mod4Mask
                 , layoutHook         = myLayoutHook
                 , workspaces         = myWorkspaces
-                , normalBorderColor  = myNormColor
-                , focusedBorderColor = myFocusColor
                 , terminal           = myTerminal
                 , borderWidth        = myBorderWidth
                 , startupHook        = myStartupHook
