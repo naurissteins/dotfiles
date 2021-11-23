@@ -5,7 +5,6 @@ import System.Exit
 import qualified XMonad.StackSet as W
 
 -- Actions
-import XMonad.Actions.GridSelect
 import XMonad.Actions.CycleWS (Direction1D(..), moveTo, shiftTo, WSType(..), nextScreen, prevScreen)
 import XMonad.Actions.MouseResize
 import XMonad.Actions.WithAll (sinkAll, killAll)
@@ -54,11 +53,8 @@ import XMonad.Util.SpawnOnce
 import Graphics.X11.ExtraTypes.XF86
 
 ------------------------------------------------------------------------
--- Main strings
+-- My Strings
 ------------------------------------------------------------------------
-myFont :: String
-myFont = "xft:SauceCodePro Nerd Font Mono:regular:size=9:antialias=true:hinting=true"
-
 myTerminal :: String
 myTerminal = "alacritty"        -- Default terminal
 
@@ -176,14 +172,20 @@ myKeys =
 
     -- Apps
       , ("M-f", spawn "firefox")                                                    -- Firefox
-      , ("M-b", spawn "brave")                                                      -- Brave
+      , ("M-b", spawn "subl")                                                       -- Sublime Text Editor
       , ("M-c", spawn "chromium")                                                   -- Chromium
       , ("M-S-f", spawn "firefox -private-window")                                  -- Firefox Private mode
-      , ("M-S-b", spawn "brave --incognito")                                        -- Brave Private mode
       , ("M-S-c", spawn "chromium --incognito")                                     -- Chromium Private mode
-      , ("M-<XF86Tools>", spawn "flameshot gui")                                    -- Flameshot (screenshot)
-      , ("M-S-<XF86Tools>", spawn "sleep 5 && flameshot full -p $HOME/Pictures/Screenshots") -- Flameshot (5 sec delay)
       , ("M-<Return>", spawn (myTerminal))                                          -- Terminal
+
+    -- Flameshot
+      , ("<XF86Tools>", spawn "flameshot gui")                                                      -- Flameshot GUI (screenshot)
+      , ("M-<XF86Tools> 1", spawn "flameshot screen -n 0 -p $HOME/Pictures/Screenshots")            -- Monitor 1
+      , ("M-<XF86Tools> 2", spawn "flameshot screen -n 1 -p $HOME/Pictures/Screenshots")            -- Monitor 2
+      , ("M-<XF86Tools> 3", spawn "flameshot screen -n 2 -p $HOME/Pictures/Screenshots")            -- Monitor 3
+      , ("M-<XF86Tools> 4", spawn "sleep 5 && flameshot screen -n 0 -p $HOME/Pictures/Screenshots") -- Monitor 1
+      , ("M-<XF86Tools> 5", spawn "sleep 5 && flameshot screen -n 1 -p $HOME/Pictures/Screenshots") -- Monitor 2
+      , ("M-<XF86Tools> 6", spawn "sleep 5 && flameshot screen -n 2 -p $HOME/Pictures/Screenshots") -- Monitor 3      
 
     -- Windows navigation
       , ("M-<Space>", sendMessage NextLayout)                                       -- Rotate through the available layout algorithms
