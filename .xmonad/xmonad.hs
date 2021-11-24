@@ -71,7 +71,7 @@ myBorderWidth   = 0             -- Window border
 -- Space between Tiling Windows
 ------------------------------------------------------------------------
 mySpacing :: Integer -> l a -> XMonad.Layout.LayoutModifier.ModifiedLayout Spacing l a
-mySpacing i = spacingRaw False (Border 40 10 10 10) True (Border 10 10 10 10) True
+mySpacing i = spacingRaw False (Border 30 10 10 10) True (Border 10 10 10 10) True
 
 ------------------------------------------------------------------------
 -- Layout Hook
@@ -192,10 +192,11 @@ myKeys =
       , ("M1-f", sendMessage (MT.Toggle NBFULL) >> sendMessage ToggleStruts)        -- Toggles full width
       , ("M1-s", sinkAll)                                                           -- Push all windows back into tiling      
       , ("M1-S-p>", withFocused $ windows . W.sink)                                 -- Push window back into tiling
+      , ("M1-t", sendMessage (T.Toggle "floats"))                                   -- Toggles my 'floats' layout
       , ("M-<Left>", windows W.swapMaster)                                          -- Swap the focused window and the master window
       , ("M-<Up>", windows W.swapUp)                                                -- Swap the focused window with the previous window
       , ("M-<Down>", windows W.swapDown)                                            -- Swap the focused window with the next window
-      , ("M-S-w", sendMessage (T.Toggle "full"))                                    -- Toggles my 'mirror' layout
+      
 
     -- Workspaces
       , ("M-.", nextScreen)                                                         -- Switch focus to next monitor
