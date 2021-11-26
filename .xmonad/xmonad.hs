@@ -27,8 +27,6 @@ import XMonad.Hooks.ManageHelpers (isFullscreen, doFullFloat, isDialog, doCenter
 -- Layouts
 import XMonad.Layout.GridVariants (Grid(Grid))
 import XMonad.Layout.ResizableTile
-
---Layouts modifers
 import XMonad.Layout.LayoutModifier
 import XMonad.Layout.LimitWindows (limitWindows, increaseLimit, decreaseLimit)
 import XMonad.Layout.MultiToggle (mkToggle, single, EOT(EOT), (??))
@@ -195,8 +193,7 @@ myKeys =
       , ("M1-t", sendMessage (T.Toggle "floats"))                                   -- Toggles my 'floats' layout
       , ("M-<Left>", windows W.swapMaster)                                          -- Swap the focused window and the master window
       , ("M-<Up>", windows W.swapUp)                                                -- Swap the focused window with the previous window
-      , ("M-<Down>", windows W.swapDown)                                            -- Swap the focused window with the next window
-      
+      , ("M-<Down>", windows W.swapDown)                                            -- Swap the focused window with the next window     
 
     -- Workspaces
       , ("M-.", nextScreen)                                                         -- Switch focus to next monitor
@@ -279,6 +276,7 @@ myManageHook = composeAll
      , className =? "Save As..."                        --> doFloat
      , className =? "Xfce4-appfinder"                   --> doFloat
      , className =? "Org.gnome.NautilusPreviewer"       --> doRectFloat (W.RationalRect 0.15 0.15 0.7 0.7)
+     , className =? "Xdg-desktop-portal-gtk"            --> doRectFloat (W.RationalRect 0.15 0.15 0.7 0.7)
      , className =? "Thunar"                            --> doRectFloat (W.RationalRect 0.15 0.15 0.7 0.7)
      , className =? "Sublime_merge"                     --> doRectFloat (W.RationalRect 0.15 0.15 0.7 0.7)
      , isFullscreen -->  doFullFloat
