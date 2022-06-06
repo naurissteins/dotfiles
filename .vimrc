@@ -40,7 +40,7 @@ nmap <C-Y> <C-R>
 nmap <C-F> /
 nmap <C-H> i<C-W><Esc>
 nmap <F3> :set invnumber<CR>
-nmap <F4> :q<CR>
+nmap <F4> :wq<CR>
 imap <C-S> <Esc>:w<CR>a
 imap <C-_> <Esc>:noh<CR>a
 imap <S-Left> <Esc>lv<Left>
@@ -79,9 +79,9 @@ hi group1 ctermbg=NONE ctermfg=NONE
 autocmd colorscheme * hi clear cursorline
 match group1 /\t/
 
-packadd! dracula
-syntax enable
-colorscheme dracula
+" packadd! dracula
+" syntax enable
+" colorscheme dracula
 
 hi Normal guibg=NONE ctermbg=NONE
 

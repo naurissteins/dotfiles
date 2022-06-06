@@ -6,18 +6,19 @@
 -- MPD music server https://archlinux.org/packages/extra/x86_64/mpd/
 -- MPC Command line for MPD https://archlinux.org/packages/extra/x86_64/mpc/
 -- ncmpcpp music player https://archlinux.org/packages/community/x86_64/ncmpcpp/
--- ProtonVPN CLI https://aur.archlinux.org/packages/protonvpn-cli
 
 Config { font    = "xft:Ubuntu:weight=bold:pixelsize=13:antialias=true:hinting=true,Font Awesome 5 Free Regular:pixelsize=14"
        , additionalFonts = [ "xft:Mononoki Nerd Font:pixelsize=13:antialias=true:hinting=true"
-                           , "xft:Font Awesome 5 Free Solid:pixelsize=13"
-                           , "xft:FontAwesome:pixelsize=13"                         -- Weather
-                           , "xft:Font Awesome 5 Free Solid:pixelsize=10"           -- MPD music player
-                           , "xft:Font Awesome 5 Free Regular:pixelsize=13"         -- Tiling
-                           , "xft:Ubuntu:pixelsize=13:antialias=true:hinting=true"  -- Networks
-                           , "xft:Font Awesome 5 Brands:pixelsize=13"               -- Brand Icons
+                           , "xft:Font Awesome 6 Free Solid:pixelsize=13"
+                           , "xft:FontAwesome:pixelsize=13"                                                  -- Weather
+                           , "xft:Font Awesome 6 Free Solid:pixelsize=10"                                    -- MPD music player
+                           , "xft:Font Awesome 6 Free Regular:pixelsize=13"                                  -- Tiling
+                           , "xft:Mononoki Nerd Font:weight=bold:pixelsize=13:antialias=true:hinting=true"   -- VPN
+                           , "xft:Font Awesome 6 Brands:pixelsize=13"                                        -- Brand Icons
+                           , "xft:Mononoki Nerd Font:weight=bold:pixelsize=13:antialias=true:hinting=true"   -- MAIL 
+                           , "xft:Mononoki Nerd Font:pixelsize=13:antialias=true:hinting=true"   -- Artist
                            ]
-       , bgColor = "#212733"
+       , bgColor = "#2e3440"
        , fgColor = "#ff6c6b"
        , position = TopSize L 100 30
        , lowerOnStart = True
@@ -26,10 +27,10 @@ Config { font    = "xft:Ubuntu:weight=bold:pixelsize=13:antialias=true:hinting=t
        , persistent = True
        , commands = [
                     -- Time and date
-                      Run Date "<fc=#bae67e><fn=5> </fn> %b %d %Y</fc> <fc=#212733> | |</fc> <fc=#f27983><fn=5></fn> %H:%M </fc>" "date" 50
+                      Run Date "<fc=#bae67e><fn=5> </fn> %b %d %Y</fc> <fc=#2e3440> | |</fc> <fc=#f27983><fn=5></fn> %H:%M </fc>" "date" 50
 
                       -- Network
-                    , Run Network "enp4s0" ["-t", "<fn=3></fn> <rx> kb <fc=#212733> |</fc> <fn=3></fn> <tx> kb"] 20
+                    , Run Network "enp4s0" ["-t", "<fn=3></fn> <rx> kb <fc=#2e3440> |</fc> <fn=3></fn> <tx> kb"] 20
 
                       -- Cpu usage in percent
                     , Run Cpu ["-t", "<total>%","-H","50","--high","red"] 20
@@ -72,10 +73,12 @@ Config { font    = "xft:Ubuntu:weight=bold:pixelsize=13:antialias=true:hinting=t
                              -- , "--high", "lightgoldenrod4", "--low", "darkseagreen4"
                              ] 18000
 
-                    -- ProtonVPN status
-                    , Run Com ".xmonad/scripts/xmobar/protonvpn" [] "protonvpn" 50
-                    , Run Com ".xmonad/scripts/xmobar/vpnsrvload" [] "vpnsrvload" 50
+                    -- VPN status
+                    , Run Com ".xmonad/scripts/xmobar/mullvad" [] "vpn" 50
+                    -- , Run Com ".xmonad/scripts/xmobar/vpnsrvload" [] "vpnsrvload" 50
 
+                    -- Check Mails
+                    , Run Com ".xmonad/scripts/xmobar/mail/checkmails.sh" [] "checkmails" 50                                                 
 
                     -- BTC buy price
                     , Run Com ".xmonad/scripts/xmobar/btc" [] "btc" 600
@@ -95,23 +98,24 @@ Config { font    = "xft:Ubuntu:weight=bold:pixelsize=13:antialias=true:hinting=t
                       ] 10
 
                     -- MPD Music server
-                    , Run MPD ["-t","<action=`mpc prev`><fc=#73d0ff><fn=4>\xf048</fn></fc></action> <action=`mpc play`><fc=#bae67e><fn=2>\xf144</fn></fc></action> <action=`mpc next`><fc=#73d0ff><fn=4>\xf051</fn></fc></action> <fc=#212733>a</fc> <artist> - <title>","-h","127.0.0.1","-p","6601"] 10
+                    , Run MPD ["-t","<action=`mpc prev`><fc=#73d0ff><fn=4>\xf048</fn></fc></action> <action=`mpc play`><fc=#bae67e><fn=2>\xf144</fn></fc></action> <action=`mpc next`><fc=#73d0ff><fn=4>\xf051</fn></fc></action> <fc=#2e3440>a</fc> <fc=#ffd580><fn=9><artist></fn></fc> - <fc=#bae67e><fn=9><title></fn></fc>","-h","127.0.0.1","-p","6601"] 10
                     ]
        , sepChar = "%"
        , alignSep = "}{"
-       , template = "<fc=#212733> | | </fc> <fc=#73d0ff><fn=2></fn></fc> \
-       \<fc=#212733> | </fc> %UnsafeStdinReader% \
-       \<fc=#212733> | </fc>  <fc=#73d0ff> <action=`alacritty -e htop`>%multicoretemp% / %cpu%</action> </fc> \
-       \<fc=#212733> | </fc>  <fc=#ff79c6> <action=`alacritty -e htop`>%memory%</action> </fc> \
-       \<fc=#212733> | </fc>  <fc=#d4bfff> <action=`alacritty -e htop`><fn=2></fn> %ping% ms</action> </fc> \
-       \<fc=#212733> | </fc>  <action=`alacritty -e watch protonvpn-cli status`><fc=#ffd580> <fn=2></fn> VPN: %protonvpn% </fc> <fc=#bae67e><fn=6>(%vpnsrvload%)</fn></fc></action> \
-       \<fc=#212733> | </fc>  <fc=#73d0ff> %enp4s0% </fc>} \
+       , template = "<fc=#2e3440> | | </fc> <fc=#73d0ff><fn=2></fn></fc> \
+       \<fc=#2e3440> | </fc> %UnsafeStdinReader% \
+       \<fc=#2e3440> | </fc>  <fc=#73d0ff> <action=`alacritty -e htop`>%multicoretemp% / %cpu%</action> </fc> \
+       \<fc=#2e3440> | </fc>  <fc=#ff79c6> <action=`alacritty -e htop`>%memory%</action> </fc> \
+       \<fc=#2e3440> | </fc>  <fc=#d4bfff> <action=`alacritty -e htop`><fn=2></fn> %ping% ms</action> </fc> \
+       \<fc=#2e3440> | </fc>  <action=`alacritty -e watch mullvad status`><fc=#ffd580> <fn=2></fn> VPN: </fc> <fc=#bae67e><fn=6>%vpn%</fn></fc></action> \
+       \<fc=#2e3440> | </fc>  <fc=#95e6cb> <fn=2></fn> MAIL: </fc> <fc=#bae67e><fn=8>Inbox (%checkmails%)</fn></fc> \
+       \<fc=#2e3440> | </fc>  <fc=#73d0ff> %enp4s0% </fc>} \
        \<fc=#c7c7c7>%mpd%</fc> \
-       \{<fc=#212733> | </fc>  <fc=#73d0ff> %EVRA% </fc> \
-       \<fc=#212733> | </fc>  <fc=#ffd580><fn=3></fn> %btc% </fc> \
-       \<fc=#212733> | </fc>  <fc=#9aadf2><fn=7></fn> %eth% </fc> \
-       \<fc=#212733> | </fc>  <fc=#ff79c6> <action=`alacritty -e watch df -h`>%disku%</action> </fc> \
-       \<fc=#212733> | </fc>   <fc=#d4bfff><fn=2></fn>  <action=`alacritty -e yay -Syu`>%sysupdate%</action> </fc> \
-       \<fc=#212733> | </fc>  <fc=#95e6cb> <fn=2></fn> %default:Master% </fc> \
-       \<fc=#212733> | </fc>  %date% <fc=#212733> | | </fc>"
+       \{<fc=#2e3440> | </fc>  <fc=#73d0ff> %EVRA% </fc> \
+       \<fc=#2e3440> | </fc>  <fc=#ffd580><fn=3></fn> %btc% </fc> \
+       \<fc=#2e3440> | </fc>  <fc=#9aadf2><fn=7></fn> %eth% </fc> \
+       \<fc=#2e3440> | </fc>  <fc=#ff79c6> <action=`alacritty -e watch df -h`>%disku%</action> </fc> \
+       \<fc=#2e3440> | </fc>   <fc=#d4bfff><fn=2></fn>  <action=`alacritty -e yay -Syu`>%sysupdate%</action> </fc> \
+       \<fc=#2e3440> | </fc>  <fc=#95e6cb> <fn=2></fn> %default:Master% </fc> \
+       \<fc=#2e3440> | </fc>  %date% <fc=#2e3440> | | </fc>"
        }
