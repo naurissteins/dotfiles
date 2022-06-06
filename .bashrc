@@ -14,10 +14,10 @@
 
 export HISTCONTROL=ignoreboth:erasedups
 
-# Make vim the default editor
+# Make nano the default editor
 
-export EDITOR='vim'
-export VISUAL='vim'
+export EDITOR='nano'
+export VISUAL='nano'
 
 PS1='[\u@\h \W]\$ '
 
