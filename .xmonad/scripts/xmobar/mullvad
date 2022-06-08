@@ -1,0 +1,15 @@
+#!/bin/bash
+
+STATUS=$(mullvad status | head -n 1 | cut -d' ' -f3)
+SERVER=$(wget -q -O - https://freegeoip.live/csv/ | cut -d',' -f3)
+
+if [ $STATUS == "Connected" ]
+then
+    echo $SERVER
+elif [ $STATUS == "Disconnected" ]
+then 
+    echo "Disconnected" 
+else
+        echo "Connecting..."
+fi
+
