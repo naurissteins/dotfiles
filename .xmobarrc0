@@ -74,7 +74,7 @@ Config { font    = "xft:Ubuntu:weight=bold:pixelsize=13:antialias=true:hinting=t
                              ] 18000
 
                     -- VPN status
-                    , Run Com ".xmonad/scripts/xmobar/mullvad" [] "vpn" 50
+                    , Run Com ".xmonad/scripts/xmobar/protonvpn" [] "vpn" 50
                     -- , Run Com ".xmonad/scripts/xmobar/vpnsrvload" [] "vpnsrvload" 50
 
                     -- Check Mails

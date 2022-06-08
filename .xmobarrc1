@@ -10,11 +10,13 @@
 Config { font    = "xft:Ubuntu:weight=bold:pixelsize=13:antialias=true:hinting=true,Font Awesome 5 Free Regular:pixelsize=14"
        , additionalFonts = [ "xft:Mononoki Nerd Font:pixelsize=13:antialias=true:hinting=true"
                            , "xft:Font Awesome 6 Free Solid:pixelsize=13"
-                           , "xft:FontAwesome:pixelsize=13"                         -- Weather
-                           , "xft:Font Awesome 6 Free Solid:pixelsize=10"           -- MPD music player
-                           , "xft:Font Awesome 6 Free Regular:pixelsize=13"         -- Tiling
-                           , "xft:Ubuntu:pixelsize=13:antialias=true:hinting=true"  -- Networks
-                           , "xft:Font Awesome 6 Brands:pixelsize=13"               -- Brand Icons
+                           , "xft:FontAwesome:pixelsize=13"                                                  -- Weather
+                           , "xft:Font Awesome 6 Free Solid:pixelsize=10"                                    -- MPD music player
+                           , "xft:Font Awesome 6 Free Regular:pixelsize=13"                                  -- Tiling
+                           , "xft:Mononoki Nerd Font:weight=bold:pixelsize=13:antialias=true:hinting=true"   -- VPN
+                           , "xft:Font Awesome 6 Brands:pixelsize=13"                                        -- Brand Icons
+                           , "xft:Mononoki Nerd Font:weight=bold:pixelsize=13:antialias=true:hinting=true"   -- MAIL 
+                           , "xft:Mononoki Nerd Font:pixelsize=13:antialias=true:hinting=true"   -- Artist
                            ]
        , bgColor = "#2e3440"
        , fgColor = "#ff6c6b"
@@ -72,9 +74,11 @@ Config { font    = "xft:Ubuntu:weight=bold:pixelsize=13:antialias=true:hinting=t
                              ] 18000
 
                     -- VPN status
-                    , Run Com ".xmonad/scripts/xmobar/mullvad" [] "vpn" 50
+                    , Run Com ".xmonad/scripts/xmobar/protonvpn" [] "vpn" 50
                     -- , Run Com ".xmonad/scripts/xmobar/vpnsrvload" [] "vpnsrvload" 50
 
+                    -- Check Mails
+                    , Run Com ".xmonad/scripts/xmobar/mail/checkmails.sh" [] "checkmails" 50                                                 
 
                     -- BTC buy price
                     , Run Com ".xmonad/scripts/xmobar/btc" [] "btc" 600
@@ -94,7 +98,7 @@ Config { font    = "xft:Ubuntu:weight=bold:pixelsize=13:antialias=true:hinting=t
                       ] 10
 
                     -- MPD Music server
-                    , Run MPD ["-t","<action=`mpc prev`><fc=#73d0ff><fn=4>\xf048</fn></fc></action> <action=`mpc play`><fc=#bae67e><fn=2>\xf144</fn></fc></action> <action=`mpc next`><fc=#73d0ff><fn=4>\xf051</fn></fc></action> <fc=#2e3440>a</fc> <artist> - <title>","-h","127.0.0.1","-p","6601"] 10
+                    , Run MPD ["-t","<action=`mpc prev`><fc=#73d0ff><fn=4>\xf048</fn></fc></action> <action=`mpc play`><fc=#bae67e><fn=2>\xf144</fn></fc></action> <action=`mpc next`><fc=#73d0ff><fn=4>\xf051</fn></fc></action> <fc=#2e3440>a</fc> <fc=#ffd580><fn=9><artist></fn></fc> - <fc=#bae67e><fn=9><title></fn></fc>","-h","127.0.0.1","-p","6601"] 10
                     ]
        , sepChar = "%"
        , alignSep = "}{"
@@ -104,8 +108,9 @@ Config { font    = "xft:Ubuntu:weight=bold:pixelsize=13:antialias=true:hinting=t
        \<fc=#2e3440> | </fc>  <fc=#ff79c6> <action=`alacritty -e htop`>%memory%</action> </fc> \
        \<fc=#2e3440> | </fc>  <fc=#d4bfff> <action=`alacritty -e htop`><fn=2></fn> %ping% ms</action> </fc> \
        \<fc=#2e3440> | </fc>  <action=`alacritty -e watch mullvad status`><fc=#ffd580> <fn=2></fn> VPN: </fc> <fc=#bae67e><fn=6>%vpn%</fn></fc></action> \
+       \<fc=#2e3440> | </fc>  <fc=#95e6cb> <fn=2></fn> MAIL: </fc> <fc=#bae67e><fn=8>Inbox (%checkmails%)</fn></fc> \
        \<fc=#2e3440> | </fc>  <fc=#73d0ff> %enp4s0% </fc>} \
-       \<fc=#c7c7c7>%mpd%</fc> \
+       -- \<fc=#c7c7c7>%mpd%</fc> \
        \{<fc=#2e3440> | </fc>  <fc=#73d0ff> %EVRA% </fc> \
        \<fc=#2e3440> | </fc>  <fc=#ffd580><fn=3></fn> %btc% </fc> \
        \<fc=#2e3440> | </fc>  <fc=#9aadf2><fn=7></fn> %eth% </fc> \
