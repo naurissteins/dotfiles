@@ -1,16 +1,17 @@
 #!/bin/bash
 
 STATUS=$(protonvpn-cli status | head -n 2 | cut -d' ' -f1)
+COUNTRY=$(protonvpn-cli status | grep 'Country:' | awk {'print $2'})
 SERVER=$(protonvpn-cli status | grep 'Server:' | awk {'print $2'})
+SRVLOAD=$(protonvpn-cli status | grep 'Server Load:' | awk {'print $3'})
 DISCONNECTED=$(protonvpn-cli status | awk {'print $1'})
 
-if [ $STATUS == "ProtonVPN" ]
+if [ $STATUS == "Proton" ]
 then
-    echo $SERVER
+    echo $COUNTRY $SERVER $SRVLOAD
 elif [ $DISCONNECTED == "No" ]
 then 
     echo "Disconnected" 
 else
         echo "Connecting..."
 fi
-

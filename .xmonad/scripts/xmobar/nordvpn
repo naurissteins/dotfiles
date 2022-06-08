@@ -1,16 +1,17 @@
 #!/bin/bash
 
-RESPONSE=$(wget -q -O - https://freegeoip.live/csv/)
-IP_ADDRESS=$(echo $RESPONSE | cut -d',' -f1)
-IP_CITY=$(echo $RESPONSE | cut -d',' -f3)
-IP_STATE=$(echo $RESPONSE | cut -d',' -f2)
-UPTIME=$(echo )
+#RESPONSE=$(wget -q -O - https://freegeoip.live/csv/)
+#IP_ADDRESS=$(echo $RESPONSE | cut -d',' -f1)
+IP_CITY=$(nordvpn status | grep 'City:' | awk {'print $2'})
+SRV=$(nordvpn status | grep 'Current server:' | awk {'print $3'} | sed -e 's/^\(.\{4\}\).*/\1/')
+#IP_STATE=$(echo $RESPONSE | cut -d',' -f2)
+#UPTIME=$(echo )
 
 STATUS=$(nordvpn status | head -n 1 | cut -d' ' -f6)
 
 if [ $STATUS == "Connected" ]
 then
-    echo ${IP_CITY}
+    echo ${IP_CITY} ${SRV}
 elif [ $STATUS == "Disconnected" ]
 then 
     echo "Disconnected" 

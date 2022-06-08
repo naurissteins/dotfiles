@@ -54,22 +54,33 @@ import Graphics.X11.ExtraTypes.XF86
 -- My Strings
 ------------------------------------------------------------------------
 myTerminal :: String
-myTerminal = "alacritty"        -- Default terminal
+myTerminal = "alacritty"          -- Default terminal
 
 myDmenu :: String
 myDmenu = "dmenu_run -i -nb '#2e3440' -nf '#a37acc' -sb '#55b4d4' -sf '#212733' -fn 'NotoMonoRegular:bold:pixelsize=15' -h 30" -- Dmenu
 
 myModMask :: KeyMask
-myModMask = mod4Mask            -- Super Key (--mod4Mask= super key --mod1Mask= alt key --controlMask= ctrl key --shiftMask= shift key)
+myModMask = mod4Mask              -- Super Key (--mod4Mask= super key --mod1Mask= alt key --controlMask= ctrl key --shiftMask= shift key)
 
 myBorderWidth :: Dimension
 myBorderWidth   = 0             -- Window border
 
 ------------------------------------------------------------------------
+-- Colors
+------------------------------------------------------------------------
+myNormColor :: String       -- Border color of normal windows
+myNormColor   = "#73cffe" 
+
+myFocusColor :: String      -- Border color of focused windows
+myFocusColor  = "#fe79c5"  
+
+
+------------------------------------------------------------------------
 -- Space between Tiling Windows
 ------------------------------------------------------------------------
 mySpacing :: Integer -> l a -> XMonad.Layout.LayoutModifier.ModifiedLayout Spacing l a
-mySpacing i = spacingRaw False (Border 30 10 10 10) True (Border 10 10 10 10) True
+mySpacing i = spacingRaw False (Border i i i i) True (Border i i i i) True
+--mySpacing i = spacingRaw False (Border 10 10 10 10) True (Border 10 10 10 10) True
 
 ------------------------------------------------------------------------
 -- Layout Hook
@@ -77,21 +88,14 @@ mySpacing i = spacingRaw False (Border 30 10 10 10) True (Border 10 10 10 10) Tr
 myLayoutHook = avoidStruts $ mouseResize $ windowArrange $ T.toggleLayouts full
                $ mkToggle (NBFULL ?? NOBORDERS ?? MIRROR ?? EOT) myDefaultLayout
              where
-               myDefaultLayout =      withBorder myBorderWidth tall
+               myDefaultLayout =      withBorder myBorderWidth grid
                                   ||| full
-                                  ||| grid
+                                  ||| tall
                                   ||| mirror
 
 ------------------------------------------------------------------------
 -- Tiling Layouts
 ------------------------------------------------------------------------
-tall     = renamed [Replace " <fc=#95e6cb><fn=2> \61449 </fn>Tall</fc>"]
-           $ smartBorders
-           $ windowNavigation
-           $ subLayout [] (smartBorders Simplest)
-           $ limitWindows 8
-           $ mySpacing 5
-           $ ResizableTall 1 (3/100) (1/2) []               
 grid     = renamed [Replace " <fc=#95e6cb><fn=2> \61449 </fn>Grid</fc>"]
            $ smartBorders
            $ windowNavigation
@@ -99,7 +103,15 @@ grid     = renamed [Replace " <fc=#95e6cb><fn=2> \61449 </fn>Grid</fc>"]
            $ limitWindows 12
            $ mySpacing 5
            $ mkToggle (single MIRROR)
-           $ Grid (16/10)   
+           -- $ Grid (16/10)
+           $ ResizableTall 1 (3/100) (1/2) []  
+tall     = renamed [Replace " <fc=#95e6cb><fn=2> \61449 </fn>Tall</fc>"]
+           $ smartBorders
+           $ windowNavigation
+           $ subLayout [] (smartBorders Simplest)
+           $ limitWindows 8
+           $ mySpacing 5
+           $ ResizableTall 1 (3/100) (1/2) []                
 mirror     = renamed [Replace " <fc=#95e6cb><fn=2> \61449 </fn>Mirror</fc>"]
            $ smartBorders
            $ windowNavigation
@@ -133,6 +145,10 @@ myScratchPads :: [NamedScratchpad]
 myScratchPads =
   [
       NS "discord"              "discord"              (appName =? "discord")                   (customFloating $ W.RationalRect 0.15 0.15 0.7 0.7)
+    , NS "thunderbird"          "thunderbird"          (appName =? "Mail")                      (customFloating $ W.RationalRect 0.15 0.15 0.7 0.7)
+    , NS "ravenreader"          "ravenreader"          (appName =? "raven reader")              (customFloating $ W.RationalRect 0.15 0.15 0.7 0.7)
+    , NS "thunar"               "thunar"               (appName =? "thunar")                    (customFloating $ W.RationalRect 0.15 0.15 0.7 0.7)
+    , NS "discord"              "discord"              (appName =? "discord")                   (customFloating $ W.RationalRect 0.15 0.15 0.7 0.7)
     , NS "spotify"              "spotify"              (appName =? "spotify")                   (customFloating $ W.RationalRect 0.15 0.15 0.7 0.7)
     , NS "nautilus"             "nautilus"             (className =? "Org.gnome.Nautilus")      (customFloating $ W.RationalRect 0.15 0.15 0.7 0.7)
     , NS "ncmpcpp"              launchMocp             (title =? "ncmpcpp")                     (customFloating $ W.RationalRect 0.15 0.15 0.7 0.7)
@@ -158,9 +174,10 @@ myKeys =
       , ("M-<F12>", spawn "pactl set-sink-volume @DEFAULT_SINK@ +10%")              -- Volume Up
       , ("M-<F11>", spawn "pactl set-sink-volume @DEFAULT_SINK@ -10%")              -- Volume Down
       , ("M-<F10>", spawn "pactl set-sink-mute @DEFAULT_SINK@ toggle")              -- Mute
+      , ("M-S-<F9>", spawn "sh $HOME/.xmonad/scripts/xmobar/togglesinkaudio")       -- Change sink-inputs
 
     -- System Lock
-      , ("M-S-<XF86Eject>", spawn "arcolinux-logout")                               -- Lock Screen
+      , ("M-S-<XF86Eject>", spawn "archlinux-logout")                               -- Lock Screen
       , ("M-<XF86Eject>", spawn "betterlockscreen -l dim -- --time-str='%H:%M'")    -- Lock Screen
 
     -- Run Prompt
@@ -170,10 +187,11 @@ myKeys =
 
     -- Apps
       , ("M-f", spawn "firefox")                                                    -- Firefox
-      , ("M-b", spawn "subl")                                                       -- Sublime Text Editor
+      , ("M-b", spawn "brave")                                                      -- Brave
       , ("M-c", spawn "chromium")                                                   -- Chromium
       , ("M-S-f", spawn "firefox -private-window")                                  -- Firefox Private mode
       , ("M-S-c", spawn "chromium --incognito")                                     -- Chromium Private mode
+      , ("M-S-b", spawn "brave --incognito")                                        -- Brave Private mode
       , ("M-<Return>", spawn (myTerminal))                                          -- Terminal
 
     -- Flameshot
@@ -244,9 +262,13 @@ myKeys =
       , ("M-m", namedScratchpadAction myScratchPads "ncmpcpp")                      -- Ncmpcpp Player
       , ("M-o", namedScratchpadAction myScratchPads "spotify")                      -- Spotify
       , ("M-a", namedScratchpadAction myScratchPads "nautilus")                     -- Nautilus
+      , ("M-e", namedScratchpadAction myScratchPads "telegram")                     -- Telegram
       , ("M-d", namedScratchpadAction myScratchPads "discord")                      -- Discord
       , ("M-w", namedScratchpadAction myScratchPads "whatsapp-for-linux")           -- WhatsApp
       , ("M-t", namedScratchpadAction myScratchPads "terminal")                     -- Terminal
+      , ("M-h", namedScratchpadAction myScratchPads "thunderbird")                  -- Thunderbird
+      , ("M-r", namedScratchpadAction myScratchPads "ravenreader")                  -- Raven Reader
+      , ("M-z", namedScratchpadAction myScratchPads "thunar")                       -- Thunar
 
     ]  
 
@@ -265,17 +287,19 @@ myManageHook = composeAll
      , className =? "file_progress"                     --> doFloat
      , resource  =? "desktop_window"                    --> doIgnore
      , className =? "MEGAsync"                          --> doFloat
-     , className =? "mpv"                               --> doCenterFloat
+     , className =? "mpv"                               --> doRectFloat (W.RationalRect 0.15 0.15 0.7 0.7)
      , className =? "Gthumb"                            --> doCenterFloat
-     , className =? "Ristretto"                         --> doCenterFloat
      , className =? "feh"                               --> doCenterFloat
      , className =? "Galculator"                        --> doCenterFloat
+     , className =? "Viewnior"                          --> doCenterFloat
      , className =? "Gcolor3"                           --> doFloat
      , className =? "dialog"                            --> doFloat
      , className =? "Downloads"                         --> doFloat
      , className =? "Save As..."                        --> doFloat
      , className =? "Xfce4-appfinder"                   --> doFloat
      , className =? "Org.gnome.NautilusPreviewer"       --> doRectFloat (W.RationalRect 0.15 0.15 0.7 0.7)
+     , className =? "Ristretto"                         --> doRectFloat (W.RationalRect 0.15 0.15 0.7 0.7)
+     , className =? "Bitwarden"                         --> doRectFloat (W.RationalRect 0.15 0.15 0.7 0.7)
      , className =? "Xdg-desktop-portal-gtk"            --> doRectFloat (W.RationalRect 0.15 0.15 0.7 0.7)
      , className =? "Thunar"                            --> doRectFloat (W.RationalRect 0.15 0.15 0.7 0.7)
      , className =? "Sublime_merge"                     --> doRectFloat (W.RationalRect 0.15 0.15 0.7 0.7)
@@ -301,12 +325,15 @@ main :: IO ()
 main = do
         xmproc0 <- spawnPipe "/usr/bin/xmobar -x 0 ~/.xmobarrc0"
         xmproc1 <- spawnPipe "/usr/bin/xmobar -x 1 ~/.xmobarrc1"
+        xmproc2 <- spawnPipe "/usr/bin/xmobar -x 2 ~/.xmobarrc2"
         xmonad $ ewmh def
                 { manageHook = myManageHook <+> manageDocks
+                , handleEventHook  = docksEventHook <+> fullscreenEventHook
                 , logHook = dynamicLogWithPP $ namedScratchpadFilterOutWorkspacePP $ xmobarPP
                         { ppOutput = \x -> hPutStrLn xmproc0 x -- xmobar on monitor 1
                                         >> hPutStrLn xmproc1 x -- xmobar on monitor 2
-                        , ppCurrent = xmobarColor "#ff79c6" "" . \s -> " <fn=2>\61713</fn>"
+                                        >> hPutStrLn xmproc2 x -- xmobar on monitor 3
+                         , ppCurrent = xmobarColor "#ff79c6" "" . \s -> " <fn=2>\61713</fn>"
                          , ppVisible = xmobarColor "#d4bfff" ""
                          , ppHidden = xmobarColor "#d4bfff" ""
                          , ppHiddenNoWindows = xmobarColor "#d4bfff" ""
@@ -320,7 +347,8 @@ main = do
                 , terminal           = myTerminal
                 , borderWidth        = myBorderWidth
                 , startupHook        = myStartupHook
-                , handleEventHook    = myHandleEventHook
+                , normalBorderColor  = myNormColor
+                , focusedBorderColor = myFocusColor
                 } `additionalKeysP` myKeys
 
 -- Find app class name
