@@ -68,8 +68,8 @@ conky.config = {
 									     -- middle_left,middle_middle,middle_right,none
 	--Arch Duoscreen
 	--gap_x = -1910,
-	gap_x = 45,							-- pixels between right or left border
-	gap_y = 75,							-- pixels between bottom or left border
+	gap_x = 35,							-- pixels between right or left border
+	gap_y = 65,							-- pixels between bottom or left border
 	minimum_height = 600,					-- minimum height of window
 	minimum_width = 300,					-- minimum height of window
 	maximum_width = 300,					-- maximum height of window
@@ -114,7 +114,7 @@ conky.config = {
 	own_window = true,					     -- create your own window to draw
 	own_window_argb_value = 255,			     -- real transparency - composite manager required 0-255
 	own_window_argb_visual = true,			-- use ARGB - composite manager required
-	own_window_colour = '#2e3440',			-- set colour if own_window_transparent no
+	own_window_colour = '#1e222a',			-- set colour if own_window_transparent no
 	own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',  -- if own_window true - just hints - own_window_type sets it
 	own_window_transparent = false,			-- if own_window_argb_visual is true sets background opacity 0%
 	own_window_title = 'system_conky',			-- set the name manually  - default conky "hostname"
@@ -214,5 +214,5 @@ ${color2}VPN 	IP: ${color} ${alignr}${execi 2 protonvpn-cli status | grep 'IP' |
 
 ${color2}Eth Up:${color} ${alignr}${offset -10$}${upspeed enp4s0}${alignr}${upspeedgraph enp4s0 8,100}
 ${color2}Eth Down:${color} ${alignr}${offset -10$}${downspeed enp4s0}${alignr}${downspeedgraph enp4s0 8,100}
-${voffset 6}
+${voffset 26}
 ]];
