@@ -5,8 +5,6 @@ A collection of configs to be placed in the user's home directory usually prefix
 
 ![My ArchLinux Desktop](https://i.imgur.com/EP2iFWL.png)
 
-![My ArchLinux Desktop](https://i.imgur.com/z4HehHL.png)
-
 ![My ArchLinux Desktop](https://i.imgur.com/6MMgAn6.png)
 
 ![My ArchLinux Desktop](https://i.imgur.com/ro0TYWC.png)
