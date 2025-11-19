@@ -7,8 +7,6 @@ A collection of configs to be placed in the user's home directory usually prefix
 
 ![My ArchLinux Desktop](https://i.imgur.com/6MMgAn6.png)
 
-![My ArchLinux Desktop](https://i.imgur.com/ro0TYWC.png)
-
 ![My ArchLinux Desktop2](https://i.imgur.com/juhwQlK.png)
 
 
